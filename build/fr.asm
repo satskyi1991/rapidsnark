@@ -4,35 +4,35 @@
         global Fr_copyn
 ;        global Fr_add
 ;        global Fr_sub
-        global Fr_neg
+;        global Fr_neg
         global Fr_mul
-        global Fr_square
-        global Fr_band
-        global Fr_bor
-        global Fr_bxor
-        global Fr_bnot
-        global Fr_shl
-        global Fr_shr
-        global Fr_eq
-        global Fr_neq
-        global Fr_lt
-        global Fr_gt
-        global Fr_leq
-        global Fr_geq
-        global Fr_land
-        global Fr_lor
-        global Fr_lnot
+;        global Fr_square
+;        global Fr_band
+;        global Fr_bor
+;        global Fr_bxor
+;        global Fr_bnot
+;        global Fr_shl
+;        global Fr_shr
+;        global Fr_eq
+;        global Fr_neq
+;        global Fr_lt
+;        global Fr_gt
+;        global Fr_leq
+;        global Fr_geq
+;        global Fr_land
+;        global Fr_lor
+;        global Fr_lnot
         global Fr_toNormal
         global Fr_toLongNormal
         global Fr_toMontgomery
-        global Fr_toInt
-        global Fr_isTrue
+;        global Fr_toInt
+;        global Fr_isTrue
         global Fr_q
-        global Fr_R3
+;        global Fr_R3
 
         global Fr_rawCopy
         global Fr_rawZero
-        global Fr_rawSwap
+;        global Fr_rawSwap
         global Fr_rawAdd
         global Fr_rawSub
         global Fr_rawNeg
@@ -41,8 +41,8 @@
         global Fr_rawToMontgomery
         global Fr_rawFromMontgomery
         global Fr_rawIsEq
-        global Fr_rawIsZero
-        global Fr_rawq
+;        global Fr_rawIsZero
+;        global Fr_rawq
         global Fr_rawR3
 
         extern Fr_fail
@@ -2164,53 +2164,6 @@ rawNegSL_done:
 
 
 
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;
-; neg
-;;;;;;;;;;;;;;;;;;;;;;
-; Adds two elements of any kind
-; Params:
-;   rsi <= Pointer to element to be negated
-;   rdi <= Pointer to result
-;   [rdi] = -[rsi]
-;;;;;;;;;;;;;;;;;;;;;;
-Fr_neg:
-        mov    rax, [rsi]
-        bt     rax, 63          ; Check if is short first operand
-        jc     neg_l
-
-neg_s:                          ; Operand is short
-
-        neg    eax
-        jo     neg_manageOverflow   ; Check if overflow. (0x80000000 is the only case)
-
-        mov    [rdi], rax           ; not necessary to adjust so just save and return
-        ret
-
-neg_manageOverflow:                 ; Do the operation in 64 bits
-        push   rsi
-        movsx  rsi, eax
-        neg    rsi
-        call   rawCopyS2L
-        pop    rsi
-        ret
-
-
-
-neg_l:
-        mov [rdi], rax          ; Copy the type
-
-        add rdi, 8
-        add rsi, 8
-        call rawNegL
-        sub rdi, 8
-        sub rsi, 8
-        ret
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;
 ; rawNeg
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -2270,96 +2223,6 @@ doNegate:
 
         ret
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;
-; square
-;;;;;;;;;;;;;;;;;;;;;;
-; Squares a field element
-; Params:
-;   rsi <= Pointer to element 1
-;   rdi <= Pointer to result
-;   [rdi] = [rsi] * [rsi]
-; Modified Registers:
-;    r8, r9, 10, r11, rax, rcx
-;;;;;;;;;;;;;;;;;;;;;;
-Fr_square:
-        mov    r8, [rsi]
-        bt     r8, 63          ; Check if is short first operand
-        jc     square_l1
-
-square_s1:                       ; Both operands are short
-
-        xor    rax, rax
-        mov    eax, r8d
-        imul   eax
-        jo     square_manageOverflow   ; rsi already is the 64bits result
-
-        mov    [rdi], rax       ; not necessary to adjust so just save and return
-
-square_manageOverflow:                 ; Do the operation in 64 bits
-        push   rsi
-        movsx  rax, r8d
-        imul   rax
-        mov    rsi, rax
-        call   rawCopyS2L
-        pop    rsi
-
-        ret
-
-square_l1:
-        bt     r8, 62          ; check if montgomery first
-        jc     square_l1m
-square_l1n:
-        mov r11b, 0xC0
-        shl r11d, 24
-        mov [rdi+4], r11d
-
-        add rdi, 8
-        add rsi, 8
-        call Fr_rawMSquare
-        sub rdi, 8
-        sub rsi, 8
-
-
-        push rsi
-        add rdi, 8
-        mov rsi, rdi
-        lea rdx, [R3]
-        call Fr_rawMMul
-        sub rdi, 8
-        pop rsi
-
-        ret
-
-square_l1m:
-        mov r11b, 0xC0
-        shl r11d, 24
-        mov [rdi+4], r11d
-
-        add rdi, 8
-        add rsi, 8
-        call Fr_rawMSquare
-        sub rdi, 8
-        sub rsi, 8
-
-        ret
 
 
 
