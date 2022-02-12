@@ -2,8 +2,8 @@
 
         global Fr_copy
         global Fr_copyn
-        global Fr_add
-        global Fr_sub
+;        global Fr_add
+;        global Fr_sub
         global Fr_neg
         global Fr_mul
         global Fr_square
@@ -91,7 +91,7 @@ Fr_copy:
         mov     [rdi + 24], rax
 
         mov     rax, [rsi + 32]
-        mov     [rdi + 32], rax
+        mov     [rdi + 32], rax;
 
         ret
 
@@ -1106,31 +1106,31 @@ toLongNormal_fromShort:
 ; Modified Registers:
 ;    r8, r9, 10, r11, rax, rcx
 ;;;;;;;;;;;;;;;;;;;;;;
-Fr_add:
-        push   rbp
-        push   rsi
-        push   rdx
-        mov    rbp, rsp
-        mov    rax, [rsi]
-        mov    rcx, [rdx]
-        bt     rax, 63          ; Check if is short first operand
-        jc     add_l1
-        bt     rcx, 63          ; Check if is short second operand
-        jc     add_s1l2
-
-add_s1s2:                       ; Both operands are short
-
-        xor    rdx, rdx
-        mov    edx, eax
-        add    edx, ecx
-        jo     add_manageOverflow   ; rsi already is the 64bits result
-
-        mov    [rdi], rdx       ; not necessary to adjust so just save and return
-        mov rsp, rbp
-        pop rdx
-        pop rsi
-        pop rbp
-        ret
+;Fr_add:
+;        push   rbp
+;        push   rsi
+;        push   rdx
+;       mov    rbp, rsp
+;        mov    rax, [rsi]
+;        mov    rcx, [rdx]
+;        bt     rax, 63          ; Check if is short first operand
+;        jc     add_l1
+;        bt     rcx, 63          ; Check if is short second operand
+;        jc     add_s1l2
+;
+;add_s1s2:                       ; Both operands are short
+;
+;        xor    rdx, rdx
+;        mov    edx, eax
+;        add    edx, ecx
+;        jo     add_manageOverflow   ; rsi already is the 64bits result
+;
+;        mov    [rdi], rdx       ; not necessary to adjust so just save and return
+;        mov rsp, rbp
+;        pop rdx
+;        pop rsi
+;        pop rbp
+;        ret
 
 add_manageOverflow:                 ; Do the operation in 64 bits
         push   rsi
@@ -1603,17 +1603,17 @@ rawAddLS_done:
 ; Modified Registers:
 ;    r8, r9, 10, r11, rax, rcx
 ;;;;;;;;;;;;;;;;;;;;;;
-Fr_sub:
-        push   rbp
-        push   rsi
-        push   rdx
-        mov    rbp, rsp
-        mov    rax, [rsi]
-        mov    rcx, [rdx]
-        bt     rax, 63          ; Check if is long first operand
-        jc     sub_l1
-        bt     rcx, 63          ; Check if is long second operand
-        jc     sub_s1l2
+;Fr_sub:
+;        push   rbp
+;        push   rsi
+;        push   rdx
+;        mov    rbp, rsp
+;        mov    rax, [rsi]
+;        mov    rcx, [rdx]
+;        bt     rax, 63          ; Check if is long first operand
+;        jc     sub_l1
+;        bt     rcx, 63          ; Check if is long second operand
+;        jc     sub_s1l2
 
 sub_s1s2:                       ; Both operands are short
 
