@@ -265,7 +265,38 @@ void RawFr::fromMpz(Element &r, mpz_t a) {
     mpz_export((void *)(r.v), NULL, -1, 8, -1, 0, a);
     Fr_rawToMontgomery(r.v, r.v);
 }
+/*****************************************************************************************
+ * ASM Functions to C/C++ using GNU MP Lib Begin
+******************************************************************************************/
+//void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
+//{
 
+//}
+void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
+{
+    mpz_t ma;
+    mpz_t mb;
+    mpz_t mr;
+    mpz_init(ma);
+    mpz_init(mb);
+    mpz_init(mr);
+
+    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
+    mpz_add(mr, ma, mb);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+
+    mpz_clear(ma);
+    mpz_clear(mb);
+    mpz_clear(mr);
+}
+
+
+
+/*****************************************************************************************
+ * ASM Functions to C/C++ using GNU MP Lib End
+******************************************************************************************/
 
 static bool init = Fr_init();
 
