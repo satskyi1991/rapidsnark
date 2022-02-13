@@ -66,7 +66,10 @@ extern "C" int Fr_toInt(PFrElement pE);
 *********************************************************************
 */
 
-extern "C" void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
+//extern "C" void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
+
+void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
+
 /***********************************************************************
  * these functions are not needed to implement
 extern "C" void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
@@ -75,8 +78,12 @@ extern "C" void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
 //extern "C" void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 
-extern "C" void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
-extern "C" void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
+//extern "C" void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
+void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
+
+//extern "C" void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
+void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
+
 extern "C" void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 extern "C" void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
 extern "C" void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);

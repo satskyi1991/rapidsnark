@@ -292,6 +292,63 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_clear(mr);
 }
 
+void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
+{
+    mpz_t ma;
+    mpz_t mb;
+    mpz_t mr;
+    mpz_init(ma);
+    mpz_init(mb);
+    mpz_init(mr);
+
+    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
+    mpz_sub(mr, ma, mb);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+
+    mpz_clear(ma);
+    mpz_clear(mb);
+    mpz_clear(mr);
+}
+
+void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
+{
+    mpz_t ma;
+    mpz_t mr;
+    mpz_init(ma);
+
+    mpz_init(mr);
+
+    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mpz_neg(mr, ma);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+
+    mpz_clear(ma);
+    mpz_clear(mr);
+}
+
+void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA)
+{
+    pRawResult = pRawA ;
+/*
+    mpz_t ma;
+    mpz_t mr;
+    mpz_init(ma);
+
+    mpz_init(mr);
+
+    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mr = ma;
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+
+    mpz_clear(ma);
+    mpz_clear(mr);
+*/
+}
+
 
 
 /*****************************************************************************************
