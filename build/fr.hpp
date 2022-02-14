@@ -21,8 +21,10 @@ extern FrElement Fr_R3;
 extern FrRawElement Fr_rawq;
 extern FrRawElement Fr_rawR3;
 
-extern "C" void Fr_copy(PFrElement r, PFrElement a);
-extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);
+//extern "C" void Fr_copy(PFrElement r, PFrElement a);
+//extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);
+void Fr_copy(PFrElement r, PFrElement a);
+void Fr_copyn(PFrElement r, PFrElement a, int n);
 
 /***************************************************************
  * these functions are not needed to implement

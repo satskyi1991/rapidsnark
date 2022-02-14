@@ -331,22 +331,20 @@ void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
 
 void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA)
 {
-    pRawResult = pRawA ;
-/*
-    mpz_t ma;
-    mpz_t mr;
-    mpz_init(ma);
+    for (int i=0; i<Fr_N64; i++)
+        pRawResult[i] = pRawA[i];
+}
 
-    mpz_init(mr);
+void Fr_copy(PFrElement r, PFrElement a)
+{
+    for (int i=0; i<Fr_N64; i++)
+        r[i] = a[i];
+}
 
-    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
-    mr = ma;
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
-
-    mpz_clear(ma);
-    mpz_clear(mr);
-*/
+void Fr_copyn(PFrElement r, PFrElement a, int n)
+{
+    for (int i=0; i<n; i++)
+        r[i] = a[i];
 }
 
 
