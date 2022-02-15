@@ -347,6 +347,25 @@ void Fr_copyn(PFrElement r, PFrElement a, int n)
         r[i] = a[i];
 }
 
+int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB)
+{
+    for (int i=0; i<Fr_N64; i++)
+    {
+        if (pRawA[i] != pRawB[i])
+            return 0;
+    }
+    return 1;
+}
+
+//void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
+//{
+
+//}
+
+//void Fr_toNormal(PFrElement r, PFrElement a)
+//{
+
+//}
 
 
 /*****************************************************************************************

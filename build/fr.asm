@@ -1,7 +1,7 @@
 
 
-        global Fr_copy
-        global Fr_copyn
+        global Fr_copy		;; implemented
+        global Fr_copyn	;; implemented	
 ;        global Fr_add
 ;        global Fr_sub
 ;        global Fr_neg
@@ -16,7 +16,7 @@
 ;        global Fr_eq
 ;        global Fr_neq
 ;        global Fr_lt
-;        global Fr_gt
+;        global Fr_gtFr_rawAdd
 ;        global Fr_leq
 ;        global Fr_geq
 ;        global Fr_land
@@ -27,23 +27,23 @@
         global Fr_toMontgomery
 ;        global Fr_toInt
 ;        global Fr_isTrue
-        global Fr_q
-;        global Fr_R3
+        global Fr_q		; global var
+;        global Fr_R3		; global var
 
-        global Fr_rawCopy
+        global Fr_rawCopy	;; implemented
         global Fr_rawZero
 ;        global Fr_rawSwap
-        global Fr_rawAdd
-        global Fr_rawSub
-        global Fr_rawNeg
+        global Fr_rawAdd	;; implemented
+        global Fr_rawSub	;; implemented
+       global Fr_rawNeg	;; implemented
         global Fr_rawMMul
         global Fr_rawMSquare
         global Fr_rawToMontgomery
         global Fr_rawFromMontgomery
-        global Fr_rawIsEq
+        global Fr_rawIsEq	;; implemented
 ;        global Fr_rawIsZero
-;        global Fr_rawq
-        global Fr_rawR3
+;        global Fr_rawq	; global var
+        global Fr_rawR3	; global var
 
         extern Fr_fail
         DEFAULT REL

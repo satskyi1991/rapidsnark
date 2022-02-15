@@ -91,7 +91,9 @@ extern "C" void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
 extern "C" void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
 extern "C" void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
 extern "C" void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
-extern "C" int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
+//extern "C" int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
+
+int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
 /***************************************************************
  * these functions are not needed to implement
 extern "C" int Fr_rawIsZero(FrRawElement pRawB);
