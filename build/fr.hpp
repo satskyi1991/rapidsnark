@@ -95,13 +95,22 @@ void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 //extern "C" void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
 void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
 
-extern "C" void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
-extern "C" void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
-extern "C" void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
-extern "C" void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
-extern "C" void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
-//extern "C" int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
+//extern "C" void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
+void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 
+//extern "C" void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
+void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
+
+//extern "C" void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
+void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
+
+//extern "C" void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+
+extern "C" void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+//void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+
+//extern "C" int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
 int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
 /***************************************************************
  * these functions are not needed to implement

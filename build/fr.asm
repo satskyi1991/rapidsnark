@@ -1,7 +1,7 @@
 
 
-        global Fr_copy		;; implemented
-        global Fr_copyn	;; implemented	
+        global Fr_copy		;; implemented not checked
+        global Fr_copyn	;; implemented not checked
 ;        global Fr_add
 ;        global Fr_sub
 ;        global Fr_neg
@@ -30,17 +30,17 @@
         global Fr_q		; global var
         global Fr_R3		; global var
 
-        global Fr_rawCopy	;; implemented
+        global Fr_rawCopy	;; implemented not checked
         global Fr_rawZero
 ;        global Fr_rawSwap
-        global Fr_rawAdd	;; implemented
-        global Fr_rawSub	;; implemented
-       global Fr_rawNeg	;; implemented
-        global Fr_rawMMul
-        global Fr_rawMSquare
-        global Fr_rawToMontgomery
+        global Fr_rawAdd	;; implemented not checked
+        global Fr_rawSub	;; implemented not checked
+       global Fr_rawNeg	;; implemented not checked
+        global Fr_rawMMul	;; implemented not checked
+        global Fr_rawMSquare   ;; implemented not checked
+        global Fr_rawToMontgomery ;; implemented not checked
         global Fr_rawFromMontgomery
-        global Fr_rawIsEq	;; implemented
+        global Fr_rawIsEq	;; implemented not checked
 ;        global Fr_rawIsZeroFr_fail
         global Fr_rawq		; global var
         global Fr_rawR3	; global var
@@ -535,6 +535,8 @@ Fr_rawMMul_done:
     pop r14
     pop r15
     ret
+    
+    
 Fr_rawMSquare:
     push r15
     push r14
@@ -703,6 +705,16 @@ Fr_rawMSquare_done:
     pop r14
     pop r15
     ret
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 Fr_rawMMul1:
     push r15
     push r14
@@ -826,6 +838,9 @@ Fr_rawMMul1_done:
     pop r14
     pop r15
     ret
+    
+    
+    
 Fr_rawFromMontgomery:
     push r15
     push r14

@@ -357,7 +357,80 @@ int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB)
     return 1;
 }
 
-//void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
+void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
+{
+//    FrRawElement rcx;
+//    for (int i=0; i<Fr_N64; i++) //    mov rcx,rdx
+//    {
+//        rcx[i] = pRawB[i];
+//    }
+
+//    uint64_t nptmp = np[0];   // mov r9,[ np ]
+//    uint64_t r10 = 0; //xor r10,10
+
+//    FrRawElement rdx = {0,0,0,0};
+//    rdx[0] = pRawA[0]; //mov rdx,[rsi + 0]
+
+    mpz_t ma;
+    mpz_t mb;
+    mpz_t mr;
+    mpz_init(ma);
+    mpz_init(mb);
+    mpz_init(mr);
+
+    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
+    mpz_mul(mr, ma, mb);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+
+    mpz_clear(ma);
+    mpz_clear(mb);
+    mpz_clear(mr);
+}
+
+void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA)
+{
+    mpz_t ma;
+    mpz_t mr;
+    mpz_init(ma);
+    mpz_init(mr);
+
+    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mpz_mul(mr, ma, ma);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+
+    mpz_clear(ma);
+    mpz_clear(mr);
+}
+
+void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
+{
+    mpz_t ma;
+    mpz_t mb;
+    mpz_t mr;
+    mpz_init(ma);
+    mpz_init(mb);
+    mpz_init(mr);
+
+    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mpz_import(mb, 1, -1, 8, -1, 0, (const void *)pRawB);
+    mpz_mul(mr, ma, mb);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+
+    mpz_clear(ma);
+    mpz_clear(mb);
+    mpz_clear(mr);
+}
+
+void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
+{
+    Fr_rawMMul(pRawResult, pRawA, R2);
+}
+
+//void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
 //{
 
 //}
