@@ -28,7 +28,7 @@
 ;        global Fr_toInt
 ;        global Fr_isTrue
         global Fr_q		; global var
-;        global Fr_R3		; global var
+        global Fr_R3		; global var
 
         global Fr_rawCopy	;; implemented
         global Fr_rawZero
@@ -41,10 +41,16 @@
         global Fr_rawToMontgomery
         global Fr_rawFromMontgomery
         global Fr_rawIsEq	;; implemented
-;        global Fr_rawIsZero
-;        global Fr_rawq	; global var
+;        global Fr_rawIsZeroFr_fail
+        global Fr_rawq		; global var
         global Fr_rawR3	; global var
-
+        global q		; local var
+        global half		; local var
+        global R2		; local var
+        global R3		; local var
+        global lboMask		; local var
+        global np		; local var
+        
         extern Fr_fail
         DEFAULT REL
 

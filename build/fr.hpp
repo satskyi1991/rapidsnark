@@ -16,11 +16,20 @@ typedef struct __attribute__((__packed__)) {
     FrRawElement longVal;
 } FrElement;
 typedef FrElement *PFrElement;
-extern FrElement Fr_q;
-extern FrElement Fr_R3;
-extern FrRawElement Fr_rawq;
-extern FrRawElement Fr_rawR3;
 
+extern "C"
+{
+    extern FrElement Fr_q;
+    extern FrElement Fr_R3;
+    extern FrRawElement Fr_rawq;
+    extern FrRawElement Fr_rawR3;
+    extern FrRawElement q;
+    extern FrRawElement half;
+    extern FrRawElement R2;
+    extern FrRawElement R3;
+    extern FrRawElement lboMask;
+    extern FrRawElement np;
+}
 //extern "C" void Fr_copy(PFrElement r, PFrElement a);
 //extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);
 void Fr_copy(PFrElement r, PFrElement a);
