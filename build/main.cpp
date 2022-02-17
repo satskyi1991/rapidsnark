@@ -1,14 +1,27 @@
 #include <iostream>
+
+#define TEST_C_FUNCTIONS
+
+#ifdef TEST_C_FUNCTIONS
 #include "fr.hpp"
+#else
+#include "fr_asm.hpp"
+#endif
 #include <assert.h>
 using namespace std;
 
 //#define Fr_N64 4
 //typedef uint64_t FrRawElement[Fr_N64];
 
+#ifndef TEST_C_FUNCTIONS
 void Fr_fail() {
     assert(false);
 }
+#endif
+
+FrRawElement pRawResult = {0,0,0,0};
+FrRawElement pRawA = {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+FrRawElement pRawB = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
 
 void show_extern_vars()
 {
@@ -62,16 +75,34 @@ void show_extern_vars()
     std::cout << "lbomask= " << std::hex << lboMask[3] << '\n';
 
     std::cout << "np= " << std::hex << np[0] << '\n';
-    std::cout << "np= " << std::hex << np[1] << '\n';
-    std::cout << "np= " << std::hex << np[2] << '\n';
-    std::cout << "np= " << std::hex << np[3] << '\n';
+
+    std::cout << "np= "  << std::dec << np[0] << '\n';
+//    std::cout << "np= " << std::hex << np[1] << '\n';
+//    std::cout << "np= " << std::hex << np[2] << '\n';
+//    std::cout << "np= " << std::hex << np[3] << '\n';
+}
+
+void Fr_Rw_copy_test()
+{
+    Fr_rawCopy(pRawResult, pRawA);
+    std::cout << "Fr_rawCopy Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[1] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[2] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[3] << '\n';
+
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[1] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[2] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[3] << '\n';
 }
 
 int main()
 {
     //typedef uint64_t unit64_t;
 
-    show_extern_vars();
+    //show_extern_vars();
+    Fr_Rw_copy_test();
 
 
 
