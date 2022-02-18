@@ -198,12 +198,12 @@ int main()
     //Fr_Rw_copy_test();
     //Fr_Rw_add_test();
     //Fr_Rw_sub_test();
-    //Fr_Rw_neg_test();
+    Fr_Rw_neg_test();
     //Fr_Rw_mul_test();
     //Fr_Rw_square_test();
     //Fr_Rw_mul1_test();
 
-    Fr_Rw_ToMontgomery_test();
+    //Fr_Rw_ToMontgomery_test();
 
 //    std::cout << typeid(uint64_t).name() << '\n';
 //    std::cout << typeid(FrRawElement).name() << '\n';
