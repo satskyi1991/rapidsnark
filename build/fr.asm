@@ -37,6 +37,7 @@
         global Fr_rawSub	;; implemented not checked
        global Fr_rawNeg	;; implemented not checked
         global Fr_rawMMul	;; implemented not checked
+        global Fr_rawMMul1	;; implemented not checked
         global Fr_rawMSquare   ;; implemented not checked
         global Fr_rawToMontgomery ;; implemented not checked
         global Fr_rawFromMontgomery

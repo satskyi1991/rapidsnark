@@ -13,10 +13,10 @@ using namespace std;
 //#define Fr_N64 4
 //typedef uint64_t FrRawElement[Fr_N64];
 
-#ifndef TEST_C_FUNCTIONS
-void Fr_fail() {
-    assert(false);
-}
+#ifdef TEST_C_FUNCTIONS
+//void Fr_fail() {
+//    assert(false);
+//}
 #endif
 
 FrRawElement pRawResult = {0,0,0,0};
@@ -97,14 +97,113 @@ void Fr_Rw_copy_test()
     std::cout << "pRawResult= " << std::hex << pRawResult[3] << '\n';
 }
 
+void Fr_Rw_add_test()
+{
+    Fr_rawAdd(pRawResult, pRawA, pRawB);
+    std::cout << "Fr_rawAdd Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[1] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[2] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[3] << '\n';
+
+    std::cout << "pRawB= " << std::hex << pRawB[0] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[1] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[2] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[3] << '\n';
+
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[1] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[2] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[3] << '\n';
+}
+
+void Fr_Rw_sub_test()
+{
+    Fr_rawSub(pRawResult, pRawA, pRawB);
+    std::cout << "Fr_rawSub Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[1] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[2] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[3] << '\n';
+
+    std::cout << "pRawB= " << std::hex << pRawB[0] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[1] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[2] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[3] << '\n';
+
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[1] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[2] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[3] << '\n';
+}
+
+void Fr_Rw_neg_test()
+{
+    Fr_rawNeg(pRawResult, pRawA);
+    std::cout << "Fr_rawNeg Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[1] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[2] << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[3] << '\n';
+
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[1] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[2] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[3] << '\n';
+}
+
+void Fr_Rw_mul_test()
+{
+    Fr_rawMMul(pRawResult, pRawA, pRawB);
+    std::cout << "Fr_rawMMul Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[0] << ", " << pRawB[1] << ", " << pRawB[2] << ", " << pRawB[3] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
+}
+
+void Fr_Rw_square_test()
+{
+    Fr_rawMSquare(pRawResult, pRawA);
+    std::cout << "Fr_rawMSquare Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
+}
+
+void Fr_Rw_mul1_test()
+{
+    Fr_rawMMul1(pRawResult, pRawA, pRawB[0]);
+    std::cout << "Fr_rawMMul1 Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[0] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
+}
+
+void Fr_Rw_ToMontgomery_test()
+{
+    Fr_rawToMontgomery(pRawResult, pRawA);
+    std::cout << "Fr_rawToMontgomery Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
+}
+
+
+
+
+
 int main()
 {
     //typedef uint64_t unit64_t;
 
     //show_extern_vars();
-    Fr_Rw_copy_test();
+    //Fr_Rw_copy_test();
+    //Fr_Rw_add_test();
+    //Fr_Rw_sub_test();
+    //Fr_Rw_neg_test();
+    //Fr_Rw_mul_test();
+    //Fr_Rw_square_test();
+    //Fr_Rw_mul1_test();
 
-
+    Fr_Rw_ToMontgomery_test();
 
 //    std::cout << typeid(uint64_t).name() << '\n';
 //    std::cout << typeid(FrRawElement).name() << '\n';

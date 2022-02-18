@@ -317,7 +317,6 @@ void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
     mpz_t ma;
     mpz_t mr;
     mpz_init(ma);
-
     mpz_init(mr);
 
     mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
