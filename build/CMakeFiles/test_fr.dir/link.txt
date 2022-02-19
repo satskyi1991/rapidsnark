@@ -1,0 +1,1 @@
+/usr/bin/g++  -g   CMakeFiles/test_fr.dir/main.cpp.o CMakeFiles/test_fr.dir/fr.cpp.o fr.o  -o test_fr  -lgmp 
