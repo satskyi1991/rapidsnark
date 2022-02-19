@@ -28,7 +28,7 @@ extern "C"
     extern FrRawElement R2;
     extern FrRawElement R3;
     extern FrRawElement lboMask;
-    extern FrRawElement np;
+    extern uint64_t np;
 }
 //extern "C" void Fr_copy(PFrElement r, PFrElement a);
 //extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);

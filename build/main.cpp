@@ -22,6 +22,8 @@ using namespace std;
 FrRawElement pRawResult = {0,0,0,0};
 FrRawElement pRawA = {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
 FrRawElement pRawB = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
+//FrRawElement pRawA = {0x0,0x0,0x1,0x1};
+//FrRawElement pRawB = {0x0,0x0,0x1,0x1};
 
 void show_extern_vars()
 {
@@ -74,9 +76,9 @@ void show_extern_vars()
     std::cout << "lbomask= " << std::hex << lboMask[2] << '\n';
     std::cout << "lbomask= " << std::hex << lboMask[3] << '\n';
 
-    std::cout << "np= " << std::hex << np[0] << '\n';
+    std::cout << "np= " << std::hex << np << '\n';
 
-    std::cout << "np= "  << std::dec << np[0] << '\n';
+    std::cout << "np= "  << std::dec << np << '\n';
 //    std::cout << "np= " << std::hex << np[1] << '\n';
 //    std::cout << "np= " << std::hex << np[2] << '\n';
 //    std::cout << "np= " << std::hex << np[3] << '\n';
@@ -198,8 +200,8 @@ int main()
     //Fr_Rw_copy_test();
     //Fr_Rw_add_test();
     //Fr_Rw_sub_test();
-    Fr_Rw_neg_test();
-    //Fr_Rw_mul_test();
+    //Fr_Rw_neg_test();
+    Fr_Rw_mul_test();
     //Fr_Rw_square_test();
     //Fr_Rw_mul1_test();
 
