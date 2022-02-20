@@ -537,22 +537,9 @@ void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA)
 
 void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
 {
-    mpz_t ma;
-    mpz_t mb;
-    mpz_t mr;
-    mpz_init(ma);
-    mpz_init(mb);
-    mpz_init(mr);
-
-    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
-    mpz_import(mb, 1, -1, 8, -1, 0, (const void *)&pRawB);
-    mpz_mul(mr, ma, mb);
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
-
-    mpz_clear(ma);
-    mpz_clear(mb);
-    mpz_clear(mr);
+    FrRawElement pRawBtmp = {0};
+    pRawBtmp[0] = pRawB;
+    Fr_rawMMul(pRawResult, pRawA, pRawBtmp);
 }
 
 void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
