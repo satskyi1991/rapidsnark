@@ -202,8 +202,8 @@ int main()
     //Fr_Rw_sub_test();
     //Fr_Rw_neg_test();
     //Fr_Rw_mul_test();
-    Fr_Rw_square_test();
-    //Fr_Rw_mul1_test();
+    //Fr_Rw_square_test();
+    Fr_Rw_mul1_test();
 
     //Fr_Rw_ToMontgomery_test();
 
