@@ -1,3 +1,5 @@
+
+// Passed
 C:
 Fr_rawCopy Test: 
 pRawA= a1f0fac9f8000000
@@ -8,7 +10,6 @@ pRawResult= a1f0fac9f8000000
 pRawResult= 9419f4243cdcb848
 pRawResult= dc2822db40c0ac2e
 pRawResult= 183227397098d014
-
 Asm:
 Fr_rawCopy Test: 
 pRawA= a1f0fac9f8000000
@@ -20,6 +21,7 @@ pRawResult= 9419f4243cdcb848
 pRawResult= dc2822db40c0ac2e
 pRawResult= 183227397098d014
 
+// Passed
 C:
 Fr_rawAdd Test: 
 pRawA= a1f0fac9f8000000
@@ -34,9 +36,8 @@ pRawResult= bda9e10fa6216da7
 pRawResult= e8182ed62039122b
 pRawResult= 6871a618947c2cb3
 pRawResult= 1a48f7eaefe714ba
-
 Asm:
-Fr_rawCopy Test: 
+Fr_rawAdd Test: 
 pRawA= a1f0fac9f8000000
 pRawA= 9419f4243cdcb848
 pRawA= dc2822db40c0ac2e
@@ -50,7 +51,7 @@ pRawResult= e8182ed62039122b
 pRawResult= 6871a618947c2cb3
 pRawResult= 1a48f7eaefe714ba
 
-
+// Passed
 C:
 Fr_rawSub Test: 
 pRawA= a1f0fac9f8000000
@@ -65,7 +66,6 @@ pRawResult= 8638148449de9259
 pRawResult= 401bb97259805e65
 pRawResult= 4fde9f9ded052ba9
 pRawResult= 161b5687f14a8b6f
-
 Asm:
 Fr_rawSub Test: 
 pRawA= a1f0fac9f8000000
@@ -81,41 +81,8 @@ pRawResult= 401bb97259805e65
 pRawResult= 4fde9f9ded052ba9
 pRawResult= 161b5687f14a8b6f
 
-// Is not Passed
-C:
-Fr_rawNeg Test: 
-pRawA= a1f0fac9f8000000
-pRawA= 9419f4243cdcb848
-pRawA= dc2822db40c0ac2e
-pRawA= 183227397098d014
-pRawResult= a1f0fac9f8000000
-pRawResult= 9419f4243cdcb848
-pRawResult= dc2822db40c0ac2e
-pRawResult= 183227397098d014
 
-// Is not Passed
-C2:
-Fr_rawNeg Test: 
-pRawA= a1f0fac9f8000000
-pRawA= 9419f4243cdcb848
-pRawA= dc2822db40c0ac2e
-pRawA= 183227397098d014
-pRawResult= a1f0fac9f8000001
-pRawResult= 9419f4243cdcb849
-pRawResult= dc2822db40c0ac2f
-pRawResult= 183227397098d015
 
-// Is not Passed
-C3:
-Fr_rawNeg Test: 
-pRawA= a1f0fac9f8000000
-pRawA= 9419f4243cdcb848
-pRawA= dc2822db40c0ac2e
-pRawA= 183227397098d014
-pRawResult= a1f0fac9f8000000
-pRawResult= 9419f4243cdcb848
-pRawResult= dc2822db40c0ac2e
-pRawResult= 183227397098d014
 
 // Passed
 C5:
@@ -128,7 +95,6 @@ pRawResult= a1f0fac9f8000001
 pRawResult= 9419f4243cdcb848
 pRawResult= dc2822db40c0ac2e
 pRawResult= 183227397098d014
-
 Asm:
 Fr_rawNeg Test: 
 pRawA= a1f0fac9f8000000
@@ -140,76 +106,72 @@ pRawResult= 9419f4243cdcb848
 pRawResult= dc2822db40c0ac2e
 pRawResult= 183227397098d014
 
-// Is not Passed
+
+
+
+// Passed
 C:
 Fr_rawMMul Test: 
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 pRawB= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
-pRawResult= b1949058c8000000, a59f044b6b791c1a, 8a5c9ebfb83006c5, 4c81cd52ca38e664
-
+pRawResult= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
 Asm:
 Fr_rawMMul Test: 
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 pRawB= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
 pRawResult= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
 
-Fr_rawMMul Test first loop asm: 
-pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
-pRawB= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
-pRawResult= b1949058c8000000, 20e519a10bbe3d22, 99a96277480e51ac, cf3f23efeaf091ab
-
-Fr_rawMMul Test second loop asm: 
-pRawResult= b1949058c8000000, 20e519a10bbe3d22, 99a96277480e51ac, cf3f23efeaf091ab
-
-pRawResult= f082de36b8000000, 20e519a10bbe3d22, 99a96277480e51ac, cf3f23efeaf091ab
-
-//pRawResult= 2b5f03ec9137536d, 806e49a91514a16c, 31762d353b74a158, 13d4d397da065264
-pRawResult= a79ea4b8579164b, 20e519a10bbe3d22, 99a96277480e51ac, cf3f23efeaf091ab
-
-
-Fr_rawMMul Test: 
-pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
-pRawB= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
-pRawResult= b1949058c8000000, 20e519a10bbe3d22, 99a96277480e51ac, cf3f23efeaf091ab
-
-pRawResult= f082de36b8000000, 20e519a10bbe3d22, 99a96277480e51ac, cf3f23efeaf091ab
 
 
 
-
-
-
-
-
-
-// Is not Passed
+// Passed
 C:
 Fr_rawMSquare Test: 
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
-pRawResult= 6040000000000000, 5de2a464ba5017b7, 63d246afd971c2b1, d1815f24096fa757
+pRawResult= 9907e2cb536c4654, d65db18eb521336a, e31a6546c6ec385, 1dad258dd14a255c
 
 Asm:
 Fr_rawMSquare Test: 
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 pRawResult= 9907e2cb536c4654, d65db18eb521336a, e31a6546c6ec385, 1dad258dd14a255c
 
-// Is not Passed, programm crashes
+
+
+// Passed
+C:
+Fr_rawMMul1 Test: 
+pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+pRawB= 1bb8e645ae216da7
+pRawResult= f599ddfbad86bc06, ec1c0a17893c85cd, 5d482c29ab80ec64, 4d4face96bf58f3
+
 Asm:
 Fr_rawMMul1 Test: 
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 pRawB= 1bb8e645ae216da7
 pRawResult= f599ddfbad86bc06, ec1c0a17893c85cd, 5d482c29ab80ec64, 4d4face96bf58f3
 
-// Is not Passed
+// Passed
 C:
 Fr_rawToMontgomery Test: 
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
-pRawResult= b1949058c8000000, a59f044b6b791c1a, 8a5c9ebfb83006c5, 4c81cd52ca38e664
-
+pRawResult= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
 Asm:
 Fr_rawToMontgomery Test: 
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 pRawResult= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+
+// Passed
+C:
+Fr_rawFromMontgomery Test: 
+pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+pRawResult= 55b425913927735a, a3ac6d7389307a4d, 543d3ec42a2529ae, 256e51ca1fcef59b
+Asm:
+Fr_rawFromMontgomery Test: 
+pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+pRawResult= 55b425913927735a, a3ac6d7389307a4d, 543d3ec42a2529ae, 256e51ca1fcef59b
+
+
 
 
 

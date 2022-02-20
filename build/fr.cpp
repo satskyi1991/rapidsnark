@@ -550,17 +550,73 @@ void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
 void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
 {
     mpz_t ma;
-    mpz_t mq;
     mpz_t mnp;
+    mpz_t mq;
+    mpz_t mr1;
+    mpz_t mr2;
+
     mpz_init(ma);
-    mpz_init(mq);
+    mpz_init(mr1);
+    mpz_init(mr2);
     mpz_init(mnp);
+    mpz_init(mq);
 
     mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+    mpz_import(mnp, 1, -1, 8, -1, 0, (const void *)&np);
     mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)q);
-    mpz_import(mnp, Fr_N64, -1, 8, -1, 0, (const void *)np);
 
+    // Second Loop
+    mpz_mul_ui(mr1, mnp, ma->_mp_d[0]);
+    mpz_mul_ui(mr2, mq, mr1->_mp_d[0]);
+    mpz_add(mr2, mr2, ma);
+    mr2->_mp_d[0] = mr2->_mp_d[1];
+    mr2->_mp_d[1] = mr2->_mp_d[2];
+    mr2->_mp_d[2] = mr2->_mp_d[3];
+    mr2->_mp_d[3] = mr2->_mp_d[4];
+    mr2->_mp_d[4] = 0;
 
+    // Second Loop
+    mpz_mul_ui(mr1, mnp, mr2->_mp_d[0]);
+    mpz_mul_ui(mr1, mq, mr1->_mp_d[0]);
+    mpz_add(mr2, mr1, mr2);
+    mr2->_mp_d[0] = mr2->_mp_d[1];
+    mr2->_mp_d[1] = mr2->_mp_d[2];
+    mr2->_mp_d[2] = mr2->_mp_d[3];
+    mr2->_mp_d[3] = mr2->_mp_d[4];
+    mr2->_mp_d[4] = 0;
+
+    // Second Loop
+    mpz_mul_ui(mr1, mnp, mr2->_mp_d[0]);
+    mpz_mul_ui(mr1, mq, mr1->_mp_d[0]);
+    mpz_add(mr2, mr1, mr2);
+    mr2->_mp_d[0] = mr2->_mp_d[1];
+    mr2->_mp_d[1] = mr2->_mp_d[2];
+    mr2->_mp_d[2] = mr2->_mp_d[3];
+    mr2->_mp_d[3] = mr2->_mp_d[4];
+    mr2->_mp_d[4] = 0;
+
+    // Second Loop
+    mpz_mul_ui(mr1, mnp, mr2->_mp_d[0]);
+    mpz_mul_ui(mr1, mq, mr1->_mp_d[0]);
+    mpz_add(mr2, mr1, mr2);
+    mr2->_mp_d[0] = mr2->_mp_d[1];
+    mr2->_mp_d[1] = mr2->_mp_d[2];
+    mr2->_mp_d[2] = mr2->_mp_d[3];
+    mr2->_mp_d[3] = mr2->_mp_d[4];
+    mr2->_mp_d[4] = 0;
+
+    if (!mpz_cmp(mr2,mq))
+    {
+        mpz_sub(mr2,mr2,mq);
+    }
+
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr2->_mp_d[i];
+
+    mpz_clear(ma);
+    mpz_clear(mr1);
+    mpz_clear(mr2);
+    mpz_clear(mnp);
+    mpz_clear(mq);
 }
 
 //void Fr_toNormal(PFrElement r, PFrElement a)

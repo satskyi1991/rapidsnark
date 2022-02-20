@@ -188,8 +188,13 @@ void Fr_Rw_ToMontgomery_test()
     std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
 }
 
-
-
+void Fr_rawFromMontgomery_test()
+{
+    Fr_rawFromMontgomery(pRawResult, pRawA);
+    std::cout << "Fr_rawFromMontgomery Test: " <<  '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
+}
 
 
 int main()
@@ -204,7 +209,8 @@ int main()
     //Fr_Rw_mul_test();
     //Fr_Rw_square_test();
     //Fr_Rw_mul1_test();
-    Fr_Rw_ToMontgomery_test();
+    //Fr_Rw_ToMontgomery_test();
+    Fr_rawFromMontgomery_test();
 
 //    std::cout << typeid(uint64_t).name() << '\n';
 //    std::cout << typeid(FrRawElement).name() << '\n';
