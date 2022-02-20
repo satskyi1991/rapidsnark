@@ -438,119 +438,94 @@ int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB)
 void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 {
     mpz_t ma;
-    mpz_t ma0;
-    mpz_t ma1;
-    mpz_t ma2;
-    mpz_t ma3;
     mpz_t mb;
     mpz_t mnp;
     mpz_t mq;
-    mpz_t mq0;
-    mpz_t mq1;
-    mpz_t mq2;
-    mpz_t mq3;
     mpz_t mr1;
     mpz_t mr2;
     mpz_t mr3;
     mpz_t mr4;
-    mpz_t mr5;
-    mpz_t mr6;
-
-    mpz_t m1;
-    mpz_t m2;
-    mpz_t m3;
-    mpz_t m4;
-    mpz_t m5;
-    mpz_t m6;
 
     mpz_init(ma);
-    mpz_init(ma0);
-    mpz_init(ma1);
-    mpz_init(ma2);
-    mpz_init(ma3);
-
-    mpz_init(mq0);
-    mpz_init(mq1);
-    mpz_init(mq2);
-    mpz_init(mq3);
     mpz_init(mb);
     mpz_init(mr1);
     mpz_init(mr2);
     mpz_init(mr3);
     mpz_init(mr4);
-    mpz_init(mr5);
-    mpz_init(mr6);
-    mpz_init(m1);
-    mpz_init(m2);
-    mpz_init(m3);
-    mpz_init(m4);
-    mpz_init(m5);
-    mpz_init(m6);
-
     mpz_init(mnp);
     mpz_init(mq);
 
     mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
-    mpz_import(ma0, 1, -1, 8, -1, 0, (const void *)&pRawA[0]);
-    mpz_import(ma1, 1, -1, 8, -1, 0, (const void *)&pRawA[1]);
-    mpz_import(ma2, 1, -1, 8, -1, 0, (const void *)&pRawA[2]);
-    mpz_import(ma3, 1, -1, 8, -1, 0, (const void *)&pRawA[3]);
-    mpz_import(mq0, 1, -1, 8, -1, 0, (const void *)&q[0]);
-    mpz_import(mq1, 1, -1, 8, -1, 0, (const void *)&q[1]);
-    mpz_import(mq2, 1, -1, 8, -1, 0, (const void *)&q[2]);
-    mpz_import(mq3, 1, -1, 8, -1, 0, (const void *)&q[3]);
-
     mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
     mpz_import(mnp, 1, -1, 8, -1, 0, (const void *)&np);
     mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)q);
 
-    // first loop
-    //pRawResult= b1949058c8000000, 20e519a10bbe3d22, 99a96277480e51ac, cf3f23efeaf091ab
-    mpz_mul(mr1, mb, ma0);    // ; FirstLoop
+    // FirstLoop
+    mpz_mul_ui(mr1, mb, pRawA[0]);
+    // Second Loop
+    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+    mpz_add(mr4, mr3, mr1);
+    mr4->_mp_d[0] = mr4->_mp_d[1];
+    mr4->_mp_d[1] = mr4->_mp_d[2];
+    mr4->_mp_d[2] = mr4->_mp_d[3];
+    mr4->_mp_d[3] = mr4->_mp_d[4];
+    mr4->_mp_d[4] = 0;
 
-    // mulx rax,rdx,r11; npp = np * m1[0]  ; rdx == npp, часть результата из rax не используется
-    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);// ; Second Loop
-    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);              // ; Second Loop
-    mpz_add(mr4, mr3, mr1);  // ; Second Loop
+    // FirstLoop
+    mpz_mul_ui(mr1, mb, pRawA[1]);
+    // Second Loop
+    mpz_add(mr1, mr4, mr1);
+    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+    mpz_add(mr4, mr3, mr1);
+    mr4->_mp_d[0] = mr4->_mp_d[1];
+    mr4->_mp_d[1] = mr4->_mp_d[2];
+    mr4->_mp_d[2] = mr4->_mp_d[3];
+    mr4->_mp_d[3] = mr4->_mp_d[4];
+    mr4->_mp_d[4] = 0;
 
+    // FirstLoop
+    mpz_mul_ui(mr1, mb, pRawA[2]);
+    // Second Loop
+    mpz_add(mr1, mr4, mr1);
+    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+    mpz_add(mr4, mr3, mr1);
+    mr4->_mp_d[0] = mr4->_mp_d[1];
+    mr4->_mp_d[1] = mr4->_mp_d[2];
+    mr4->_mp_d[2] = mr4->_mp_d[3];
+    mr4->_mp_d[3] = mr4->_mp_d[4];
+    mr4->_mp_d[4] = 0;
 
-     for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i+1];
-     //for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-     //mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr4);
+    // FirstLoop
+    mpz_mul_ui(mr1, mb, pRawA[3]);
+    // Second Loop
+    mpz_add(mr1, mr4, mr1);
+    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+    mpz_add(mr4, mr3, mr1);
+    mr4->_mp_d[0] = mr4->_mp_d[1];
+    mr4->_mp_d[1] = mr4->_mp_d[2];
+    mr4->_mp_d[2] = mr4->_mp_d[3];
+    mr4->_mp_d[3] = mr4->_mp_d[4];
+    mr4->_mp_d[4] = 0;
 
-//    // crypto.c
-//    mpz_mul(mr1, ma, mb);
-//    mpz_mul_ui(mr2, mr1, np);
-//    mpz_mul(mr3, mr2, mq);
-//    mpz_add(mr4, mr1, mr3);
-//    mpz_sub(mr5, mr4, mq);
+    if (!mpz_cmp(mr4,mq))
+    {
+        mpz_sub(mr4,mr4,mq);
+    }
 
-//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-//    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr5);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+//     for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+//     mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr4);
 
     mpz_clear(ma);
-    mpz_clear(ma0);
-    mpz_clear(ma1);
-    mpz_clear(ma2);
-    mpz_clear(ma3);
-    mpz_clear(mq0);
-    mpz_clear(mq1);
-    mpz_clear(mq2);
-    mpz_clear(mq3);
     mpz_clear(mb);
     mpz_clear(mr1);
     mpz_clear(mr2);
     mpz_clear(mr3);
     mpz_clear(mr4);
-    mpz_clear(mr5);
-    mpz_clear(mr6);
-
-    mpz_clear(m1);
-    mpz_clear(m2);
-    mpz_clear(m3);
-    mpz_clear(m4);
-    mpz_clear(m5);
-    mpz_clear(m6);
     mpz_clear(mnp);
     mpz_clear(mq);
 }
