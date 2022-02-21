@@ -22,8 +22,7 @@ using namespace std;
 FrRawElement pRawResult = {0,0,0,0};
 FrRawElement pRawA = {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
 FrRawElement pRawB = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
-//FrRawElement pRawA = {0x0,0x0,0x1,0x1};
-//FrRawElement pRawB = {0x0,0x0,0x1,0x1};
+
 
 void show_extern_vars()
 {
@@ -196,6 +195,28 @@ void Fr_rawFromMontgomery_test()
     std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
 }
 
+void Fr_Copy_test()
+{
+    FrElement ResultEl = {0};
+    FrElement AEl = {0};
+    AEl.shortVal = -1;
+    AEl.type =1;
+    AEl.longVal[0] = 0xa1f0fac9f8000000;
+    AEl.longVal[1] = 0x9419f4243cdcb848;
+    AEl.longVal[2] = 0xdc2822db40c0ac2e;
+    AEl.longVal[3] = 0x183227397098d014;
+    Fr_copy(&ResultEl, &AEl);
+    std::cout << "Fr_copy Test: " <<  '\n';
+
+    std::cout << "pAEl.shortVal = " << std::hex << AEl.shortVal  << '\n';
+    std::cout << "pResultEl.shortVal = " << std::hex << ResultEl.shortVal  << '\n';
+
+    std::cout << "pAEl.type = " << std::hex << AEl.type  << '\n';
+    std::cout << "pResultEl.type = " << std::hex << ResultEl.type  << '\n';
+
+    std::cout << "AEl.longVal= " << std::hex << AEl.longVal[0] << ", " << AEl.longVal[1]<< ", " << AEl.longVal[2] << ", " << AEl.longVal[3] << '\n';
+    std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
+}
 
 int main()
 {
@@ -210,7 +231,11 @@ int main()
     //Fr_Rw_square_test();
     //Fr_Rw_mul1_test();
     //Fr_Rw_ToMontgomery_test();
-    Fr_rawFromMontgomery_test();
+    //Fr_rawFromMontgomery_test();
+    Fr_Copy_test();
+
+//    printf("%d  ", sizeof(FrElement));
+//    printf("%d  ", sizeof(FrRawElement));
 
 //    std::cout << typeid(uint64_t).name() << '\n';
 //    std::cout << typeid(FrRawElement).name() << '\n';

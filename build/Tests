@@ -171,6 +171,24 @@ Fr_rawFromMontgomery Test:
 pRawA= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 pRawResult= 55b425913927735a, a3ac6d7389307a4d, 543d3ec42a2529ae, 256e51ca1fcef59b
 
+// Passed
+C:
+pAEl.shortVal = ffffffff
+pResultEl.shortVal = ffffffff
+pAEl.type = 1
+pResultEl.type = 1
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+ResultEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+
+Asm:
+Fr_copy Test: 
+pAEl.shortVal = ffffffff
+pResultEl.shortVal = ffffffff
+pAEl.type = 1
+pResultEl.type = 1
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+ResultEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+
 
 
 

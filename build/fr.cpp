@@ -415,8 +415,10 @@ void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA)
 
 void Fr_copy(PFrElement r, PFrElement a)
 {
+    r->shortVal = a->shortVal;
+    r->type = a->type;
     for (int i=0; i<Fr_N64; i++)
-        r[i] = a[i];
+        r->longVal[i] = a->longVal[i];
 }
 
 void Fr_copyn(PFrElement r, PFrElement a, int n)
