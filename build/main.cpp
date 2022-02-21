@@ -218,6 +218,14 @@ void Fr_Copy_test()
     std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
 }
 
+void Fr_rawIsEq_test()
+{
+    std::cout << "Fr_rawIsEq(pRawA, pRawB) Test: " <<  Fr_rawIsEq(pRawA, pRawB) << '\n';
+    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawB[0] << ", " << pRawB[1] << ", " << pRawB[2] << ", " << pRawB[3] << '\n';
+}
+
+
 int main()
 {
     //typedef uint64_t unit64_t;
@@ -232,7 +240,8 @@ int main()
     //Fr_Rw_mul1_test();
     //Fr_Rw_ToMontgomery_test();
     //Fr_rawFromMontgomery_test();
-    Fr_Copy_test();
+    //Fr_Copy_test();
+    Fr_rawIsEq_test();
 
 //    printf("%d  ", sizeof(FrElement));
 //    printf("%d  ", sizeof(FrRawElement));
