@@ -1,6 +1,6 @@
 #include <iostream>
 
-#define TEST_C_FUNCTIONS
+//#define TEST_C_FUNCTIONS
 
 #ifdef TEST_C_FUNCTIONS
 #include "fr.hpp"
@@ -225,6 +225,31 @@ void Fr_rawIsEq_test()
     std::cout << "pRawResult= " << std::hex << pRawB[0] << ", " << pRawB[1] << ", " << pRawB[2] << ", " << pRawB[3] << '\n';
 }
 
+void Fr_copyn_test()
+{
+    FrElement ResultEl = {0};
+    FrElement AEl = {0};
+    AEl.shortVal = -1;
+    AEl.type =1;
+    AEl.longVal[0] = 0xa1f0fac9f8000000;
+    AEl.longVal[1] = 0x9419f4243cdcb848;
+    AEl.longVal[2] = 0xdc2822db40c0ac2e;
+    AEl.longVal[3] = 0x183227397098d014;
+    Fr_copyn(&ResultEl, &AEl, 1);
+    std::cout << "Fr_copyn Test: " <<  '\n';
+
+    std::cout << "pAEl.shortVal = " << std::hex << AEl.shortVal  << '\n';
+    std::cout << "pResultEl.shortVal = " << std::hex << ResultEl.shortVal  << '\n';
+
+    std::cout << "pAEl.type = " << std::hex << AEl.type  << '\n';
+    std::cout << "pResultEl.type = " << std::hex << ResultEl.type  << '\n';
+
+    std::cout << "AEl.longVal= " << std::hex << AEl.longVal[0] << ", " << AEl.longVal[1]<< ", " << AEl.longVal[2] << ", " << AEl.longVal[3] << '\n';
+    std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
+}
+
+
+
 
 int main()
 {
@@ -241,7 +266,8 @@ int main()
     //Fr_Rw_ToMontgomery_test();
     //Fr_rawFromMontgomery_test();
     //Fr_Copy_test();
-    Fr_rawIsEq_test();
+    //Fr_rawIsEq_test();
+    Fr_copyn_test();
 
 //    printf("%d  ", sizeof(FrElement));
 //    printf("%d  ", sizeof(FrRawElement));
