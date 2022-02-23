@@ -66,10 +66,12 @@ extern "C" void Fr_lor(PFrElement r, PFrElement a, PFrElement b);
 extern "C" void Fr_lnot(PFrElement r, PFrElement a);
 ********************************************************************
 */
-extern "C" void Fr_toNormal(PFrElement r, PFrElement a);
+//extern "C" void Fr_toNormal(PFrElement r, PFrElement a);
+void Fr_toNormal(PFrElement r, PFrElement a);
 //extern "C" void Fr_toLongNormal(PFrElement r, PFrElement a);
 void Fr_toLongNormal(PFrElement r, PFrElement a);
-extern "C" void Fr_toMontgomery(PFrElement r, PFrElement a);
+//extern "C" void Fr_toMontgomery(PFrElement r, PFrElement a);
+void Fr_toMontgomery(PFrElement r, PFrElement a);
 
 /********************************************************************
  * these functions are not needed to implement

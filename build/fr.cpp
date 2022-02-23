@@ -723,10 +723,128 @@ void Fr_toLongNormal(PFrElement r, PFrElement a)
     mpz_clear(mr);
 }
 
-//void Fr_toNormal(PFrElement r, PFrElement a)
-//{
+void Fr_toNormal(PFrElement r, PFrElement a)
+{
+    mpz_t ma;
+    mpz_t mb;
+    mpz_t mc;
+    mpz_t mr;
+    mpz_t mr1;
+    mpz_t mq;
+    mpz_init(ma);
+    mpz_init(mb);
+    mpz_init(mc);
+    mpz_init(mr);
+    mpz_init(mr1);
+    mpz_init(mq);
+    FrRawElement pRawResult = {0};
+    FrRawElement pRawA = {0};
+    uint64_t rax = 0;
+    Fr_toMpz(ma, a);
+    //mpz_fdiv_q(mr, ma, mb);
 
-//}
+    //Test bit bit index in op and return 0 or 1 accordingly.
+    if (mpz_tstbit (ma, 62)) //; check if montgomery
+    {
+        mpz_add_ui(mr, mr, 8);
+        mpz_add_ui(ma, ma, 8);
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+        mpz_export((void *)pRawA, NULL, -1, 8, -1, 0, ma);
+        Fr_rawFromMontgomery(pRawResult, pRawA);
+        mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+        mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)pRawResult);
+        mpz_sub_ui(mr, mr, 8);
+        mpz_sub_ui(ma, ma, 8);
+
+        mpz_setbit(mb,7); //mov r11b, 0x80
+        for(int i=0; i<23; i++) //shl r11d, 24
+            mb->_mp_d[0] = mb->_mp_d[0]*2;
+
+        mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+        Fr_fromMpz(r, mr);
+    }
+    else if (mpz_tstbit (ma, 62)) //; check if montgomery
+    {
+        mpz_add_ui(mr, mr, 8);
+        mpz_add_ui(ma, ma, 8);
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+        mpz_export((void *)pRawA, NULL, -1, 8, -1, 0, ma);
+        Fr_rawFromMontgomery(pRawResult, pRawA);
+        mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+        mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)pRawResult);
+        mpz_sub_ui(mr, mr, 8);
+        mpz_sub_ui(ma, ma, 8);
+
+        mpz_setbit(mb,7); //mov r11b, 0x80
+        for(int i=0; i<23; i++) //shl r11d, 24
+            mb->_mp_d[0] = mb->_mp_d[0]*2;
+
+        mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+    }
+    else
+    {
+        Fr_copy(r, a);
+    }
+
+
+    mpz_clear(ma);
+    mpz_clear(mb);
+    mpz_clear(mr);
+}
+
+void Fr_toMontgomery(PFrElement r, PFrElement a)
+{
+    mpz_t ma;
+    mpz_t mb;
+    mpz_t mc;
+    mpz_t mr;
+    mpz_t mr1;
+    mpz_t mq;
+    mpz_init(ma);
+    mpz_init(mb);
+    mpz_init(mc);
+    mpz_init(mr);
+    mpz_init(mr1);
+    mpz_init(mq);
+    FrRawElement pRawResult = {0};
+    FrRawElement pRawA = {0};
+    uint64_t rax = 0;
+    Fr_toMpz(ma, a);
+    //mpz_fdiv_q(mr, ma, mb);
+
+    //Test bit bit index in op and return 0 or 1 accordingly.
+    if (mpz_tstbit (ma, 63)) // toMontgomeryLong
+    {
+        mpz_set(mr, ma);       //    mov     [rdi], rax
+        mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+        mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+        mpz_export((void *)pRawA, NULL, -1, 8, -1, 0, ma);
+        Fr_rawMMul(pRawResult, pRawA, R2);
+        mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
+        mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)pRawResult);
+        mpz_sub_ui(mr, mr, 8);
+        mpz_sub_ui(ma, ma, 8);
+
+        //mov r11b, 0xC0
+        mpz_setbit(mb,7);
+        mpz_setbit(mb,6);
+        for(int i=0; i<23; i++) //shl r11d, 24
+            mb->_mp_d[0] = mb->_mp_d[0]*2;
+
+        mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+        Fr_fromMpz(r, mr);
+    }
+    else if (mpz_tstbit (ma, 62))    // toMontgomery_doNothing
+    {
+        Fr_copy(r, a);
+    }
+
+
+    mpz_clear(ma);
+    mpz_clear(mb);
+    mpz_clear(mr);
+}
 
 
 /*****************************************************************************************

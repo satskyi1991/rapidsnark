@@ -248,6 +248,100 @@ void Fr_copyn_test()
     std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
 }
 
+void Fr_toLongNormal_test()
+{
+    FrElement ResultEl = {0};
+    FrElement AEl = {0};
+    AEl.shortVal = 0xa1f0;
+    AEl.type = 0x9419;
+//    AEl.longVal[0] = 0xa1f0fac9f8000000;
+//    AEl.longVal[1] = 0x9419f4243cdcb848;
+//    AEl.longVal[2] = 0xdc2822db40c0ac2e;
+//    AEl.longVal[3] = 0x183227397098d014;
+//    AEl.longVal[0] = 0;
+//    AEl.longVal[1] = 0;
+//    AEl.longVal[2] = 0;
+//    AEl.longVal[3] = 0;
+    //Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+    Fr_toLongNormal(&ResultEl, &AEl);
+    std::cout << "Fr_toLongNormal Test: " <<  '\n';
+
+    std::cout << "pAEl.shortVal = " << std::hex << AEl.shortVal  << '\n';
+    std::cout << "pResultEl.shortVal = " << std::hex << ResultEl.shortVal  << '\n';
+
+    std::cout << "pAEl.type = " << std::hex << AEl.type  << '\n';
+    std::cout << "pResultEl.type = " << std::hex << ResultEl.type  << '\n';
+
+    std::cout << "AEl.longVal= " << std::hex << AEl.longVal[0] << ", " << AEl.longVal[1]<< ", " << AEl.longVal[2] << ", " << AEl.longVal[3] << '\n';
+    std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
+}
+
+void Fr_toNormal_test()
+{
+    FrElement ResultEl = {0};
+    FrElement AEl = {0};
+    FrElement BEl = {0};
+//    AEl.shortVal = 0xa1f0;
+//    AEl.type = 0x9419;
+    AEl.shortVal = 0;
+    AEl.type = 0;
+    AEl.longVal[0] = 0xa1f0fac9f8000000;
+    AEl.longVal[1] = 0x9419f4243cdcb848;
+    AEl.longVal[2] = 0xdc2822db40c0ac2e;
+    AEl.longVal[3] = 0x183227397098d014;
+//    AEl.longVal[0] = 0;
+//    AEl.longVal[1] = 0;
+//    AEl.longVal[2] = 0;
+//    AEl.longVal[3] = 0;
+    //Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+
+
+    Fr_toNormal(&ResultEl, &AEl);
+    std::cout << "Fr_toLongNormal Test: " <<  '\n';
+
+    std::cout << "pAEl.shortVal = " << std::hex << AEl.shortVal  << '\n';
+    std::cout << "pResultEl.shortVal = " << std::hex << ResultEl.shortVal  << '\n';
+
+    std::cout << "pAEl.type = " << std::hex << AEl.type  << '\n';
+    std::cout << "pResultEl.type = " << std::hex << ResultEl.type  << '\n';
+
+    std::cout << "AEl.longVal= " << std::hex << AEl.longVal[0] << ", " << AEl.longVal[1]<< ", " << AEl.longVal[2] << ", " << AEl.longVal[3] << '\n';
+    std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
+}
+
+void Fr_toMontgomery_test()
+{
+    FrElement ResultEl = {0};
+    FrElement AEl = {0};
+    FrElement BEl = {0};
+    AEl.shortVal = 0;
+    AEl.type = 0;
+//    AEl.shortVal = 0;
+//    AEl.type = 0;
+    AEl.longVal[0] = 0xa1f0fac9f8000000;
+    AEl.longVal[1] = 0x9419f4243cdcb848;
+    AEl.longVal[2] = 0xdc2822db40c0ac2e;
+    AEl.longVal[3] = 0x183227397098d014;
+//    AEl.longVal[0] = 0;
+//    AEl.longVal[1] = 0;
+//    AEl.longVal[2] = 0;
+//    AEl.longVal[3] = 0;
+    //Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+
+
+    Fr_toMontgomery(&ResultEl, &AEl);
+    std::cout << "Fr_toMontgomery Test: " <<  '\n';
+
+    std::cout << "AEl.shortVal = " << std::hex << AEl.shortVal  << '\n';
+    std::cout << "ResultEl.shortVal = " << std::hex << ResultEl.shortVal  << '\n';
+
+    std::cout << "AEl.type = " << std::hex << AEl.type  << '\n';
+    std::cout << "ResultEl.type = " << std::hex << ResultEl.type  << '\n';
+
+    std::cout << "AEl.longVal= " << std::hex << AEl.longVal[0] << ", " << AEl.longVal[1]<< ", " << AEl.longVal[2] << ", " << AEl.longVal[3] << '\n';
+    std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
+}
+
 
 
 
@@ -267,7 +361,11 @@ int main()
     //Fr_rawFromMontgomery_test();
     //Fr_Copy_test();
     //Fr_rawIsEq_test();
-    Fr_copyn_test();
+    // Fr_copyn_test(); //need to check
+
+
+    Fr_toMontgomery_test();
+        //Fr_toLongNormal_test();
 
 //    printf("%d  ", sizeof(FrElement));
 //    printf("%d  ", sizeof(FrRawElement));
