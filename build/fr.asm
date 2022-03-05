@@ -32,7 +32,7 @@
 
         global Fr_rawCopy	;; implemented not checked
         global Fr_rawZero
-;        global Fr_rawSwap
+        global Fr_rawSwap
         global Fr_rawAdd	;; implemented not checked
         global Fr_rawSub	;; implemented not checked
        global Fr_rawNeg	;; implemented not checked
@@ -42,7 +42,8 @@
         global Fr_rawToMontgomery ;; implemented not checked
         global Fr_rawFromMontgomery
         global Fr_rawIsEq	;; implemented not checked
-;        global Fr_rawIsZeroFr_fail
+        global Fr_rawIsZero
+	;global Fr_fail
         global Fr_rawq		; global var
         global Fr_rawR3	; global var
         global q		; local var

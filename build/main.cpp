@@ -342,8 +342,57 @@ void Fr_toMontgomery_test()
     std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
 }
 
+void Fr_mul_test()
+{
+    FrElement ResultEl = {0};
+    FrElement AEl = {0};
+    FrElement BEl = {0};
+    AEl.shortVal = 0;
+    AEl.type = 0;
+    BEl.shortVal = 0;
+    BEl.type = 0;
+//    AEl.shortVal = 0;
+//    AEl.type = 0;
+    AEl.longVal[0] = 0xa1f0fac9f8000000;
+    AEl.longVal[1] = 0x9419f4243cdcb848;
+    AEl.longVal[2] = 0xdc2822db40c0ac2e;
+    AEl.longVal[3] = 0x183227397098d014;
 
+    BEl.longVal[0]  = 0x1bb8e645ae216da7;
+    BEl.longVal[1]  = 0x53fe3ab1e35c59e3;
+    BEl.longVal[2]  = 0x8c49833d53bb8085;
+    BEl.longVal[3]  = 0x0216d0b17f4e44a5;
 
+    Fr_mul(&ResultEl, &AEl, &BEl);
+    std::cout << "Fr_mul Test: " <<  '\n';
+
+    std::cout << "AEl.shortVal = " << std::hex << AEl.shortVal  << '\n';
+    std::cout << "BEl.shortVal = " << std::hex << BEl.shortVal  << '\n';
+    std::cout << "ResultEl.shortVal = " << std::hex << ResultEl.shortVal  << '\n';
+
+    std::cout << "AEl.type = " << std::hex << AEl.type  << '\n';
+    std::cout << "BEl.type = " << std::hex << BEl.type  << '\n';
+    std::cout << "ResultEl.type = " << std::hex << ResultEl.type  << '\n';
+
+    std::cout << "AEl.longVal= " << std::hex << AEl.longVal[0] << ", " << AEl.longVal[1]<< ", " << AEl.longVal[2] << ", " << AEl.longVal[3] << '\n';
+    std::cout << "BEl.longVal= " << std::hex << BEl.longVal[0] << ", " << BEl.longVal[1]<< ", " << BEl.longVal[2] << ", " << BEl.longVal[3] << '\n';
+    std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
+}
+
+void Fr_rawIsZero_test()
+{
+    std::cout << "Fr_rawIsZero(pRawB) Test: " <<  Fr_rawIsZero(pRawB) << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[0] << ", " << pRawB[1] << ", " << pRawB[2] << ", " << pRawB[3] << '\n';
+}
+
+void Fr_rawSwap_test()
+{
+    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[0] << ", " << pRawB[1] << ", " << pRawB[2] << ", " << pRawB[3] << '\n';
+    Fr_rawSwap(pRawB, pRawA);
+    std::cout << "pRawAafterSwap= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
+    std::cout << "pRawBafterSwap= " << std::hex << pRawB[0] << ", " << pRawB[1] << ", " << pRawB[2] << ", " << pRawB[3] << '\n';
+}
 
 int main()
 {
@@ -364,8 +413,12 @@ int main()
     // Fr_copyn_test(); //need to check
 
 
-    Fr_toMontgomery_test();
+    //Fr_toMontgomery_test();
         //Fr_toLongNormal_test();
+
+    //Fr_mul_test();
+    //Fr_rawIsZero_test();
+    Fr_rawSwap_test();
 
 //    printf("%d  ", sizeof(FrElement));
 //    printf("%d  ", sizeof(FrRawElement));
