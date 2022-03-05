@@ -220,8 +220,13 @@ pResultEl.type = 0
 AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 ResultEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 
-
-
+// Passed
+C:
+Fr_rawIsZero(pRawB) Test: 0
+pRawB= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ASM:
+Fr_rawIsZero(pRawB) Test: 0
+pRawB= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
 
 
 
