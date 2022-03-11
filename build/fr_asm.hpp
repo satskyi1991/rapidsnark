@@ -81,9 +81,9 @@ extern "C" void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
 
 //void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
 
+extern "C" void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
 /***********************************************************************
  * these functions are not needed to implement
-extern "C" void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
 *************************************************************************
 */
 extern "C" void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
@@ -112,9 +112,11 @@ extern "C" void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA
 
 extern "C" int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
 //int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
+
+extern "C" int Fr_rawIsZero(FrRawElement pRawB);
 /***************************************************************
  * these functions are not needed to implement
-extern "C" int Fr_rawIsZero(FrRawElement pRawB);
+
 ****************************************************************
 */
 
