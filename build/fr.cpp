@@ -774,26 +774,32 @@ void Fr_toNormal(PFrElement r, PFrElement a)
     mpz_init(mb);
     mpz_init(mr);
 
-    if ((a->type & Fr_LONGMONTGOMERY) || (a->type & Fr_LONG))
+    if ((a->type == Fr_LONGMONTGOMERY))
     {
         mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
         mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-        mpz_add_ui(mr, mr, 8);
-        mpz_add_ui(ma, ma, 8);
+        //mpz_add_ui(mr, mr, 8);
+        //mpz_add_ui(ma, ma, 8);
         mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
         mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
         Fr_rawFromMontgomery(r->longVal, a->longVal);
         mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
         mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-        mpz_sub_ui(mr, mr, 8);
-        mpz_sub_ui(ma, ma, 8);
+        //mpz_sub_ui(mr, mr, 8);
+        //mpz_sub_ui(ma, ma, 8);
 
-        mb->_mp_d[0] = 0x80;    //mov r11b, 0x80
-        for(int i=0; i<23; i++) //shl r11d, 24
+        //mpz_set(mb,0);
+        mpz_setbit(mb,7);
+        //mb->_mp_d[0] = 0x80;    //mov r11b, 0x80
+        for(int i=0; i<23; i++)     //shl r11d, 24
+        {
             mb->_mp_d[0] = mb->_mp_d[0]*2;
+        }
 
-        mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+
+        //mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
         Fr_fromMpz(r, mr);
+        //mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
     }
     else
     {
@@ -897,7 +903,8 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     Fr_toMpz(mr, r);
     Fr_toMpz(r8, a);
     Fr_toMpz(r9, b);
-    Fr_toMpz(mr3, &Fr_R3);
+    //Fr_toMpz(mr3, &Fr_R3);
+    mpz_import(mr3, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawR3);
 
     if (mpz_tstbit (ma, 63)) // 2267 ; Check if is short first operand
     {

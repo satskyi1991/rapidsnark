@@ -284,7 +284,8 @@ void Fr_toNormal_test()
 //    AEl.shortVal = 0xa1f0;
 //    AEl.type = 0x9419;
     AEl.shortVal = 0;
-    AEl.type = 0;
+    //AEl.type = Fr_LONG;
+    AEl.type = Fr_LONGMONTGOMERY;
     AEl.longVal[0] = 0xa1f0fac9f8000000;
     AEl.longVal[1] = 0x9419f4243cdcb848;
     AEl.longVal[2] = 0xdc2822db40c0ac2e;
@@ -315,7 +316,7 @@ void Fr_toMontgomery_test()
     FrElement AEl = {0};
     FrElement BEl = {0};
     AEl.shortVal = 0;
-    AEl.type = 0;
+    AEl.type = Fr_LONG;
 //    AEl.shortVal = 0;
 //    AEl.type = 0;
     AEl.longVal[0] = 0xa1f0fac9f8000000;
@@ -342,15 +343,19 @@ void Fr_toMontgomery_test()
     std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
 }
 
+//#define Fr_SHORT 0x00000000
+//#define Fr_LONG 0x80000000
+//#define Fr_LONGMONTGOMERY 0xC0000000
+
 void Fr_mul_test()
 {
     FrElement ResultEl = {0};
     FrElement AEl = {0};
     FrElement BEl = {0};
     AEl.shortVal = 0;
-    AEl.type = 0;
+    AEl.type = Fr_LONG;
     BEl.shortVal = 0;
-    BEl.type = 0;
+    BEl.type = Fr_LONG;
 //    AEl.shortVal = 0;
 //    AEl.type = 0;
     AEl.longVal[0] = 0xa1f0fac9f8000000;
