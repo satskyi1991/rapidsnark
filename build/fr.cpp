@@ -719,61 +719,6 @@ void Fr_toLongNormal(PFrElement r, PFrElement a)
 
 void Fr_toNormal(PFrElement r, PFrElement a)
 {
-/*
-    mpz_t ma;
-    mpz_t mb;
-    mpz_t mr;
-    mpz_t mq;
-    mpz_init(ma);
-    mpz_init(mb);
-    mpz_init(mr);
-    mpz_init(mq);
-    FrRawElement pRawResult = {0};
-    FrRawElement pRawA = {0};
-    uint64_t rax = 0;
-    mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)q);
-
-    Fr_toMpz(ma, a);
-
-    //Test bit bit index in op and return 0 or 1 accordingly.
-    if (mpz_tstbit (ma, 62) || mpz_tstbit (ma, 63)) //; check if montgomery
-    {
-        mpz_add_ui(mr, mr, 8);
-        mpz_add_ui(ma, ma, 8);
-        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
-        mpz_export((void *)pRawA, NULL, -1, 8, -1, 0, ma);
-        Fr_rawFromMontgomery(pRawResult, pRawA);
-        mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
-        mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)pRawResult);
-        mpz_sub_ui(mr, mr, 8);
-        mpz_sub_ui(ma, ma, 8);
-
-        mpz_setbit(mb,7); //mov r11b, 0x80
-        for(int i=0; i<23; i++) //shl r11d, 24
-            mb->_mp_d[0] = mb->_mp_d[0]*2;
-
-        mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
-        Fr_fromMpz(r, mr);
-    }
-    else
-    {
-        Fr_copy(r, a);
-    }
-
-
-    mpz_clear(ma);
-    mpz_clear(mb);
-    mpz_clear(mr);
-    */
-
-    mpz_t ma;
-    mpz_t mb;
-    mpz_t mr;
-
-    mpz_init(ma);
-    mpz_init(mb);
-    mpz_init(mr);
-
     if (a->type == Fr_LONGMONTGOMERY)
     {
         Fr_rawFromMontgomery(r->longVal, a->longVal);
@@ -782,10 +727,6 @@ void Fr_toNormal(PFrElement r, PFrElement a)
     {
         Fr_copy(r, a);
     }
-    mpz_clear(ma);
-    mpz_clear(mb);
-    mpz_clear(mr);
-
 }
 
 void Fr_toMontgomery(PFrElement r, PFrElement a)
