@@ -836,6 +836,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
                 if (mpz_tstbit (mb, 62)) // 2554 ; check if montgomery second
                 {
                     // mul_l1ml2m
+                    std::cout << "mul_l1ml2m: " <<  '\n';
                     //mov r11b, 0xC0
                     mpz_setbit(mb,7);
                     mpz_setbit(mb,6);
@@ -861,6 +862,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
                 else
                 {
                     // mul_l1ml2n
+                    std::cout << "mul_l1ml2n: " <<  '\n';
                     // mov r11b, 0x80
                     mpz_setbit(mb,7);
                     for(int i=0; i<23; i++) //shl r11d, 24
@@ -886,6 +888,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             else if (mpz_tstbit (mb, 62)) // 2514 ; check if montgomery second
             {
                 // mul_l1nl2m
+                std::cout << "mul_l1nl2m: " <<  '\n';
                 // mov r11b, 0x80
                 mpz_setbit(mb,7);
                 for(int i=0; i<23; i++) //shl r11d, 24
@@ -910,6 +913,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             // mul_l1nl2n
             else
             {
+                std::cout << "mul_l1nl2n: " <<  '\n';
                 // mov r11b, 0xC0
                 mpz_setbit(mb,6);
                 mpz_setbit(mb,7);
@@ -952,6 +956,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             {
                 // mul_l1ms2m
                 // mov r11b, 0xC0
+                std::cout << "mul_l1ms2m: " <<  '\n';
                 mpz_setbit(mb,6);
                 mpz_setbit(mb,7);
                 for(int i=0; i<23; i++) //shl r11d, 24
@@ -975,6 +980,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             else
             {
                 // mul_l1ms2n
+                std::cout << "mul_l1ms2n: " <<  '\n';
                 //mov r11b, 0x80
                 mpz_setbit(mb,7);
                 for(int i=0; i<23; i++) //shl r11d, 24
@@ -1019,6 +1025,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             if (mpz_tstbit (mb, 62)) // 2301 ; check if montgomery second
             {
                 // mul_l1ns2m
+                std::cout << "mul_l1ns2m: " <<  '\n';
                 //mov r11b, 0x80
                 mpz_setbit(mb,7);
                 for(int i=0; i<23; i++) //shl r11d, 24
@@ -1042,6 +1049,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             else
             {
                // mul_l1ns2n
+                std::cout << "mul_l1ns2n: " <<  '\n';
                 //mov r11b, 0xC0
                 mpz_setbit(mb,6);
                 mpz_setbit(mb,7);
@@ -1104,6 +1112,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             if (mpz_tstbit (mb, 62)) // 2479  ; check if montgomery second
             {
                 // mul_s1ml2m
+                std::cout << "mul_s1ml2m: " <<  '\n';
                 //mov r11b, 0xC0
                 mpz_setbit(mb,6);
                 mpz_setbit(mb,7);
@@ -1128,6 +1137,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             else
             {
                 // mul_s1ml2n
+                std::cout << "mul_s1ml2n: " <<  '\n';
                 //mov r11b, 0x80
                 mpz_setbit(mb,7);
                 for(int i=0; i<23; i++) //shl r11d, 24
@@ -1153,6 +1163,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
         else if (mpz_tstbit (mb, 62)) // 2409; check if montgomery second
         {
             // mul_s1nl2m
+            std::cout << "mul_s1nl2m: " <<  '\n';
             //mov r11b, 0x80
             mpz_setbit(mb,7);
             for(int i=0; i<23; i++) //shl r11d, 24
@@ -1204,6 +1215,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
         // mul_s1nl2n
         else
         {
+            std::cout << "mul_s1nl2n: " <<  '\n';
             //mov r11b, 0xC0
             mpz_setbit(mb,6);
             mpz_setbit(mb,7);
@@ -1269,6 +1281,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     else
     {
         //mul_s1s2:
+         std::cout << "mul_s1s2: " <<  '\n';
         mpz_mul(mr, ma, mb);
         Fr_fromMpz(r, mr);
     }
