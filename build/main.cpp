@@ -1,6 +1,6 @@
 #include <iostream>
 
-//#define TEST_C_FUNCTIONS
+#define TEST_C_FUNCTIONS
 
 #ifdef TEST_C_FUNCTIONS
 #include "fr.hpp"
@@ -297,7 +297,7 @@ void Fr_toNormal_test()
 
 
     Fr_toNormal(&ResultEl, &AEl);
-    std::cout << "Fr_toLongNormal Test: " <<  '\n';
+    std::cout << "Fr_toNormal Test: " <<  '\n';
 
     std::cout << "pAEl.shortVal = " << std::hex << AEl.shortVal  << '\n';
     std::cout << "pResultEl.shortVal = " << std::hex << ResultEl.shortVal  << '\n';
@@ -414,11 +414,12 @@ int main()
 
 
     //Fr_toMontgomery_test();
-        //Fr_toLongNormal_test();
+    //Fr_toLongNormal_test();
 
     //Fr_mul_test();
+    Fr_toNormal_test();
     //Fr_rawIsZero_test();
-    Fr_rawSwap_test();
+    //Fr_rawSwap_test();
 
 //    printf("%d  ", sizeof(FrElement));
 //    printf("%d  ", sizeof(FrRawElement));
