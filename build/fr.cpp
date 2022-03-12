@@ -804,6 +804,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
 {
     mpz_t ma;
     mpz_t mb;
+    mpz_t r11;
     mpz_t mr;
     mpz_t mq;
     mpz_t r8;
@@ -815,25 +816,26 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     mpz_init(mq);
     mpz_init(r8);
     mpz_init(r9);
+    mpz_init(r11);
     mpz_init(mr3);
     Fr_toMpz(ma, a);
     Fr_toMpz(mb, b);
     Fr_toMpz(mr, r);
     Fr_toMpz(r8, a);
     Fr_toMpz(r9, b);
-    //Fr_toMpz(mr3, &Fr_R3);
-    mpz_import(mr3, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawR3);
+    Fr_toMpz(mr3, &Fr_R3);
+    //mpz_import(mr3, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawR3);
 
-    if (mpz_tstbit (ma, 63)) // 2267 ; Check if is short first operand
+    if (a->type == Fr_LONG) // if (mpz_tstbit (ma, 63)) // 2267 ; Check if is short first operand
     {
         // jc     mul_l1
-        if (mpz_tstbit (mb, 63)) // 2293 ; Check if is short second operand
+        if (b->type == Fr_LONG) //if (mpz_tstbit (mb, 63)) // 2293 ; Check if is short second operand
         {
             // jc     mul_l1l2
-            if (mpz_tstbit (ma, 62)) // 2511 ; check if montgomery first
+            if (a->type == Fr_LONGMONTGOMERY) // if (mpz_tstbit (ma, 62)) // 2511 ; check if montgomery first
             {
                 // jc     mul_l1ml2
-                if (mpz_tstbit (mb, 62)) // 2554 ; check if montgomery second
+                if (b->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (mb, 62)) // 2554 ; check if montgomery second
                 {
                     // mul_l1ml2m
                     std::cout << "mul_l1ml2m: " <<  '\n';
@@ -885,7 +887,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
                 }
             }
             // mul_l1nl2
-            else if (mpz_tstbit (mb, 62)) // 2514 ; check if montgomery second
+            else if (b->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (mb, 62)) // 2514 ; check if montgomery second
             {
                 // mul_l1nl2m
                 std::cout << "mul_l1nl2m: " <<  '\n';
@@ -915,12 +917,12 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             {
                 std::cout << "mul_l1nl2n: " <<  '\n';
                 // mov r11b, 0xC0
-                mpz_setbit(mb,6);
-                mpz_setbit(mb,7);
+                mpz_setbit(r11,6);
+                mpz_setbit(r11,7);
                 for(int i=0; i<23; i++) //shl r11d, 24
-                    mb->_mp_d[0] = mb->_mp_d[0]*2;
+                    r11->_mp_d[0] = r11->_mp_d[0]*2;
 
-                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+                mr->_mp_d[0] = r11->_mp_d[0]; //mov [rdi+4], r11d
                 mpz_add_ui(mr, mr, 8); //    add     rdi, 8
                 mpz_add_ui(ma, ma, 8); //    add     rsi, 8
                 mpz_add_ui(mb, mb, 8); //    add     rdx, 8
@@ -949,10 +951,10 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             }
         }
         //mul_l1s2:
-        else if (mpz_tstbit (ma, 62)) // 2298 ; check if montgomery first
+        else if (a->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (ma, 62)) // 2298 ; check if montgomery first
         {
             // mul_l1ms2
-            if (mpz_tstbit (mb, 62)) // 2358 ; check if montgomery second
+            if (b->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (mb, 62)) // 2358 ; check if montgomery second
             {
                 // mul_l1ms2m
                 // mov r11b, 0xC0
@@ -1022,7 +1024,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
         // mul_l1ns2
         else
         {
-            if (mpz_tstbit (mb, 62)) // 2301 ; check if montgomery second
+            if (b->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (mb, 62)) // 2301 ; check if montgomery second
             {
                 // mul_l1ns2m
                 std::cout << "mul_l1ns2m: " <<  '\n';
@@ -1103,13 +1105,13 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             }
         }
     }
-    else if (mpz_tstbit (mb, 63)) // 2269  ; Check if is short second operand
+    else if (b->type == Fr_LONG)//if (mpz_tstbit (mb, 63)) // 2269  ; Check if is short second operand
     {
         // mul_s1l2
-        if (mpz_tstbit (ma, 62)) // 2406  ; check if montgomery first
+        if (a->type == Fr_LONGMONTGOMERY)//if (mpz_tstbit (ma, 62)) // 2406  ; check if montgomery first
         {
             // mul_s1ml2
-            if (mpz_tstbit (mb, 62)) // 2479  ; check if montgomery second
+            if (b->type == Fr_LONGMONTGOMERY)//if (mpz_tstbit (mb, 62)) // 2479  ; check if montgomery second
             {
                 // mul_s1ml2m
                 std::cout << "mul_s1ml2m: " <<  '\n';
@@ -1160,7 +1162,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             }
         }
         // mul_s1nl2
-        else if (mpz_tstbit (mb, 62)) // 2409; check if montgomery second
+        else if (b->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (mb, 62)) // 2409; check if montgomery second
         {
             // mul_s1nl2m
             std::cout << "mul_s1nl2m: " <<  '\n';
@@ -1291,6 +1293,7 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     mpz_clear(mq);
     mpz_clear(r8);
     mpz_clear(r9);
+    mpz_clear(r11);
     mpz_clear(mr3);
 }
 

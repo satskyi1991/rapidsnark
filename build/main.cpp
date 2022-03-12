@@ -353,20 +353,18 @@ void Fr_mul_test()
     FrElement AEl = {0};
     FrElement BEl = {0};
     AEl.shortVal = 0xa1f0fac9;
-    AEl.type = Fr_SHORT;
+    AEl.type = Fr_LONG;
     BEl.shortVal = 0x1bb8e645;
-    BEl.type = Fr_SHORT;
-//    AEl.shortVal = 0;
-//    AEl.type = 0;
-//    AEl.longVal[0] = 0xa1f0fac9f8000000;
-//    AEl.longVal[1] = 0x9419f4243cdcb848;
-//    AEl.longVal[2] = 0xdc2822db40c0ac2e;
-//    AEl.longVal[3] = 0x183227397098d014;
+    BEl.type = Fr_LONG;
+    AEl.longVal[0] = 0xa1f0fac9f8000000;
+    AEl.longVal[1] = 0x9419f4243cdcb848;
+    AEl.longVal[2] = 0xdc2822db40c0ac2e;
+    AEl.longVal[3] = 0x183227397098d014;
 
-//    BEl.longVal[0]  = 0x1bb8e645ae216da7;
-//    BEl.longVal[1]  = 0x53fe3ab1e35c59e3;
-//    BEl.longVal[2]  = 0x8c49833d53bb8085;
-//    BEl.longVal[3]  = 0x0216d0b17f4e44a5;
+    BEl.longVal[0]  = 0x1bb8e645ae216da7;
+    BEl.longVal[1]  = 0x53fe3ab1e35c59e3;
+    BEl.longVal[2]  = 0x8c49833d53bb8085;
+    BEl.longVal[3]  = 0x0216d0b17f4e44a5;
 
     Fr_mul(&ResultEl, &AEl, &BEl);
     std::cout << "Fr_mul Test: " <<  '\n';
