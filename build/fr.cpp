@@ -810,6 +810,8 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     mpz_t r8;
     mpz_t r9;
     mpz_t mr3;
+    mpz_t rcx;
+    mpz_t rax;
     mpz_init(ma);
     mpz_init(mb);
     mpz_init(mr);
@@ -817,6 +819,8 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     mpz_init(r8);
     mpz_init(r9);
     mpz_init(r11);
+    mpz_init(rax);
+    mpz_init(rcx);
     mpz_init(mr3);
     Fr_toMpz(ma, a);
     Fr_toMpz(mb, b);
@@ -1284,7 +1288,91 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     {
         //mul_s1s2:
          std::cout << "mul_s1s2: " <<  '\n';
-        mpz_mul(mr, ma, mb);
+        mpz_xor(rax,rax,rax);
+        mpz_set(rax, ma);
+        mpz_mul(rax, rax, mb);
+
+
+        // mul_manageOverflow:
+        if (!mpz_fits_sint_p(rax))
+        {
+            std::cout << "mul_s1s2 rawCopyS2L: " <<  '\n';
+
+            mpz_set(r11,ma);
+            mpz_set(rax,ma);
+            mpz_set(rcx,mb);
+            mpz_mul(rax, rax, rcx);
+            mpz_set(ma,rax);
+
+
+            //rawCopyS2L:
+            mpz_setbit(rax,7); //al, 0x80
+            for(int i=0; i<55; i++) //shl     rax, 56
+            {
+                rax->_mp_d[0] *=2;
+                //mpz_mul_ui(rax,rax,2);
+            }
+
+
+            std::cout << "rax 0 " << std::hex << rax ->_mp_d[0] <<  '\n';
+            std::cout << "rax 1 " << std::hex << rax ->_mp_d[1] <<  '\n';
+            std::cout << "rax 2 " << std::hex << rax ->_mp_d[2] <<  '\n';
+            std::cout << "rax 3 " << std::hex << rax ->_mp_d[3] <<  '\n';
+            std::cout << "rax 4 " << std::hex << rax ->_mp_d[4] <<  '\n';
+            mpz_set(mr, rax); // mov     [rdi], rax    ; set the result to LONG normal
+            //mr->_mp_d[0] = rax->_mp_d[0];
+
+            //u64toLong_adjust_neg:
+            //if (mpz_cmp_ui(ma, 0) == 0)
+            {
+                uint64_t rr = 0;
+                std::cout << "mul_s1s2 rawCopyS2L 1 " <<  '\n';
+
+                mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)q);
+                mpz_add_ui(ma, ma, mq->_mp_d[0]); //add    rsi, [q]         ; Set the first digit
+                mr->_mp_d[0] = ma->_mp_d[0]; //mov    [rdi + 8], rsi   ;
+                //ma->_mp_d[0] = -1; //mov    rsi, -1          ; all ones
+                mpz_set_ui(ma,-1);
+                //ma->_mp_d[0] = -1;
+//                mpz_set(rax,ma);
+//                mpz_add_ui(rax, rax, mq->_mp_d[1]);
+//                mr->_mp_d[2] = rax->_mp_d[2];
+
+//                mpz_set(rax,ma);
+//                mpz_add_ui(rax, rax, mq->_mp_d[2]);
+//                mr->_mp_d[3] = rax->_mp_d[3];
+
+//                mpz_set(rax,ma);
+//                mpz_add_ui(rax, rax, mq->_mp_d[3]);
+//                mr->_mp_d[4] = rax->_mp_d[4];
+
+
+                rr = ma->_mp_d[0];
+                rr += mq->_mp_d[1];
+                mr->_mp_d[1] = rr;
+
+                rr = ma->_mp_d[0];
+                rr += mq->_mp_d[2];
+                mr->_mp_d[2] = rr;
+
+                rr = ma->_mp_d[0];
+                rr += mq->_mp_d[3];
+                mr->_mp_d[3] = rr;
+            }
+//            else
+//            {
+//                std::cout << "mul_s1s2 rawCopyS2L 2 " <<  '\n';
+//                mr->_mp_d[1] = ma->_mp_d[0];
+//                //mpz_xor(rax,rax, rax);
+//                mr->_mp_d[2] = rax->_mp_d[1];
+//                mr->_mp_d[3] = rax->_mp_d[2];
+//                mr->_mp_d[4] = rax->_mp_d[3];
+
+//                //mpz_set(mr, ma);
+//            } // end of rawCopyS2L
+        }
+        //mpz_set(mr, rax);
+        mpz_set(ma, r11);
         Fr_fromMpz(r, mr);
     }
     mpz_clear(ma);
