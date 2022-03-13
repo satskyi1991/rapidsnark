@@ -1332,8 +1332,18 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
                 mpz_add_ui(ma, ma, mq->_mp_d[0]); //add    rsi, [q]         ; Set the first digit
                 mr->_mp_d[0] = ma->_mp_d[0]; //mov    [rdi + 8], rsi   ;
                 //ma->_mp_d[0] = -1; //mov    rsi, -1          ; all ones
-                mpz_set_ui(ma,-1);
-                //ma->_mp_d[0] = -1;
+                //mpz_set_ui(ma,-1);
+                ma->_mp_d[0] = -1;
+//                ma->_mp_d[1] = -1;
+//                ma->_mp_d[2] = -1;
+//                ma->_mp_d[3] = -1;
+
+                std::cout << "ma 0 " << std::hex << ma ->_mp_d[0] <<  '\n';
+                std::cout << "ma 1 " << std::hex << ma ->_mp_d[1] <<  '\n';
+                std::cout << "ma 2 " << std::hex << ma ->_mp_d[2] <<  '\n';
+                std::cout << "ma 3 " << std::hex << ma ->_mp_d[3] <<  '\n';
+
+
 //                mpz_set(rax,ma);
 //                mpz_add_ui(rax, rax, mq->_mp_d[1]);
 //                mr->_mp_d[2] = rax->_mp_d[2];
@@ -1372,6 +1382,12 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
 //            } // end of rawCopyS2L
         }
         //mpz_set(mr, rax);
+        std::cout << "mr 0 " << std::hex << mr ->_mp_d[0] <<  '\n';
+        std::cout << "mr 1 " << std::hex << mr ->_mp_d[1] <<  '\n';
+        std::cout << "mr 2 " << std::hex << mr ->_mp_d[2] <<  '\n';
+        std::cout << "mr 3 " << std::hex << mr ->_mp_d[3] <<  '\n';
+        std::cout << "mr 4 " << std::hex << mr ->_mp_d[4] <<  '\n';
+
         mpz_set(ma, r11);
         Fr_fromMpz(r, mr);
     }

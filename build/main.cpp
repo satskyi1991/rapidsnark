@@ -365,6 +365,15 @@ void Fr_mul_test()
     BEl.longVal[1]  = 0x53fe3ab1e35c59e3;
     BEl.longVal[2]  = 0x8c49833d53bb8085;
     BEl.longVal[3]  = 0x0216d0b17f4e44a5;
+//    AEl.longVal[0] = 0;
+//    AEl.longVal[1] = 0;
+//    AEl.longVal[2] = 0;
+//    AEl.longVal[3] = 0;
+
+//    BEl.longVal[0]  = 0;
+//    BEl.longVal[1]  = 0;
+//    BEl.longVal[2]  = 0;
+//    BEl.longVal[3]  = 0;
 
     Fr_mul(&ResultEl, &AEl, &BEl);
     std::cout << "Fr_mul Test: " <<  '\n';
