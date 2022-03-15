@@ -800,6 +800,9 @@ void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA)
     }
 }
 
+void rawCopyS2L(PFrElement r, int64_t temp);
+void mul_s1s2(PFrElement r, PFrElement a, PFrElement b);
+
 void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
 {
     mpz_t ma;
@@ -1288,35 +1291,36 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     {
         //mul_s1s2:
          std::cout << "mul_s1s2: " <<  '\n';
+         mul_s1s2(r, a, b);
 
-         //mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
-         {
-             int64_t temp = (int64_t)a->shortVal * (int64_t)b->shortVal;
+//         //mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
+//         {
+//             int64_t temp = (int64_t)a->shortVal * (int64_t)b->shortVal;
 
-             //mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)temp);
-//             mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)temp);
-//             rax->_mp_d[0] = temp;
-             r->longVal[0] = temp;
-             mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)r);
+//             //mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)temp);
+////             mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)temp);
+////             rax->_mp_d[0] = temp;
+//             r->longVal[0] = temp;
+//             mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)r);
 
 
-             if (!mpz_fits_sint_p(rax)) //if (mul_manageOverflow)
-             {
-                 r->longVal[0] = temp; // с расширением знака до 256 бит
+//             if (!mpz_fits_sint_p(rax)) //if (mul_manageOverflow)
+//             {
+//                 r->longVal[0] = temp; // с расширением знака до 256 бит
 
-                    if (temp < 0)
-                    {
-                        r->longVal[0] += Fr_q.longVal[0];    //сложение 256 битных чисел
-                        r->longVal[1] += Fr_q.longVal[1];
-                        r->longVal[2] += Fr_q.longVal[2];
-                        r->longVal[3] += Fr_q.longVal[3];
-                    }
-             }
-             else
-             {
+//                    if (temp < 0)
+//                    {
+//                        r->longVal[0] += Fr_q.longVal[0];    //сложение 256 битных чисел
+//                        r->longVal[1] += Fr_q.longVal[1];
+//                        r->longVal[2] += Fr_q.longVal[2];
+//                        r->longVal[3] += Fr_q.longVal[3];
+//                    }
+//             }
+//             else
+//             {
 
-             }
-         }
+//             }
+//         }
     }
     mpz_clear(ma);
     mpz_clear(mb);
@@ -1326,7 +1330,47 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     mpz_clear(r9);
     mpz_clear(r11);
     mpz_clear(mr3);
+    mpz_clear(rax);
 }
+
+void mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
+{
+    mpz_t rax;
+    mpz_init(rax);
+
+    int64_t temp = (int64_t)a->shortVal * (int64_t)b->shortVal;
+    r->longVal[0] = temp;
+    mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)r);
+    // mul_manageOverflow
+    if (!mpz_fits_sint_p(rax))
+    {
+        std::cout << "mul_s1s2: rawCopyS2L " <<  '\n';
+        rawCopyS2L(r, temp);
+    }
+    else
+    {
+        std::cout << "mul_s1s2: not in rawCopyS2L " <<  '\n';
+        r->type = Fr_SHORT;
+        r->shortVal = temp;
+    }
+    mpz_clear(rax);
+}
+
+void rawCopyS2L(PFrElement r, int64_t temp)
+{
+    r->longVal[0] = temp; // с расширением знака до 256 бит
+    r->type = Fr_LONG;      // с расширением знака до 256 бит
+
+    if (temp < 0)
+    {
+       std::cout << "mul_s1s2: rawCopyS2L 2" <<  '\n';
+       r->longVal[0] += Fr_q.longVal[0];    //сложение 256 битных чисел
+       r->longVal[1] += Fr_q.longVal[1];
+       r->longVal[2] += Fr_q.longVal[2];
+       r->longVal[3] += Fr_q.longVal[3];
+    }
+}
+
 
 /*****************************************************************************************
  * ASM Functions to C/C++ using GNU MP Lib End

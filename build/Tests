@@ -302,6 +302,8 @@ ResultEl.longVal= 39b270a08abc2e2e, 2833e84879b97091, b85045b68181585d, 30644e72
 
 C:
 mul_s1s2: 
+mul_s1s2: rawCopyS2L 
+mul_s1s2: rawCopyS2L 2
 Fr_mul Test: 
 AEl.shortVal = a1f0fac9
 BEl.shortVal = 1bb8e645
@@ -311,7 +313,71 @@ BEl.type = 0
 ResultEl.type = 80000000
 AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
-ResultEl.longVal= 60ff158c66751472, 2833e84879b97090, b85045b68181585c, 30644e72e131a028
+ResultEl.longVal= 39b270a08abc2e2e, 2833e84879b97091, b85045b68181585d, 30644e72e131a029
+
+
+ASM:
+mul_s1s2: 
+Fr_mul Test: 
+AEl.shortVal = 1
+BEl.shortVal = 2
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 2, 0, 0, 0
+
+C:
+mul_s1s2: 
+mul_s1s2: rawCopyS2L 
+Fr_mul Test: 
+AEl.shortVal = 1
+BEl.shortVal = 2
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 2, 0, 0, 0
+
+ASM:
+mul_s1s2: 
+Fr_mul Test: 
+AEl.shortVal = ffffffff
+BEl.shortVal = 2
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 43e1f593efffffff, 2833e84879b97091, b85045b68181585d, 30644e72e131a029
+
+C:
+mul_s1s2: 
+mul_s1s2: rawCopyS2L 
+mul_s1s2: rawCopyS2L 2
+Fr_mul Test: 
+AEl.shortVal = ffffffff
+BEl.shortVal = 2
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 43e1f593efffffff, 2833e84879b97091, b85045b68181585d, 30644e72e131a029
+
+
+
+
+
+
+
+
 
 ASM:
 Fr_mul Test: 
