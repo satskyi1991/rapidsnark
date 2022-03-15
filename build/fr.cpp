@@ -1348,56 +1348,21 @@ void rawCopyS2L(PFrElement r, int64_t temp)
 
 void mul_l1nl2n(PFrElement r,PFrElement a,PFrElement b)
 {
-    mpz_t mr;
-    mpz_t ma;
-    mpz_t mb;
-    mpz_t mtmp;
-    mpz_t mr3;
-
-    mpz_init(mr);
-    mpz_init(ma);
-    mpz_init(mb);
-    mpz_init(mtmp);
-    mpz_init(mr3);
+    FrElement tmp1;
+    FrElement tmp2;
 
     r->type = Fr_LONGMONTGOMERY;
-    Fr_toMpz(ma, a);
-    Fr_toMpz(mtmp, a);
-    Fr_toMpz(mb, b);
-    Fr_toMpz(mr, r);
-    Fr_toMpz(mr3, &Fr_R3);
-
-//    mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-//    mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-//    mpz_add_ui(mb, mb, 8); //    add     rdx, 8
-    Fr_fromMpz(a, ma);
-    Fr_fromMpz(b, mb);
-    Fr_fromMpz(r, mr);
     Fr_rawMMul(&r->longVal[0], &a->longVal[0], &b->longVal[0]);
-    Fr_toMpz(ma, a);
-    Fr_toMpz(mr, r);
-//    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-//    mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
-
-//    mpz_add_ui(mr, mr, 8); //    add rdi, 8
-    mpz_set(ma, mr);       //    mov rsi, rdi
-
-    mpz_set(mb, mr3);
-
-    Fr_fromMpz(a, ma);
-    Fr_fromMpz(b, mb);
-    Fr_fromMpz(r, mr);
-    Fr_rawMMul(&r->longVal[0], &a->longVal[0], &b->longVal[0]);
-    Fr_toMpz(mr, r);
-    //mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-    Fr_fromMpz(r, mr);
-    Fr_fromMpz(a, mtmp);
-
-    mpz_clear(mr);
-    mpz_clear(ma);
-    mpz_clear(mb);
-    mpz_clear(mtmp);
-    mpz_clear(mr3);
+    tmp1.type = Fr_LONG;
+    tmp2.type = Fr_LONG;
+    tmp1.shortVal = 0;
+    tmp2.shortVal = 0;
+    for (int i=0; i<Fr_N64; i++)
+    {
+        tmp1.longVal[i] = r->longVal[i];
+        tmp2.longVal[i] = Fr_R3.longVal[i];
+    }
+    Fr_rawMMul(&r->longVal[0], &tmp1.longVal[0], &tmp2.longVal[0]);
 }
 
 /*****************************************************************************************
