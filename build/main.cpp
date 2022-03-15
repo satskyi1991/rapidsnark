@@ -352,8 +352,10 @@ void Fr_mul_test()
     FrElement ResultEl = {0};
     FrElement AEl = {0};
     FrElement BEl = {0};
+    //AEl.shortVal = 1;
     AEl.shortVal = 0xa1f0fac9;
     AEl.type = Fr_SHORT;
+    //BEl.shortVal = 2;
     BEl.shortVal = 0x1bb8e645;
     BEl.type = Fr_SHORT;
     AEl.longVal[0] = 0xa1f0fac9f8000000;

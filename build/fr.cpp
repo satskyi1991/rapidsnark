@@ -1288,117 +1288,35 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
     {
         //mul_s1s2:
          std::cout << "mul_s1s2: " <<  '\n';
-        mpz_xor(rax,rax,rax);
-        mpz_set(rax, ma);
-        mpz_mul(rax, rax, mb);
+
+         //mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
+         {
+             int64_t temp = (int64_t)a->shortVal * (int64_t)b->shortVal;
+
+             //mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)temp);
+//             mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)temp);
+//             rax->_mp_d[0] = temp;
+             r->longVal[0] = temp;
+             mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)r);
 
 
-        //mpz_set(mr, rax); //mov    [rdi], rax       ; not necessary to adjust so just save and return
+             if (!mpz_fits_sint_p(rax)) //if (mul_manageOverflow)
+             {
+                 r->longVal[0] = temp; // с расширением знака до 256 бит
 
+                    if (temp < 0)
+                    {
+                        r->longVal[0] += Fr_q.longVal[0];    //сложение 256 битных чисел
+                        r->longVal[1] += Fr_q.longVal[1];
+                        r->longVal[2] += Fr_q.longVal[2];
+                        r->longVal[3] += Fr_q.longVal[3];
+                    }
+             }
+             else
+             {
 
-        // mul_manageOverflow:
-        if (!mpz_fits_sint_p(rax))
-        {
-            std::cout << "mul_s1s2 rawCopyS2L: " <<  '\n';
-
-            mpz_set(r11,ma);
-            mpz_set(rax,ma);
-            mpz_set(rcx,mb);
-            mpz_mul(rax, rax, rcx);
-            mpz_set(ma,rax);
-
-//            //rawCopyS2L:
-//            mpz_setbit(rax,7); //al, 0x80
-//            for(int i=0; i<55; i++) //shl     rax, 56
-//            {
-//                rax->_mp_d[0] *=2;
-//                //mpz_mul_ui(rax,rax,2);
-//            }
-
-            //Fr_toMpz(ma, a);
-            Fr_fromMpz(r, rax);
-            r->type = Fr_LONG;
-            r->shortVal = 0;
-            Fr_toMpz(rax, r);
-            //mpz_set(mr,rax);
-
-            std::cout << "rax 0 " << std::hex << rax ->_mp_d[0] <<  '\n';
-            std::cout << "rax 1 " << std::hex << rax ->_mp_d[1] <<  '\n';
-            std::cout << "rax 2 " << std::hex << rax ->_mp_d[2] <<  '\n';
-            std::cout << "rax 3 " << std::hex << rax ->_mp_d[3] <<  '\n';
-            std::cout << "rax 4 " << std::hex << rax ->_mp_d[4] <<  '\n';
-            mpz_set(mr, rax); // mov     [rdi], rax    ; set the result to LONG normal
-            //mr->_mp_d[0] = rax->_mp_d[0];
-
-            //u64toLong_adjust_neg:
-            if (mpz_cmp_ui(ma, 0) != 0)
-            {
-                uint64_t rr = 0;
-                std::cout << "mul_s1s2 rawCopyS2L 1 " <<  '\n';
-
-                mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)q);
-                //mpz_add_ui(ma, ma, mq->_mp_d[0]); //add    rsi, [q]         ; Set the first digit
-                ma->_mp_d[0] += mq->_mp_d[0];
-                mr->_mp_d[1] = ma->_mp_d[0]; //mov    [rdi + 8], rsi   ;
-                ma->_mp_d[0] = -1; //mov    rsi, -1          ; all ones
-                //mpz_set_ui(ma,-1);
-                //ma->_mp_d[0] = -1;
-//                ma->_mp_d[1] = -1;
-//                ma->_mp_d[2] = -1;
-//                ma->_mp_d[3] = -1;
-
-                std::cout << "ma 0 " << std::hex << ma ->_mp_d[0] <<  '\n';
-                std::cout << "ma 1 " << std::hex << ma ->_mp_d[1] <<  '\n';
-                std::cout << "ma 2 " << std::hex << ma ->_mp_d[2] <<  '\n';
-                std::cout << "ma 3 " << std::hex << ma ->_mp_d[3] <<  '\n';
-
-
-                mpz_set(rax,ma);
-                mpz_add_ui(rax, rax, mq->_mp_d[1]);
-                mr->_mp_d[1] = rax->_mp_d[0];
-
-                mpz_set(rax,ma);
-                mpz_add_ui(rax, rax, mq->_mp_d[2]);
-                mr->_mp_d[2] = rax->_mp_d[0];
-
-                mpz_set(rax,ma);
-                mpz_add_ui(rax, rax, mq->_mp_d[3]);
-                mr->_mp_d[3] = rax->_mp_d[0];
-
-
-//                rr = ma->_mp_d[0];
-//                rr += mq->_mp_d[1];
-//                mr->_mp_d[1] = rr;
-
-//                rr = ma->_mp_d[0];
-//                rr += mq->_mp_d[2];
-//                mr->_mp_d[2] = rr;
-
-//                rr = ma->_mp_d[0];
-//                rr += mq->_mp_d[3];
-//                mr->_mp_d[3] = rr;
-            }
-            else
-            {
-                std::cout << "mul_s1s2 rawCopyS2L 2 " <<  '\n';
-//                mr->_mp_d[1] = ma->_mp_d[0];
-//                mpz_xor(rax,rax, rax);
-//                mr->_mp_d[2] = rax->_mp_d[1];
-//                mr->_mp_d[3] = rax->_mp_d[2];
-//                mr->_mp_d[4] = rax->_mp_d[3];
-
-                //mpz_set(mr, ma);
-            } // end of rawCopyS2L
-        }
-        //mpz_set(mr, rax);
-        std::cout << "mr 0 " << std::hex << mr ->_mp_d[0] <<  '\n';
-        std::cout << "mr 1 " << std::hex << mr ->_mp_d[1] <<  '\n';
-        std::cout << "mr 2 " << std::hex << mr ->_mp_d[2] <<  '\n';
-        std::cout << "mr 3 " << std::hex << mr ->_mp_d[3] <<  '\n';
-        std::cout << "mr 4 " << std::hex << mr ->_mp_d[4] <<  '\n';
-
-        mpz_set(ma, r11);
-        Fr_fromMpz(r, mr);
+             }
+         }
     }
     mpz_clear(ma);
     mpz_clear(mb);

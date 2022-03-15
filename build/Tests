@@ -309,9 +309,9 @@ ResultEl.shortVal = 0
 AEl.type = 0
 BEl.type = 0
 ResultEl.type = 80000000
-AEl.longVal= 0, 0, 0, 0
-BEl.longVal= 0, 0, 0, 0
-ResultEl.longVal= 60ff158c66751472, 119cc50da4af7973, 271a7bd47372e209, a9d672d8ccb297e3
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 60ff158c66751472, 2833e84879b97090, b85045b68181585c, 30644e72e131a028
 
 ASM:
 Fr_mul Test: 
