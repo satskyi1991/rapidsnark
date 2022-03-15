@@ -488,3 +488,48 @@ BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44
 ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
 
 
+ASM:
+mul_l1ns2n: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = 0
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= a6e60015f953d4e5, ed0025db5f8e6f72, fea35ea32c8c06b0, c2779035d1c77db
+
+
+mul_l1ns2n: 
+mul_l1ns2n 1: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = 0
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= a6e60015f953d4e5, ed0025db5f8e6f72, fea35ea32c8c06b0, c2779035d1c77db
+
+
+
+
+
+ASM:
+mul_l1ns2n: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = fffffffe
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = 0
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= ac96341c4ffffffb, 36fc76959f60cd29, 666ea36f7879462e, e0a77c19a07df2f
+
+

@@ -807,6 +807,8 @@ void mul_l1ml2n(PFrElement r,PFrElement a,PFrElement b);
 void mul_l1nl2m(PFrElement r, PFrElement a, PFrElement b);
 void mul_l1ml2m(PFrElement r,PFrElement a,PFrElement b);
 
+void mul_l1ns2n(PFrElement r,PFrElement a,PFrElement b);
+
 
 void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
 {
@@ -883,65 +885,65 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
                 // mul_l1ms2m
                 // mov r11b, 0xC0
                 std::cout << "mul_l1ms2m: " <<  '\n';
-                mpz_setbit(mb,6);
-                mpz_setbit(mb,7);
-                for(int i=0; i<23; i++) //shl r11d, 24
-                    mb->_mp_d[0] = mb->_mp_d[0]*2;
+//                mpz_setbit(mb,6);
+//                mpz_setbit(mb,7);
+//                for(int i=0; i<23; i++) //shl r11d, 24
+//                    mb->_mp_d[0] = mb->_mp_d[0]*2;
 
-                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
-                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
+//                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+//                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+//                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+//                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
 
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
-                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
+//                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
             }
             else
             {
                 // mul_l1ms2n
                 std::cout << "mul_l1ms2n: " <<  '\n';
-                //mov r11b, 0x80
-                mpz_setbit(mb,7);
-                for(int i=0; i<23; i++) //shl r11d, 24
-                    mb->_mp_d[0] = mb->_mp_d[0]*2;
-                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+//                //mov r11b, 0x80
+//                mpz_setbit(mb,7);
+//                for(int i=0; i<23; i++) //shl r11d, 24
+//                    mb->_mp_d[0] = mb->_mp_d[0]*2;
+//                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
 
-                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-                                       // ?  movsx rdx, r9d
-                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-                if (mpz_cmp(mb, 0))
-                {
-                    mpz_neg(mb, mb);
-                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
-                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                    mpz_set(ma, mr); // mov rsi, rdi
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                    Fr_rawNeg(r->longVal, r->longVal);
-                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                }
-                else
-                {
-                    // tmp_7
-                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
-                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                }
+//                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+//                                       // ?  movsx rdx, r9d
+//                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+//                if (mpz_cmp(mb, 0))
+//                {
+//                    mpz_neg(mb, mb);
+//                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
+//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                    mpz_set(ma, mr); // mov rsi, rdi
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                    Fr_rawNeg(r->longVal, r->longVal);
+//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                }
+//                else
+//                {
+//                    // tmp_7
+//                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
+//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                }
             }
 
         }
@@ -952,80 +954,81 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             {
                 // mul_l1ns2m
                 std::cout << "mul_l1ns2m: " <<  '\n';
-                //mov r11b, 0x80
-                mpz_setbit(mb,7);
-                for(int i=0; i<23; i++) //shl r11d, 24
-                    mb->_mp_d[0] = mb->_mp_d[0]*2;
-                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+//                //mov r11b, 0x80
+//                mpz_setbit(mb,7);
+//                for(int i=0; i<23; i++) //shl r11d, 24
+//                    mb->_mp_d[0] = mb->_mp_d[0]*2;
+//                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
 
-                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
+//                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+//                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+//                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
 
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
-                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
+//                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
             }
             else
             {
                // mul_l1ns2n
                 std::cout << "mul_l1ns2n: " <<  '\n';
-                //mov r11b, 0xC0
-                mpz_setbit(mb,6);
-                mpz_setbit(mb,7);
-                for(int i=0; i<23; i++) //shl r11d, 24
-                    mb->_mp_d[0] = mb->_mp_d[0]*2;
-                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+                mul_l1ns2n(r, a, b);
+//                //mov r11b, 0xC0
+//                mpz_setbit(mb,6);
+//                mpz_setbit(mb,7);
+//                for(int i=0; i<23; i++) //shl r11d, 24
+//                    mb->_mp_d[0] = mb->_mp_d[0]*2;
+//                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
 
-                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-                                       // ?  movsx rdx, r9d
-                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-                if (mpz_cmp(mb, 0))
-                {
-                    // tmp_5
-                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
-                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                }
-                else
-                {
-                    mpz_neg(mb, mb);
-                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
-                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                    mpz_set(ma, mr); // mov rsi, rdi
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                    Fr_rawNeg(r->longVal, r->longVal);
-                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                    // tmp_6
-                    mpz_add_ui(mr, mr, 8); //    add rdi, 8
-                    mpz_set(ma, mr);
+//                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+//                                       // ?  movsx rdx, r9d
+//                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+//                if (mpz_cmp(mb, 0))
+//                {
+//                    // tmp_5
+//                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
+//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                }
+//                else
+//                {
+//                    mpz_neg(mb, mb);
+//                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
+//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                    mpz_set(ma, mr); // mov rsi, rdi
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                    Fr_rawNeg(r->longVal, r->longVal);
+//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                    // tmp_6
+//                    mpz_add_ui(mr, mr, 8); //    add rdi, 8
+//                    mpz_set(ma, mr);
 
-                    mpz_set(mb, mr3);
+//                    mpz_set(mb, mr3);
 
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                    mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
-                    mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
-                    Fr_rawMMul(r->longVal, a->longVal, b->longVal);
-                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                    mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
+//                    mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
+//                    Fr_rawMMul(r->longVal, a->longVal, b->longVal);
+//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
 
-                }
+//                }
             }
         }
     }
@@ -1039,50 +1042,50 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
             {
                 // mul_s1ml2m
                 std::cout << "mul_s1ml2m: " <<  '\n';
-                //mov r11b, 0xC0
-                mpz_setbit(mb,6);
-                mpz_setbit(mb,7);
-                for(int i=0; i<23; i++) //shl r11d, 24
-                    mb->_mp_d[0] = mb->_mp_d[0]*2;
-                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+//                //mov r11b, 0xC0
+//                mpz_setbit(mb,6);
+//                mpz_setbit(mb,7);
+//                for(int i=0; i<23; i++) //shl r11d, 24
+//                    mb->_mp_d[0] = mb->_mp_d[0]*2;
+//                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
 
-                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
+//                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+//                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+//                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
 
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
-                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
+//                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
             }
             else
             {
                 // mul_s1ml2n
                 std::cout << "mul_s1ml2n: " <<  '\n';
-                //mov r11b, 0x80
-                mpz_setbit(mb,7);
-                for(int i=0; i<23; i++) //shl r11d, 24
-                    mb->_mp_d[0] = mb->_mp_d[0]*2;
-                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+//                //mov r11b, 0x80
+//                mpz_setbit(mb,7);
+//                for(int i=0; i<23; i++) //shl r11d, 24
+//                    mb->_mp_d[0] = mb->_mp_d[0]*2;
+//                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
 
-                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
+//                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+//                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+//                mpz_add_ui(mb, mb, 8); //    add     rdx, 8
 
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
-                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
+//                mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)a->longVal);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
             }
         }
         // mul_s1nl2
@@ -1090,118 +1093,118 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
         {
             // mul_s1nl2m
             std::cout << "mul_s1nl2m: " <<  '\n';
-            //mov r11b, 0x80
-            mpz_setbit(mb,7);
-            for(int i=0; i<23; i++) //shl r11d, 24
-                mb->_mp_d[0] = mb->_mp_d[0]*2;
-            mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+//            //mov r11b, 0x80
+//            mpz_setbit(mb,7);
+//            for(int i=0; i<23; i++) //shl r11d, 24
+//                mb->_mp_d[0] = mb->_mp_d[0]*2;
+//            mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
 
-            mpz_set(r8, ma); //push rsi
-            // lea rsi, [rdx + 8]
-            ma->_mp_d[0] = mb->_mp_d[1];
-            ma->_mp_d[1] = mb->_mp_d[2];
-            ma->_mp_d[2] = mb->_mp_d[3];
-            //ma->_mp_d[3] = 0;
+//            mpz_set(r8, ma); //push rsi
+//            // lea rsi, [rdx + 8]
+//            ma->_mp_d[0] = mb->_mp_d[1];
+//            ma->_mp_d[1] = mb->_mp_d[2];
+//            ma->_mp_d[2] = mb->_mp_d[3];
+//            //ma->_mp_d[3] = 0;
 
-            // movsx rdx, r8d
-            mb->_mp_d[0] = r8->_mp_d[0];
-            mb->_mp_d[1] = r8->_mp_d[1];
-            mb->_mp_d[2] = r8->_mp_d[2];
-            mb->_mp_d[3] = r8->_mp_d[3];
+//            // movsx rdx, r8d
+//            mb->_mp_d[0] = r8->_mp_d[0];
+//            mb->_mp_d[1] = r8->_mp_d[1];
+//            mb->_mp_d[2] = r8->_mp_d[2];
+//            mb->_mp_d[3] = r8->_mp_d[3];
 
-            mpz_add_ui(mr, mr, 8);  // add rdi, 8
+//            mpz_add_ui(mr, mr, 8);  // add rdi, 8
 
-            if (mpz_cmp(mb, 0))    // cmp rdx, 0
-            {
-                mpz_neg(mb, mb);
-                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_set(ma, mr); // mov rsi, rdi
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                Fr_rawNeg(r->longVal, r->longVal);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-            }
-            else
-            {
-                //tmp_11:
-                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-            }
+//            if (mpz_cmp(mb, 0))    // cmp rdx, 0
+//            {
+//                mpz_neg(mb, mb);
+//                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_set(ma, mr); // mov rsi, rdi
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                Fr_rawNeg(r->longVal, r->longVal);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//            }
+//            else
+//            {
+//                //tmp_11:
+//                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//            }
         }
         // mul_s1nl2n
         else
         {
             std::cout << "mul_s1nl2n: " <<  '\n';
-            //mov r11b, 0xC0
-            mpz_setbit(mb,6);
-            mpz_setbit(mb,7);
-            for(int i=0; i<23; i++) //shl r11d, 24
-                mb->_mp_d[0] = mb->_mp_d[0]*2;
-            mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
+//            //mov r11b, 0xC0
+//            mpz_setbit(mb,6);
+//            mpz_setbit(mb,7);
+//            for(int i=0; i<23; i++) //shl r11d, 24
+//                mb->_mp_d[0] = mb->_mp_d[0]*2;
+//            mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
 
-            mpz_set(r8, ma); //push rsi
-            // lea rsi, [rdx + 8]
-            ma->_mp_d[0] = mb->_mp_d[1];
-            ma->_mp_d[1] = mb->_mp_d[2];
-            ma->_mp_d[2] = mb->_mp_d[3];
-            //ma->_mp_d[3] = 0;
+//            mpz_set(r8, ma); //push rsi
+//            // lea rsi, [rdx + 8]
+//            ma->_mp_d[0] = mb->_mp_d[1];
+//            ma->_mp_d[1] = mb->_mp_d[2];
+//            ma->_mp_d[2] = mb->_mp_d[3];
+//            //ma->_mp_d[3] = 0;
 
-            // movsx rdx, r8d
-            mb->_mp_d[0] = r8->_mp_d[0];
-            mb->_mp_d[1] = r8->_mp_d[1];
-            mb->_mp_d[2] = r8->_mp_d[2];
-            mb->_mp_d[3] = r8->_mp_d[3];
+//            // movsx rdx, r8d
+//            mb->_mp_d[0] = r8->_mp_d[0];
+//            mb->_mp_d[1] = r8->_mp_d[1];
+//            mb->_mp_d[2] = r8->_mp_d[2];
+//            mb->_mp_d[3] = r8->_mp_d[3];
 
-            mpz_add_ui(mr, mr, 8);  // add rdi, 8
+//            mpz_add_ui(mr, mr, 8);  // add rdi, 8
 
-            if (mpz_cmp(mb, 0))    // cmp rdx, 0
-            {
-                mpz_neg(mb, mb);
-                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_set(ma, mr); // mov rsi, rdi
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                Fr_rawNeg(r->longVal, r->longVal);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                //tmp_10:
-                mpz_add_ui(mr, mr, 8); //    add rdi, 8
-                mpz_set(ma, mr);
+//            if (mpz_cmp(mb, 0))    // cmp rdx, 0
+//            {
+//                mpz_neg(mb, mb);
+//                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_set(ma, mr); // mov rsi, rdi
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                Fr_rawNeg(r->longVal, r->longVal);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                //tmp_10:
+//                mpz_add_ui(mr, mr, 8); //    add rdi, 8
+//                mpz_set(ma, mr);
 
-                mpz_set(mb, mr3);
+//                mpz_set(mb, mr3);
 
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-            }
-            else
-            {
-                //tmp_9:
-                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
-                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-            }
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul(r->longVal, a->longVal, b->longVal);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//            }
+//            else
+//            {
+//                //tmp_9:
+//                mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
+//                mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
+//                mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
+//                Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
+//                mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
+//                mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//                mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
+//            }
         }
     }
     else
@@ -1294,6 +1297,56 @@ void mul_l1ml2n(PFrElement r,PFrElement a,PFrElement b)
 {
     r->type = Fr_LONG;
     Fr_rawMMul(&r->longVal[0], &a->longVal[0], &b->longVal[0]);
+}
+
+void mul_l1ns2n(PFrElement r,PFrElement a,PFrElement b)
+{
+    mpz_t mb;
+    mpz_init(mb);
+    Fr_toMpz(mb, b);
+    FrElement tmp1;
+    FrElement tmp2;
+
+    r->type = Fr_LONGMONTGOMERY;
+    if (b->shortVal >= 0)
+    {
+        // tmp_5:
+        std::cout << "mul_l1ns2n 1: " <<  '\n';
+        Fr_rawMMul1(&r->longVal[0], &a->longVal[0], b->shortVal);
+        // tmp_6:
+        tmp1.type = Fr_LONG;
+        tmp2.type = Fr_LONG;
+        tmp1.shortVal = 0;
+        tmp2.shortVal = 0;
+        for (int i=0; i<Fr_N64; i++)
+        {
+            tmp1.longVal[i] = r->longVal[i];
+            tmp2.longVal[i] = Fr_R3.longVal[i];
+        }
+        Fr_rawMMul(&r->longVal[0], &tmp1.longVal[0], &tmp2.longVal[0]);
+    }
+    else
+    {
+        std::cout << "mul_l1ns2n 2: " <<  '\n';
+        mpz_neg(mb, mb);
+        Fr_fromMpz(b, mb);
+        std::cout << "b: " << std::hex << b->shortVal  <<  '\n';
+        Fr_rawMMul1(&r->longVal[0], &a->longVal[0], b->shortVal);
+        Fr_rawNeg(&r->longVal[0], &r->longVal[0]);
+        // tmp_6:
+        tmp1.type = Fr_LONG;
+        tmp2.type = Fr_LONG;
+        tmp1.shortVal = 0;
+        tmp2.shortVal = 0;
+        for (int i=0; i<Fr_N64; i++)
+        {
+            tmp1.longVal[i] = r->longVal[i];
+            tmp2.longVal[i] = Fr_R3.longVal[i];
+        }
+        Fr_rawMMul(&r->longVal[0], &tmp1.longVal[0], &tmp2.longVal[0]);
+    }
+
+    mpz_clear(mb);
 }
 
 /*****************************************************************************************
