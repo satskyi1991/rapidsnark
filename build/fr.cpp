@@ -1367,19 +1367,19 @@ void mul_l1nl2n(PFrElement r,PFrElement a,PFrElement b)
     Fr_toMpz(mr, r);
     Fr_toMpz(mr3, &Fr_R3);
 
-    mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-    mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-    mpz_add_ui(mb, mb, 8); //    add     rdx, 8
+//    mpz_add_ui(mr, mr, 8); //    add     rdi, 8
+//    mpz_add_ui(ma, ma, 8); //    add     rsi, 8
+//    mpz_add_ui(mb, mb, 8); //    add     rdx, 8
     Fr_fromMpz(a, ma);
     Fr_fromMpz(b, mb);
     Fr_fromMpz(r, mr);
     Fr_rawMMul(&r->longVal[0], &a->longVal[0], &b->longVal[0]);
     Fr_toMpz(ma, a);
     Fr_toMpz(mr, r);
-    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-    mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
+//    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+//    mpz_sub_ui(ma, ma, 8); //    sub rsi, 8
 
-    mpz_add_ui(mr, mr, 8); //    add rdi, 8
+//    mpz_add_ui(mr, mr, 8); //    add rdi, 8
     mpz_set(ma, mr);       //    mov rsi, rdi
 
     mpz_set(mb, mr3);
@@ -1389,7 +1389,7 @@ void mul_l1nl2n(PFrElement r,PFrElement a,PFrElement b)
     Fr_fromMpz(r, mr);
     Fr_rawMMul(&r->longVal[0], &a->longVal[0], &b->longVal[0]);
     Fr_toMpz(mr, r);
-    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
+    //mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
     Fr_fromMpz(r, mr);
     Fr_fromMpz(a, mtmp);
 
