@@ -359,7 +359,7 @@ void Fr_mul_test()
     //BEl.shortVal = 2;
     //BEl.shortVal = 0x1bb8e645;
     BEl.shortVal = 0;
-    BEl.type = Fr_LONGMONTGOMERY;
+    BEl.type = Fr_LONG;
     AEl.longVal[0] = 0xa1f0fac9f8000000;
     AEl.longVal[1] = 0x9419f4243cdcb848;
     AEl.longVal[2] = 0xdc2822db40c0ac2e;
