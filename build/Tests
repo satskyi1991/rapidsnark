@@ -407,3 +407,32 @@ ResultEl.longVal= 1497892315a07fe1, 930f99e96b3b9535, 73b1e28430b17066, 29e821cd
 
 
 
+
+ASM:
+Fr_mul Test: 
+mul_l1nl2m:
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = c0000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+C:
+mul_l1nl2m: 
+Fr_mul Test: 
+AEl.shortVal = 0
+BEl.shortVal = 0
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = c0000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+
+
