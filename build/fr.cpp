@@ -1207,17 +1207,17 @@ void rawCopyS2L(PFrElement r, int64_t temp)
     Fr_toMpz(mr, r);
     mpz_t mq;
     mpz_init(mq);
-    Fr_toMpz(mr, &Fr_q);
+    Fr_toMpz(mq, &Fr_q);
 
 
     if (temp < 0)
     {
        std::cout << "mul_s1s2: rawCopyS2L 2" <<  '\n';
-       r->longVal[0] += Fr_q.longVal[0];    //сложение 256 битных чисел
-       r->longVal[1] += Fr_q.longVal[1];
-       r->longVal[2] += Fr_q.longVal[2];
-       r->longVal[3] += Fr_q.longVal[3];
-       //mpz_add(mr, mr, mq);
+//       r->longVal[0] += Fr_q.longVal[0];    //сложение 256 битных чисел
+//       r->longVal[1] += Fr_q.longVal[1];
+//       r->longVal[2] += Fr_q.longVal[2];
+//       r->longVal[3] += Fr_q.longVal[3];
+       mpz_add(mr, mr, mq);
     }
     Fr_fromMpz(r, mr);
     mpz_clear(mr);
