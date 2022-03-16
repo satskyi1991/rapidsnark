@@ -355,9 +355,9 @@ void Fr_mul_test()
     //AEl.shortVal = -1;
     AEl.shortVal = 0xa1f0fac9;
     //AEl.shortVal = 0;
-    AEl.type = Fr_LONG;
-    BEl.shortVal = -2;
-    //BEl.shortVal = 0x1bb8e645;
+    AEl.type = Fr_SHORT;
+    //BEl.shortVal = -2;
+    BEl.shortVal = 0x1bb8e645;
     //BEl.shortVal = 0;
     BEl.type = Fr_SHORT;
     AEl.longVal[0] = 0xa1f0fac9f8000000;

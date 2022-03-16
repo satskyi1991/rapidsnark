@@ -979,56 +979,6 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
                // mul_l1ns2n
                 std::cout << "mul_l1ns2n: " <<  '\n';
                 mul_l1ns2n(r, a, b);
-//                //mov r11b, 0xC0
-//                mpz_setbit(mb,6);
-//                mpz_setbit(mb,7);
-//                for(int i=0; i<23; i++) //shl r11d, 24
-//                    mb->_mp_d[0] = mb->_mp_d[0]*2;
-//                mr->_mp_d[0] = mb->_mp_d[0]; //mov [rdi+4], r11d
-
-//                mpz_add_ui(ma, ma, 8); //    add     rsi, 8
-//                                       // ?  movsx rdx, r9d
-//                mpz_add_ui(mr, mr, 8); //    add     rdi, 8
-//                if (mpz_cmp(mb, 0))
-//                {
-//                    // tmp_5
-//                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-//                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-//                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-//                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]);
-//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-//                }
-//                else
-//                {
-//                    mpz_neg(mb, mb);
-//                    mpz_export((void *)r, NULL, -1, 8, -1, 0, mr);
-//                    mpz_export((void *)a, NULL, -1, 8, -1, 0, ma);
-//                    mpz_export((void *)b, NULL, -1, 8, -1, 0, mb);
-//                    Fr_rawMMul1(r->longVal, a->longVal, b->longVal[0]); // call Fr_rawMMul1
-//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-//                    mpz_set(ma, mr); // mov rsi, rdi
-//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-//                    Fr_rawNeg(r->longVal, r->longVal);
-//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-//                    // tmp_6
-//                    mpz_add_ui(mr, mr, 8); //    add rdi, 8
-//                    mpz_set(ma, mr);
-
-//                    mpz_set(mb, mr3);
-
-//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-//                    mpz_export((void *)a->longVal, NULL, -1, 8, -1, 0, ma);
-//                    mpz_export((void *)b->longVal, NULL, -1, 8, -1, 0, mb);
-//                    Fr_rawMMul(r->longVal, a->longVal, b->longVal);
-//                    mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)r->longVal);
-//                    mpz_sub_ui(mr, mr, 8); //    sub rdi, 8
-//                    mpz_export((void *)r->longVal, NULL, -1, 8, -1, 0, mr);
-
-//                }
             }
         }
     }
@@ -1235,12 +1185,12 @@ void mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
     // mul_manageOverflow
     if (!mpz_fits_sint_p(rax))
     {
-        //std::cout << "mul_s1s2: rawCopyS2L " <<  '\n';
+        std::cout << "mul_s1s2: rawCopyS2L " <<  '\n';
         rawCopyS2L(r, temp);
     }
     else
     {
-        //std::cout << "mul_s1s2: not in rawCopyS2L " <<  '\n';
+        std::cout << "mul_s1s2: not in rawCopyS2L " <<  '\n';
         r->type = Fr_SHORT;
         r->shortVal = temp;
     }
@@ -1252,14 +1202,26 @@ void rawCopyS2L(PFrElement r, int64_t temp)
     r->longVal[0] = temp; // с расширением знака до 256 бит
     r->type = Fr_LONG;      // с расширением знака до 256 бит
 
+    mpz_t mr;
+    mpz_init(mr);
+    Fr_toMpz(mr, r);
+    mpz_t mq;
+    mpz_init(mq);
+    Fr_toMpz(mr, &Fr_q);
+
+
     if (temp < 0)
     {
-       //std::cout << "mul_s1s2: rawCopyS2L 2" <<  '\n';
+       std::cout << "mul_s1s2: rawCopyS2L 2" <<  '\n';
        r->longVal[0] += Fr_q.longVal[0];    //сложение 256 битных чисел
        r->longVal[1] += Fr_q.longVal[1];
        r->longVal[2] += Fr_q.longVal[2];
        r->longVal[3] += Fr_q.longVal[3];
+       //mpz_add(mr, mr, mq);
     }
+    Fr_fromMpz(r, mr);
+    mpz_clear(mr);
+    mpz_clear(mq);
 }
 
 void mul_l1nl2n(PFrElement r,PFrElement a,PFrElement b)
