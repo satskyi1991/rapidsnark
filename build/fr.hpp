@@ -18,125 +18,30 @@ typedef struct __attribute__((__packed__)) {
 } FrElement;
 typedef FrElement *PFrElement;
 
-//extern "C"
-//{
-//    extern FrElement Fr_q;
-//    extern FrElement Fr_R3;
-//    extern FrRawElement Fr_rawq;
-//    extern FrRawElement Fr_rawR3;
-//    extern FrRawElement q;
-//    extern FrRawElement half;
-//    extern FrRawElement R2;
-//    extern FrRawElement R3;
-//    extern FrRawElement lboMask;
-//    extern uint64_t np;
-//}
 
-//FrElement Fr_q.shortVal = 0;
-
-//FrElement Fr_q.type = 0x80000000;
-
-//FrElement Fr_q.longVal = {0x43e1f593f0000001,
-//                          0x2833e84879b97091,
-//                          0xb85045b68181585d,
-//                          0x30644e72e131a029};
-
-//FrRawElement Fr_rawq  = {0x43e1f593f0000001,
-//                         0x2833e84879b97091,
-//                         0xb85045b68181585d,
-//                         0x30644e72e131a029};
-
-
-//extern "C" void Fr_copy(PFrElement r, PFrElement a);
 //extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);
 void Fr_copy(PFrElement r, PFrElement a);
 void Fr_copyn(PFrElement r, PFrElement a, int n);
 
-/***************************************************************
- * these functions are not needed to implement
-extern "C" void Fr_add(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_sub(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_neg(PFrElement r, PFrElement a);
-****************************************************************
-*/
-
 void Fr_mul(PFrElement r, PFrElement a, PFrElement b);
-
-
-/***************************************************************
- * these functions are not needed to implement
-extern "C" void Fr_square(PFrElement r, PFrElement a);
-extern "C" void Fr_band(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_bor(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_bxor(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_bnot(PFrElement r, PFrElement a);
-extern "C" void Fr_shl(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_shr(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_eq(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_neq(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_lt(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_gt(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_leq(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_geq(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_land(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_lor(PFrElement r, PFrElement a, PFrElement b);
-extern "C" void Fr_lnot(PFrElement r, PFrElement a);
-********************************************************************
-*/
-//extern "C" void Fr_toNormal(PFrElement r, PFrElement a);
 void Fr_toNormal(PFrElement r, PFrElement a);
-//extern "C" void Fr_toLongNormal(PFrElement r, PFrElement a);
 void Fr_toLongNormal(PFrElement r, PFrElement a);
-//extern "C" void Fr_toMontgomery(PFrElement r, PFrElement a);
 void Fr_toMontgomery(PFrElement r, PFrElement a);
-
-/********************************************************************
- * these functions are not needed to implement
-extern "C" int Fr_isTrue(PFrElement pE);
-extern "C" int Fr_toInt(PFrElement pE);
-*********************************************************************
-*/
-
-//extern "C" void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
-
 void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
-
-
-//extern "C" void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
 void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
-/***********************************************************************
- * these functions are not needed to implement
-*************************************************************************
-*/
-//extern "C" void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
-
-//extern "C" void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
-
-//extern "C" void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
 void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
-
-//extern "C" void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
 void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
-
-//extern "C" void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
 void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
-
-//extern "C" void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
 void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
-
-//extern "C" void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
 void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
-
-//extern "C" void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
 void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
-
-//extern "C" int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
 int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
-
-//extern "C" int Fr_rawIsZero(FrRawElement pRawB);
 int Fr_rawIsZero(FrRawElement pRawB);
+
+void inline fr_rawAdd(FrRawElement r, FrRawElement a, FrRawElement b) { Fr_rawAdd(r, a, b); };
+
 /***************************************************************
  * these functions are not needed to implement
 

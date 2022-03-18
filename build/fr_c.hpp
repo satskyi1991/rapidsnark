@@ -1,5 +1,5 @@
-#ifndef __FR_H_ASM
-#define __FR_H_ASM
+#ifndef __FR_H_C
+#define __FR_H_C
 
 #include <stdint.h>
 #include <string>
@@ -7,48 +7,46 @@
 
 #define Fr_N64 4
 #define Fr_SHORT 0x00000000
+#define Fr_SHORTMONTGOMERY 0x40000000
 #define Fr_LONG 0x80000000
 #define Fr_LONGMONTGOMERY 0xC0000000
-#define Fr_SHORTMONTGOMERY 0x40000000
-typedef uint64_t FrRawElement_asm[Fr_N64];
+typedef uint64_t FrRawElement[Fr_N64];
 typedef struct __attribute__((__packed__)) {
     int32_t shortVal;
     uint32_t type;
-    FrRawElement_asm longVal;
-} FrElement_asm;
-typedef FrElement_asm *PFrElement_asm;
+    FrRawElement longVal;
+} FrElement;
+typedef FrElement *PFrElement;
 
-extern "C"
-{
-    extern FrElement_asm Fr_q;
-    extern FrElement_asm Fr_R3;
-    extern FrRawElement_asm Fr_rawq;
-    extern FrRawElement_asm Fr_rawR3;
-    extern FrRawElement_asm q;
-    extern FrRawElement_asm half;
-    extern FrRawElement_asm R2;
-    extern FrRawElement_asm R3;
-    extern FrRawElement_asm lboMask;
-    extern FrRawElement_asm np;
-}
-//extern "C" void Fr_copy(PFrElement r, PFrElement a);
+
 //extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);
-//extern "C" void Fr_mul(PFrElement r, PFrElement a, PFrElement b);
-//extern "C" void Fr_toNormal(PFrElement r, PFrElement a);
-//extern "C" void Fr_toLongNormal(PFrElement r, PFrElement a);
-//extern "C" void Fr_toMontgomery(PFrElement r, PFrElement a);
-//extern "C" void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
-//extern "C" void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
-extern "C" void Fr_rawAdd(FrRawElement_asm pRawResult, FrRawElement_asm pRawA, FrRawElement_asm pRawB);
-//extern "C" void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
-//extern "C" void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
-//extern "C" void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
-//extern "C" void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
-//extern "C" void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
-//extern "C" void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
-//extern "C" void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
-//extern "C" int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
-//extern "C" int Fr_rawIsZero(FrRawElement pRawB);
+//void Fr_copy(PFrElement r, PFrElement a);
+//void Fr_copyn(PFrElement r, PFrElement a, int n);
+
+//void Fr_mul(PFrElement r, PFrElement a, PFrElement b);
+//void Fr_toNormal(PFrElement r, PFrElement a);
+//void Fr_toLongNormal(PFrElement r, PFrElement a);
+//void Fr_toMontgomery(PFrElement r, PFrElement a);
+//void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA);
+//void Fr_rawSwap(FrRawElement pRawResult, FrRawElement pRawA);
+extern void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
+//void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
+//void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA);
+//void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB);
+//void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA);
+//void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB);
+//void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+//void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA);
+//int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB);
+//int Fr_rawIsZero(FrRawElement pRawB);
+
+void inline fr_rawAdd(FrRawElement r, FrRawElement a, FrRawElement b) { Fr_rawAdd(r, a, b); };
+
+/***************************************************************
+ * these functions are not needed to implement
+
+****************************************************************
+*/
 
 extern "C" void Fr_fail();
 
@@ -62,7 +60,6 @@ void Fr_mod(PFrElement r, PFrElement a, PFrElement b);
 void Fr_inv(PFrElement r, PFrElement a);
 void Fr_div(PFrElement r, PFrElement a, PFrElement b);
 void Fr_pow(PFrElement r, PFrElement a, PFrElement b);
-
 
 class RawFr {
 
@@ -121,9 +118,9 @@ public:
     static RawFr field;
 
 };
-#endif
 
-#endif // __FR_H_ASM
+#endif
+#endif // __FR_H_C
 
 
 

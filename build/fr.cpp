@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 
+/*
 FrElement Fr_q = {0, 0x80000000, {0x43e1f593f0000001,
                                   0x2833e84879b97091,
                                   0xb85045b68181585d,
@@ -48,6 +49,22 @@ FrRawElement R3 = {0x5e94d8e1b4bf0040,
 
 uint64_t lboMask = {0x3fffffffffffffff};
 uint64_t np  = {0xc2e1f593efffffff};
+*/
+extern "C"
+{
+    extern FrElement Fr_q;
+    extern FrElement Fr_R3;
+    extern FrRawElement Fr_rawq;
+    extern FrRawElement Fr_rawR3;
+    extern FrRawElement q;
+    extern FrRawElement half;
+    extern FrRawElement R2;
+    extern FrRawElement R3;
+    extern FrRawElement lboMask;
+    extern FrRawElement np;
+}
+
+
 
 static mpz_t mq;
 static mpz_t zero;
@@ -324,7 +341,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
     mpz_add(mr, ma, mb);
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+    //mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
 
     mpz_clear(ma);
     mpz_clear(mb);
@@ -353,95 +370,21 @@ void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
 void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
 {
-    //C2 not correct
-//    for (int i=0; i<Fr_N64; i++)
-//    {
-//        if(pRawA[i] == 0)
-//            pRawResult[i] = 0;
-//        else
-//        {
-//            pRawResult[i] = q[i] - pRawA[i];
-//        }
-//    }
+    mpz_t ma;
+    mpz_t mq;
+    mpz_t mr;
+    mpz_init(ma);
+    mpz_init(mq);
+    mpz_init(mr);
 
+    mpz_import(ma, Fr_N64, -1, sizeof(pRawA[0]), -1, 0, (const void *)pRawA);
+    mpz_import(mq, Fr_N64, -1, sizeof(pRawA[0]), -1, 0, (const void *)q);
+    mpz_sub(mr, mq, ma);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+    mpz_export((void *)pRawResult, NULL, -1, sizeof(pRawResult[0]), -1, 0, mr);
 
-// C : not correct
-//    mpz_t ma;
-//    mpz_t mr;
-//    mpz_init(ma);
-//    mpz_init(mr);
-
-//    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
-//    mpz_neg(mr, ma);
-//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-//    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
-
-//    mpz_clear(ma);
-//    mpz_clear(mr);
-
-// C3: not correct
-//    for (int i=0; i<Fr_N64; i++)
-//    {
-//        if(pRawA[i] == 0)
-//            pRawResult[i] = 0;
-//        else
-//        {
-//            mpz_t ma;
-//            mpz_t mr;
-//            mpz_init(ma);
-//            mpz_init(mr);
-
-//            mpz_import(ma, 1, -1, sizeof(pRawA[0]), -1, 0, (const void *)&pRawA[i]);
-//            mpz_neg(mr, ma);
-//            pRawResult[i] = 0;
-//            mpz_export((void *)&pRawResult[i], NULL, -1, sizeof(pRawResult[0]), -1, 0, mr);
-
-//            mpz_clear(ma);
-//            mpz_clear(mr);
-//        }
-//    }
-
-// C4: not correct
-//    for (int i=0; i<Fr_N64; i++)
-//    {
-//        if(pRawA[i] == 0)
-//            pRawResult[i] = 0;
-//        else
-//        {
-//            mpz_t ma;
-//            mpz_t mq;
-//            mpz_t mr;
-//            mpz_init(ma);
-//            mpz_init(mq);
-//            mpz_init(mr);
-
-//            mpz_import(ma, 1, -1, sizeof(pRawA[0]), -1, 0, (const void *)&pRawA[i]);
-//            mpz_import(mq, 1, -1, sizeof(pRawA[0]), -1, 0, (const void *)&q[i]);
-//            mpz_sub(mr, mq, ma);
-//            pRawResult[i] = 0;
-//            mpz_export((void *)&pRawResult[i], NULL, -1, sizeof(pRawResult[0]), -1, 0, mr);
-
-//            mpz_clear(ma);
-//            mpz_clear(mr);
-//        }
-//    }
-
-// C5:
-            mpz_t ma;
-            mpz_t mq;
-            mpz_t mr;
-            mpz_init(ma);
-            mpz_init(mq);
-            mpz_init(mr);
-
-            mpz_import(ma, Fr_N64, -1, sizeof(pRawA[0]), -1, 0, (const void *)pRawA);
-            mpz_import(mq, Fr_N64, -1, sizeof(pRawA[0]), -1, 0, (const void *)q);
-            mpz_sub(mr, mq, ma);
-            for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-            mpz_export((void *)pRawResult, NULL, -1, sizeof(pRawResult[0]), -1, 0, mr);
-
-            mpz_clear(ma);
-            mpz_clear(mr);
+    mpz_clear(ma);
+    mpz_clear(mr);
 
 }
 
