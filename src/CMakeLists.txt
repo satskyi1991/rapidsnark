@@ -13,7 +13,7 @@ set(CPP_SOURCES
     ../build/fq.cpp
     ../build/fq.o
     ../build/fr.cpp
-    ../build/fr.o
+    #../build/fr.o
     )
 
 include_directories(

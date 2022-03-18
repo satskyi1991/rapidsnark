@@ -7,6 +7,7 @@
 
 #define Fr_N64 4
 #define Fr_SHORT 0x00000000
+#define Fr_SHORTMONTGOMERY 0x40000000
 #define Fr_LONG 0x80000000
 #define Fr_LONGMONTGOMERY 0xC0000000
 typedef uint64_t FrRawElement[Fr_N64];
@@ -17,19 +18,35 @@ typedef struct __attribute__((__packed__)) {
 } FrElement;
 typedef FrElement *PFrElement;
 
-extern "C"
-{
-    extern FrElement Fr_q;
-    extern FrElement Fr_R3;
-    extern FrRawElement Fr_rawq;
-    extern FrRawElement Fr_rawR3;
-    extern FrRawElement q;
-    extern FrRawElement half;
-    extern FrRawElement R2;
-    extern FrRawElement R3;
-    extern FrRawElement lboMask;
-    extern uint64_t np;
-}
+//extern "C"
+//{
+//    extern FrElement Fr_q;
+//    extern FrElement Fr_R3;
+//    extern FrRawElement Fr_rawq;
+//    extern FrRawElement Fr_rawR3;
+//    extern FrRawElement q;
+//    extern FrRawElement half;
+//    extern FrRawElement R2;
+//    extern FrRawElement R3;
+//    extern FrRawElement lboMask;
+//    extern uint64_t np;
+//}
+
+//FrElement Fr_q.shortVal = 0;
+
+//FrElement Fr_q.type = 0x80000000;
+
+//FrElement Fr_q.longVal = {0x43e1f593f0000001,
+//                          0x2833e84879b97091,
+//                          0xb85045b68181585d,
+//                          0x30644e72e131a029};
+
+//FrRawElement Fr_rawq  = {0x43e1f593f0000001,
+//                         0x2833e84879b97091,
+//                         0xb85045b68181585d,
+//                         0x30644e72e131a029};
+
+
 //extern "C" void Fr_copy(PFrElement r, PFrElement a);
 //extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);
 void Fr_copy(PFrElement r, PFrElement a);

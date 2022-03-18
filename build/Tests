@@ -516,9 +516,6 @@ BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44
 ResultEl.longVal= a6e60015f953d4e5, ed0025db5f8e6f72, fea35ea32c8c06b0, c2779035d1c77db
 
 
-
-
-
 ASM:
 mul_l1ns2n: 
 Fr_mul Test: 
@@ -531,5 +528,330 @@ ResultEl.type = c0000000
 AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
 BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
 ResultEl.longVal= ac96341c4ffffffb, 36fc76959f60cd29, 666ea36f7879462e, e0a77c19a07df2f
+
+mul_l1ns2n: 
+mul_l1ns2n 2: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = fffffffe
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = 0
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= ac96341c4ffffffb, 36fc76959f60cd29, 666ea36f7879462e, e0a77c19a07df2f
+
+
+
+
+ASM:
+mul_s1nl2n
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 80000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= bffc825c956b6c57, ffe153159cf8b951, e41e9168e437926b, 1855c8e565e11b3e
+
+C:
+mul_s1nl2n: 
+mul_s1nl2n 2: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 80000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= bffc825c956b6c57, ffe153159cf8b951, e41e9168e437926b, 1855c8e565e11b3e
+
+
+ASM:
+mul_s1nl2n
+Fr_mul Test: 
+AEl.shortVal = fffffffe
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 80000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 86b843d08681ff81, d3a2aecc3fc20320, a5d6b8ed3e41b882, 16739bdbe198d530
+
+mul_s1nl2n: 
+mul_s1nl2n 2: 
+tmp3 2
+Fr_mul Test: 
+AEl.shortVal = fffffffe
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 80000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 86b843d08681ff81, d3a2aecc3fc20320, a5d6b8ed3e41b882, 16739bdbe198d530
+
+ASM:
+Fr_mul Test: 
+AEl.shortVal = 2
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 80000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= bd29b1c3697e0080, 5491397c39f76d70, 12798cc9433f9fda, 19f0b296ff98caf9
+
+C:
+mul_s1nl2n: 
+mul_s1nl2n 1: 
+Fr_mul Test: 
+AEl.shortVal = 2
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = 80000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= bd29b1c3697e0080, 5491397c39f76d70, 12798cc9433f9fda, 19f0b296ff98caf9
+
+
+ASM:
+mul_l1ms2n:
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = c0000000
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 353adabe1a8384d3, ac073852871b513f, 6164f2b8bfc79df6, 2c777b18571971c0
+
+C:
+mul_l1ms2n: 
+mul_l1ms2n 1: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = c0000000
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 353adabe1a8384d3, ac073852871b513f, 6164f2b8bfc79df6, 2c777b18571971c0
+
+
+
+
+
+ASM:
+mul_l1ms2n:
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = fffffffe
+ResultEl.shortVal = 0
+AEl.type = c0000000
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= dc5ba0056db1194e, 90ef5a9e111ec87, c8260de4aeb85d5d, 15ebf95182c5551c
+
+C:
+mul_l1ms2n: 
+mul_l1ms2n 2: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = fffffffe
+ResultEl.shortVal = 0
+AEl.type = c0000000
+BEl.type = 0
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= dc5ba0056db1194e, 90ef5a9e111ec87, c8260de4aeb85d5d, 15ebf95182c5551c
+
+
+
+
+ASM:
+mul_s1nl2m:
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = c0000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= c7c345619195a186, 96c106f5e0327802, da81c1cf6b8c0336, 19e5b9954cd030d0
+
+C:
+mul_s1nl2m: 
+mul_s1nl2m 2: 
+tmp3 5e0f0537
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = c0000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= c7c345619195a186, 96c106f5e0327802, da81c1cf6b8c0336, 19e5b9954cd030d0
+
+
+ASM:
+mul_s1nl2m:
+Fr_mul Test: 
+AEl.shortVal = 2
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = c0000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 592c68389ffffff6, 6df8ed2b3ec19a53, ccdd46def0f28c5c, 1c14ef83340fbe5e
+
+C:
+mul_s1nl2m: 
+mul_s1nl2m 1: 
+Fr_mul Test: 
+AEl.shortVal = 2
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 0
+BEl.type = c0000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= 592c68389ffffff6, 6df8ed2b3ec19a53, ccdd46def0f28c5c, 1c14ef83340fbe5e
+
+
+
+
+
+
+
+
+
+ASM:
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = 40000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+C:
+mul_l1ns2m: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 80000000
+BEl.type = 40000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+ASM:
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 40000000
+BEl.type = c0000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+C:
+mul_s1ml2m: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 40000000
+BEl.type = c0000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+ASM:
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 40000000
+BEl.type = 80000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+mul_s1ml2n: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 40000000
+BEl.type = 80000000
+ResultEl.type = 80000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+
+ASM:
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 40000000
+BEl.type = c0000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+C:
+mul_s1ml2m: 
+Fr_mul Test: 
+AEl.shortVal = a1f0fac9
+BEl.shortVal = 1bb8e645
+ResultEl.shortVal = 0
+AEl.type = 40000000
+BEl.type = c0000000
+ResultEl.type = c0000000
+AEl.longVal= a1f0fac9f8000000, 9419f4243cdcb848, dc2822db40c0ac2e, 183227397098d014
+BEl.longVal= 1bb8e645ae216da7, 53fe3ab1e35c59e3, 8c49833d53bb8085, 216d0b17f4e44a5
+ResultEl.longVal= cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d
+
+
 
 

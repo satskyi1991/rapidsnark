@@ -23,7 +23,20 @@ FrRawElement pRawResult = {0,0,0,0};
 FrRawElement pRawA = {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
 FrRawElement pRawB = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
 
+//FrElement Fr_q = {0, 0x80000000, {0x43e1f593f0000001,
+//                                  0x2833e84879b97091,
+//                                  0xb85045b68181585d,
+//                                  0x30644e72e131a029}};
 
+//FrRawElement Fr_rawq  = {0x43e1f593f0000001,
+//                         0x2833e84879b97091,
+//                         0xb85045b68181585d,
+//                         0x30644e72e131a029};
+
+//extern FrElement Fr_q;
+//extern FrRawElement Fr_rawq;
+
+/*
 void show_extern_vars()
 {
     std::cout << "Fr_q.shortVal= "    << std::hex  << Fr_q.shortVal << '\n';
@@ -82,7 +95,7 @@ void show_extern_vars()
 //    std::cout << "np= " << std::hex << np[2] << '\n';
 //    std::cout << "np= " << std::hex << np[3] << '\n';
 }
-
+*/
 void Fr_Rw_copy_test()
 {
     Fr_rawCopy(pRawResult, pRawA);
@@ -354,12 +367,12 @@ void Fr_mul_test()
     FrElement BEl = {0};
     //AEl.shortVal = -1;
     AEl.shortVal = 0xa1f0fac9;
-    //AEl.shortVal = 0;
-    AEl.type = Fr_SHORT;
+    //AEl.shortVal = 2;
+    AEl.type = Fr_SHORTMONTGOMERY;
     //BEl.shortVal = -2;
     BEl.shortVal = 0x1bb8e645;
     //BEl.shortVal = 0;
-    BEl.type = Fr_SHORT;
+    BEl.type = Fr_LONGMONTGOMERY;
     AEl.longVal[0] = 0xa1f0fac9f8000000;
     AEl.longVal[1] = 0x9419f4243cdcb848;
     AEl.longVal[2] = 0xdc2822db40c0ac2e;
