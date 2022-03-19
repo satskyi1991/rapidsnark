@@ -1,6 +1,6 @@
 #include <iostream>
 
-#define TEST_C_FUNCTIONS
+//#define TEST_C_FUNCTIONS
 
 #ifdef TEST_C_FUNCTIONS
 #include "fr.hpp"
@@ -22,6 +22,18 @@ using namespace std;
 FrRawElement pRawResult = {0,0,0,0};
 FrRawElement pRawA = {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
 FrRawElement pRawB = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
+
+FrRawElement pRawResult1 = {0,0,0,0};
+FrRawElement pRawA1      = {0x1,0,0,0};
+FrRawElement pRawB1      = {0x2,0,0,0};
+
+FrRawElement pRawResult2 = {0,0,0,0};
+FrRawElement pRawA2      = {0xffffffffffffffff,0,0,0};
+FrRawElement pRawB2      = {0xffffffffffffffff,0,0,0};
+
+FrRawElement pRawResult3 = {0,0,0,0};
+FrRawElement pRawA3      = {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+FrRawElement pRawB3      = {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
 
 //FrElement Fr_q = {0, 0x80000000, {0x43e1f593f0000001,
 //                                  0x2833e84879b97091,
@@ -113,22 +125,27 @@ void Fr_Rw_copy_test()
 
 void Fr_Rw_add_test()
 {
-    Fr_rawAdd(pRawResult, pRawA, pRawB);
     std::cout << "Fr_rawAdd Test: " <<  '\n';
-    std::cout << "pRawA= " << std::hex << pRawA[0] << '\n';
-    std::cout << "pRawA= " << std::hex << pRawA[1] << '\n';
-    std::cout << "pRawA= " << std::hex << pRawA[2] << '\n';
-    std::cout << "pRawA= " << std::hex << pRawA[3] << '\n';
+    Fr_rawAdd(pRawResult, pRawA, pRawB);
+    std::cout << "pRawA= " << std::hex << pRawA[0] << "," << pRawA[1] << "," << pRawA[2] << "," << pRawA[3] << '\n';
+    std::cout << "pRawB= " << std::hex << pRawB[0] << "," << pRawB[1] << "," << pRawB[2] << "," << pRawB[3] << '\n';
+    std::cout << "pRawResult= " << std::hex << pRawResult[0] << "," << pRawResult[1] << "," << pRawResult[2] << "," << pRawResult[3] << '\n';
 
-    std::cout << "pRawB= " << std::hex << pRawB[0] << '\n';
-    std::cout << "pRawB= " << std::hex << pRawB[1] << '\n';
-    std::cout << "pRawB= " << std::hex << pRawB[2] << '\n';
-    std::cout << "pRawB= " << std::hex << pRawB[3] << '\n';
+    Fr_rawAdd(pRawResult1, pRawA1, pRawB1);
+    std::cout << "pRawA1= " << std::hex << pRawA1[0] << "," << pRawA1[1] << "," << pRawA1[2] << "," << pRawA1[3] << '\n';
+    std::cout << "pRawB1= " << std::hex << pRawB1[0] << "," << pRawB1[1] << "," << pRawB1[2] << "," << pRawB1[3] << '\n';
+    std::cout << "pRawResult1= " << std::hex << pRawResult1[0] << "," << pRawResult1[1] << "," << pRawResult1[2] << "," << pRawResult1[3] << '\n';
 
-    std::cout << "pRawResult= " << std::hex << pRawResult[0] << '\n';
-    std::cout << "pRawResult= " << std::hex << pRawResult[1] << '\n';
-    std::cout << "pRawResult= " << std::hex << pRawResult[2] << '\n';
-    std::cout << "pRawResult= " << std::hex << pRawResult[3] << '\n';
+    Fr_rawAdd(pRawResult2, pRawA2, pRawB2);
+    std::cout << "pRawA2= " << std::hex << pRawA2[0] << "," << pRawA2[1] << "," << pRawA2[2] << "," << pRawA2[3] << '\n';
+    std::cout << "pRawB2= " << std::hex << pRawB2[0] << "," << pRawB2[1] << "," << pRawB2[2] << "," << pRawB2[3] << '\n';
+    std::cout << "pRawResult2= " << std::hex << pRawResult2[0] << "," << pRawResult2[1] << "," << pRawResult2[2] << "," << pRawResult2[3] << '\n';
+
+
+    Fr_rawAdd(pRawResult3, pRawA3, pRawB3);
+    std::cout << "pRawA3= " << std::hex << pRawA3[0] << "," << pRawA3[1] << "," << pRawA3[2] << "," << pRawA3[3] << '\n';
+    std::cout << "pRawB3= " << std::hex << pRawB3[0] << "," << pRawB3[1] << "," << pRawB3[2] << "," << pRawB3[3] << '\n';
+    std::cout << "pRawResult3= " << std::hex << pRawResult3[0] << "," << pRawResult3[1] << "," << pRawResult3[2] << "," << pRawResult3[3] << '\n';
 }
 
 void Fr_Rw_sub_test()
@@ -429,7 +446,7 @@ int main()
 
     //show_extern_vars();
     //Fr_Rw_copy_test();
-    //Fr_Rw_add_test();
+    Fr_Rw_add_test();
     //Fr_Rw_sub_test();
     //Fr_Rw_neg_test();
     //Fr_Rw_mul_test();
@@ -445,7 +462,7 @@ int main()
     //Fr_toMontgomery_test();
     //Fr_toLongNormal_test();
 
-    Fr_mul_test();
+    //Fr_mul_test();
     //Fr_toNormal_test();
     //Fr_rawIsZero_test();
     //Fr_rawSwap_test();

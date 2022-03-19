@@ -6,6 +6,23 @@
 #include <string>
 #include <iostream>
 
+//#define TEST_C_FUNCTIONS
+
+#ifndef TEST_C_FUNCTIONS
+extern "C"
+{
+    extern FrElement Fr_q;
+    extern FrElement Fr_R3;
+    extern FrRawElement Fr_rawq;
+    extern FrRawElement Fr_rawR3;
+    extern FrRawElement q;
+    extern FrRawElement half;
+    extern FrRawElement R2;
+    extern FrRawElement R3;
+    extern FrRawElement lboMask;
+    extern uint64_t np;
+}
+#else
 FrElement Fr_q = {0, 0x80000000, {0x43e1f593f0000001,
                                   0x2833e84879b97091,
                                   0xb85045b68181585d,
@@ -49,6 +66,7 @@ FrRawElement R3 = {0x5e94d8e1b4bf0040,
 uint64_t lboMask = {0x3fffffffffffffff};
 uint64_t np  = {0xc2e1f593efffffff};
 
+#endif
 static mpz_t mq;
 static mpz_t zero;
 static mpz_t one;
