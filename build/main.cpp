@@ -2,9 +2,7 @@
 #include <fstream>
 #include <string>
 
-//#define TEST_C_FUNCTIONS
-
-#define UNIT_TESTS_OUTPUT
+#define TEST_C_FUNCTIONS
 
 #ifdef TEST_C_FUNCTIONS
 #include "fr.hpp"
@@ -112,30 +110,30 @@ void show_extern_vars()
 //    std::cout << "np= " << std::hex << np[3] << '\n';
 }
 */
-void Fr_Rw_copy_test(FrRawElement pRawResult, FrRawElement pRawA, fstream *file, int idx)
+void Fr_Rw_copy_test(FrRawElement pRawResult, FrRawElement pRawA, int idx)
 {
-    *file << "Fr_Rw_copy_test Test " << idx << ": " <<  '\n';
+    std::cout << "Fr_Rw_copy_test Test " << idx << ": " <<  '\n';
     Fr_rawCopy(pRawResult, pRawA);
-    *file << "pRawA" << idx << "= " << std::hex << pRawA[0] << "," << pRawA[1] << "," << pRawA[2] << "," << pRawA[3] << '\n';
-    *file << "Rw_copy RawResult" << idx << "= " << std::hex << pRawResult[0] << "," << pRawResult[1] << "," << pRawResult[2] << "," << pRawResult[3] << '\n';
+    std::cout << "pRawA" << idx << "= " << std::hex << pRawA[0] << "," << pRawA[1] << "," << pRawA[2] << "," << pRawA[3] << '\n';
+    std::cout << "Rw_copy RawResult" << idx << "= " << std::hex << pRawResult[0] << "," << pRawResult[1] << "," << pRawResult[2] << "," << pRawResult[3] << '\n';
 }
 
-void Fr_Rw_add_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, fstream *file, int idx)
+void Fr_Rw_add_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
 {
-    *file << "Fr_rawAdd Test " << idx << ": " <<  '\n';
+    std::cout << "Fr_rawAdd Test " << idx << ": " <<  '\n';
     Fr_rawAdd(pRawResult, pRawA, pRawB);
-    *file << "pRawA" << idx << "= " << std::hex << pRawA[0] << "," << pRawA[1] << "," << pRawA[2] << "," << pRawA[3] << '\n';
-    *file << "pRawB" << idx << "= " << std::hex << pRawB[0] << "," << pRawB[1] << "," << pRawB[2] << "," << pRawB[3] << '\n';
-    *file << "Rw_add RawResult" << idx << "= " << std::hex << pRawResult[0] << "," << pRawResult[1] << "," << pRawResult[2] << "," << pRawResult[3] << '\n';
+    std::cout << "pRawA" << idx << "= " << std::hex << pRawA[0] << "," << pRawA[1] << "," << pRawA[2] << "," << pRawA[3] << '\n';
+    std::cout << "pRawB" << idx << "= " << std::hex << pRawB[0] << "," << pRawB[1] << "," << pRawB[2] << "," << pRawB[3] << '\n';
+    std::cout << "Rw_add RawResult" << idx << "= " << std::hex << pRawResult[0] << "," << pRawResult[1] << "," << pRawResult[2] << "," << pRawResult[3] << '\n';
 }
 
-void Fr_Rw_sub_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, fstream *file, int idx)
+void Fr_Rw_sub_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
 { 
-    *file << "Fr_Rw_sub Test " << idx << ": " <<  '\n';
+    std::cout  << "Fr_Rw_sub Test " << idx << ": " <<  '\n';
     Fr_rawSub(pRawResult, pRawA, pRawB);
-    *file << "pRawA" << idx << "= " << std::hex << pRawA[0] << "," << pRawA[1] << "," << pRawA[2] << "," << pRawA[3] << '\n';
-    *file << "pRawB" << idx << "= " << std::hex << pRawB[0] << "," << pRawB[1] << "," << pRawB[2] << "," << pRawB[3] << '\n';
-    *file << "Rw_sub RawResult" << idx << "= " << std::hex << pRawResult[0] << "," << pRawResult[1] << "," << pRawResult[2] << "," << pRawResult[3] << '\n';
+    std::cout  << "pRawA" << idx << "= " << std::hex << pRawA[0] << "," << pRawA[1] << "," << pRawA[2] << "," << pRawA[3] << '\n';
+    std::cout  << "pRawB" << idx << "= " << std::hex << pRawB[0] << "," << pRawB[1] << "," << pRawB[2] << "," << pRawB[3] << '\n';
+    std::cout  << "Rw_sub RawResult" << idx << "= " << std::hex << pRawResult[0] << "," << pRawResult[1] << "," << pRawResult[2] << "," << pRawResult[3] << '\n';
 }
 
 void Fr_Rw_neg_test()
@@ -412,62 +410,20 @@ void Fr_rawSwap_test()
 
 int main()
 {
-#ifdef UNIT_TESTS_OUTPUT
-    fstream * unit_tests_vectors_c = new fstream();
-    fstream * unit_tests_vectors_asm = new fstream();
-    string text;
-    unit_tests_vectors_c->open ("unit_test_c.txt", ios::in);
-    unit_tests_vectors_asm->open ("unit_test_c.txt", ios::in);
+    Fr_Rw_add_test(pRawResult,  pRawA,  pRawB, 0);
+    Fr_Rw_add_test(pRawResult1, pRawA1, pRawB1, 1);
+    Fr_Rw_add_test(pRawResult2, pRawA2, pRawB2, 2);
+    Fr_Rw_add_test(pRawResult3, pRawA3, pRawB3, 3);
 
+//    Fr_Rw_sub_test(pRawResult,  pRawA,  pRawB, 0);
+//    Fr_Rw_sub_test(pRawResult1, pRawA1, pRawB1, 1);
+//    Fr_Rw_sub_test(pRawResult2, pRawA2, pRawB2, 2);
+//    Fr_Rw_sub_test(pRawResult3, pRawA3, pRawB3, 3);
 
-
-    if(unit_tests_vectors_c->is_open())
-    {
-        string s,text;
-        *unit_tests_vectors_c >> s;
-        text=s;
-        while(*unit_tests_vectors_c >> s)
-        {
-            text=text+" "+s;
-        }
-        std::cout << text;
-        unit_tests_vectors_c->close();
-    }
-
-
-
-#else
-    fstream * unit_tests_vectors = new fstream();
-    #ifdef TEST_C_FUNCTIONS
-        unit_tests_vectors->open ("unit_test_c.txt", ios::out | ios::trunc);
-        unit_tests_vectors->close();
-        unit_tests_vectors->open ("unit_test_c.txt", ios::out | ios::app);
-    #else
-        unit_tests_vectors->open ("unit_test_asm.txt", ios::out | ios::trunc);
-        unit_tests_vectors->close();
-        unit_tests_vectors->open ("unit_test_asm.txt", ios::out | ios::app);
-    #endif
-
-    if (!unit_tests_vectors->is_open())
-    {
-        std::cout << "Error file opening";
-    }
-    else
-    {
-        Fr_Rw_add_test(pRawResult,  pRawA,  pRawB,  unit_tests_vectors, 0);
-        Fr_Rw_add_test(pRawResult1, pRawA1, pRawB1, unit_tests_vectors, 1);
-        Fr_Rw_add_test(pRawResult2, pRawA2, pRawB2, unit_tests_vectors, 2);
-        Fr_Rw_add_test(pRawResult3, pRawA3, pRawB3, unit_tests_vectors, 3);
-
-        Fr_Rw_sub_test(pRawResult,  pRawA,  pRawB,  unit_tests_vectors, 0);
-        Fr_Rw_sub_test(pRawResult1, pRawA1, pRawB1, unit_tests_vectors, 1);
-        Fr_Rw_sub_test(pRawResult2, pRawA2, pRawB2, unit_tests_vectors, 2);
-        Fr_Rw_sub_test(pRawResult3, pRawA3, pRawB3, unit_tests_vectors, 3);
-
-        Fr_Rw_copy_test(pRawResult,  pRawA,  unit_tests_vectors, 0);
-        Fr_Rw_copy_test(pRawResult1, pRawA1, unit_tests_vectors, 1);
-        Fr_Rw_copy_test(pRawResult2, pRawA2, unit_tests_vectors, 2);
-        Fr_Rw_copy_test(pRawResult3, pRawA3, unit_tests_vectors, 3);
+//    Fr_Rw_copy_test(pRawResult,  pRawA, 0);
+//    Fr_Rw_copy_test(pRawResult1, pRawA1, 1);
+//    Fr_Rw_copy_test(pRawResult2, pRawA2, 2);
+//    Fr_Rw_copy_test(pRawResult3, pRawA3, 3);
 
 
 
@@ -496,8 +452,5 @@ int main()
 
     //    std::cout << typeid(uint64_t).name() << '\n';
     //    std::cout << typeid(FrRawElement).name() << '\n';
-        unit_tests_vectors->close();
-    }
-#endif
     return 0;
 }

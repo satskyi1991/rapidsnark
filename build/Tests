@@ -51,6 +51,31 @@ pRawResult= e8182ed62039122b
 pRawResult= 6871a618947c2cb3
 pRawResult= 1a48f7eaefe714ba
 
+Asm:
+Fr_rawAdd Test 0: 
+pRawA0= a1f0fac9f8000000,9419f4243cdcb848,dc2822db40c0ac2e,183227397098d014
+pRawB0= 1bb8e645ae216da7,53fe3ab1e35c59e3,8c49833d53bb8085,216d0b17f4e44a5
+Rw_add RawResult0= bda9e10fa6216da7,e8182ed62039122b,6871a618947c2cb3,1a48f7eaefe714ba
+Fr_rawAdd Test 1: 
+pRawA1= 1,0,0,0
+pRawB1= 2,0,0,0
+Rw_add RawResult1= 3,0,0,0
+Fr_rawAdd Test 2: 
+pRawA2= ffffffffffffffff,0,0,0
+pRawB2= ffffffffffffffff,0,0,0
+Rw_add RawResult2= fffffffffffffffe,1,0,0
+Fr_rawAdd Test 3: 
+pRawA3= ffffffffffffffff,ffffffffffffffff,ffffffffffffffff,ffffffffffffffff
+pRawB3= ffffffffffffffff,ffffffffffffffff,ffffffffffffffff,ffffffffffffffff
+Rw_add RawResult3= bc1e0a6c0ffffffd,d7cc17b786468f6e,47afba497e7ea7a2,cf9bb18d1ece5fd6
+
+C:
+Fr_rawAdd Test 3: 
+rawAddLL_sq
+pRawA3= ffffffffffffffff,ffffffffffffffff,ffffffffffffffff,ffffffffffffffff
+pRawB3= ffffffffffffffff,ffffffffffffffff,ffffffffffffffff,ffffffffffffffff
+Rw_add RawResult3= bc1e0a6c0ffffffe,d7cc17b786468f6e,47afba497e7ea7a2,cf9bb18d1ece5fd6
+
 // Passed
 C:
 Fr_rawSub Test: 

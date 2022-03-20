@@ -7,7 +7,7 @@
 #include <iostream>
 
 //#define TEST_C_FUNCTIONS
-
+/*
 #ifndef TEST_C_FUNCTIONS
 extern "C"
 {
@@ -67,6 +67,8 @@ uint64_t lboMask = {0x3fffffffffffffff};
 uint64_t np  = {0xc2e1f593efffffff};
 
 #endif
+*/
+
 static mpz_t mq;
 static mpz_t zero;
 static mpz_t one;
@@ -326,27 +328,79 @@ void RawFr::fromMpz(Element &r, mpz_t a) {
     mpz_export((void *)(r.v), NULL, -1, 8, -1, 0, a);
     Fr_rawToMontgomery(r.v, r.v);
 }
+
+
+
 /*****************************************************************************************
  * ASM Functions to C/C++ using GNU MP Lib Begin
 ******************************************************************************************/
 void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 {
     mpz_t ma;
+    mpz_t rax;
     mpz_t mb;
     mpz_t mr;
+    mpz_t mq;
     mpz_init(ma);
     mpz_init(mb);
     mpz_init(mr);
+    mpz_init(mq);
+    mpz_init(rax);
 
     mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
     mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
-    mpz_add(mr, ma, mb);
+    mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawq);
+    mpz_set(rax, ma);
+    mpz_add(rax, rax, mb);
+    mpz_set(mr, rax);
+    if (!mpz_fits_slong_p(mr) || !mpz_fits_ulong_p(mr))
+    {
+       //rawAddLL_sq
+        std::cout << "rawAddLL_sq" << "\n";
+        mpz_set(rax, mq);
+        mpz_sub(mr, mr, rax);
+    }
+
+    if (mq->_mp_d[3] < rax->_mp_d[3])
+    {
+        //rawAddLL_sq
+         std::cout << "rawAddLL_sq 1" << "\n";
+         mpz_set(rax, mq);
+         mpz_sub(mr, mr, rax);
+    }
+
+    if (mq->_mp_d[2] < rax->_mp_d[2])
+    {
+        //rawAddLL_sq
+         std::cout << "rawAddLL_sq 2" << "\n";
+         mpz_set(rax, mq);
+         mpz_sub(mr, mr, rax);
+    }
+
+    if (mq->_mp_d[1] < rax->_mp_d[1])
+    {
+        //rawAddLL_sq
+         std::cout << "rawAddLL_sq 3" << "\n";
+         mpz_set(rax, mq);
+         mpz_sub(mr, mr, rax);
+    }
+
+    if (mq->_mp_d[0] < rax->_mp_d[0])
+    {
+        //rawAddLL_sq
+         std::cout << "rawAddLL_sq 4" << "\n";
+         mpz_set(rax, mq);
+         mpz_sub(mr, mr, rax);
+    }
+
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
     mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
 
     mpz_clear(ma);
     mpz_clear(mb);
     mpz_clear(mr);
+    mpz_clear(mq);
+    mpz_clear(rax);
 }
 
 void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
