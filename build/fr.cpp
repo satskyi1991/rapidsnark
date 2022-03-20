@@ -594,10 +594,23 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
     if (!mpz_cmp(mr4,mq))
     {
+        //Fr_rawMMul_sq:
         mpz_sub(mr4,mr4,mq);
     }
-
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+
+//    if (mr4->_mp_d[3] == mq->_mp_d[3])
+//    {
+//        //Fr_rawMMul_sq:
+//        mpz_sub(mr4,mr4,mq);
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+//    }
+//    else
+//    {
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+//    }
+
+
 //     for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
 //     mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr4);
 
