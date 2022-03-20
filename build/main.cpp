@@ -343,13 +343,47 @@ void Fr_Rw_mul_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pR
     std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
 }
 
-void Fr_Rw_square_test()
+
+void Fr_Rw_Msquare_unit_test()
 {
-    Fr_rawMSquare(pRawResult, pRawA);
-    std::cout << "Fr_rawMSquare Test: " <<  '\n';
-    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
-    std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
+    //Fr_Rw_Msquare_test 0:
+    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+    FrRawElement pRawResult0= {0x9907e2cb536c4654,0xd65db18eb521336a,0xe31a6546c6ec385,0x1dad258dd14a255c};
+    //Fr_Rw_Msquare_test 1:
+    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+    FrRawElement pRawResult1= {0xdc5ba0056db1194e,0x90ef5a9e111ec87,0xc8260de4aeb85d5d,0x15ebf95182c5551c};
+    //Fr_Rw_Msquare_test 2:
+    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+    FrRawElement pRawResult2= {0xa36e2021c3cb4871,0x9ccfdd64549375be,0xfabb3edd8b138d5d,0x1f90d859c5779848};
+    //Fr_Rw_Msquare_test 3:
+    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+    FrRawElement pRawResult3= {0x3ff409a0d3b30d18,0xca2027949dd16d47,0x6c8c4187ce125dad,0x3b5af5c48558e40};
+
+    FrRawElement pRawResult0_c;
+    FrRawElement pRawResult1_c;
+    FrRawElement pRawResult2_c;
+    FrRawElement pRawResult3_c;
+
+    Fr_rawMSquare(pRawResult0_c, pRawA0);
+    Fr_rawMSquare(pRawResult1_c, pRawA1);
+    Fr_rawMSquare(pRawResult2_c, pRawA2);
+    Fr_rawMSquare(pRawResult3_c, pRawA3);
+
+    compare_rawResult(pRawResult0, pRawResult0_c, 0, "Fr_Rw_Msquare_unit_test");
+    compare_rawResult(pRawResult1, pRawResult1_c, 1, "Fr_Rw_Msquare_unit_test");
+    compare_rawResult(pRawResult2, pRawResult2_c, 2, "Fr_Rw_Msquare_unit_test");
+    compare_rawResult(pRawResult3, pRawResult3_c, 3, "Fr_Rw_Msquare_unit_test");
 }
+
+void Fr_Rw_Msquare_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
+{
+    std::cout << "//Fr_Rw_Msquare_test " << idx << ": " <<  '\n';
+    Fr_rawMSquare(pRawResult, pRawA);
+    std::cout << "FrRawElement pRawA" << idx << "= " << std::hex << "{0x" << pRawA[0] << ",0x" << pRawA[1] << ",0x" << pRawA[2] << ",0x" << pRawA[3] << "};"<< '\n';
+    //std::cout << "FrRawElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
+    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
+}
+
 
 void Fr_Rw_mul1_test()
 {
@@ -656,6 +690,19 @@ int main()
     Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
     Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
+#endif
+
+#ifdef TEST_C_FUNCTIONS
+    Fr_Rw_Msquare_unit_test();
+//    Fr_Rw_Msquare_test(pRawResult,  pRawA,  pRawB, 0);
+//    Fr_Rw_Msquare_test(pRawResult1, pRawA1, pRawB1, 1);
+//    Fr_Rw_Msquare_test(pRawResult2, pRawA2, pRawB2, 2);
+//    Fr_Rw_Msquare_test(pRawResult3, pRawA3, pRawB3, 3);
+#else
+    Fr_Rw_Msquare_test(pRawResult,  pRawA,  pRawB, 0);
+    Fr_Rw_Msquare_test(pRawResult1, pRawA1, pRawB1, 1);
+    Fr_Rw_Msquare_test(pRawResult2, pRawA2, pRawB2, 2);
+    Fr_Rw_Msquare_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
 
 
