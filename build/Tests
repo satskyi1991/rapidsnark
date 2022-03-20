@@ -70,11 +70,29 @@ pRawB3= ffffffffffffffff,ffffffffffffffff,ffffffffffffffff,ffffffffffffffff
 Rw_add RawResult3= bc1e0a6c0ffffffd,d7cc17b786468f6e,47afba497e7ea7a2,cf9bb18d1ece5fd6
 
 C:
-Fr_rawAdd Test 3: 
+Fr_Rw_add_unit_test0 failed!
+Fr_Rw_add_unit_test1 succeed!
+Fr_Rw_add_unit_test2 failed!
+Fr_Rw_add_unit_test3 succeed!
+//Fr_rawAdd Test 0: 
 rawAddLL_sq
-pRawA3= ffffffffffffffff,ffffffffffffffff,ffffffffffffffff,ffffffffffffffff
-pRawB3= ffffffffffffffff,ffffffffffffffff,ffffffffffffffff,ffffffffffffffff
-Rw_add RawResult3= bc1e0a6c0ffffffe,d7cc17b786468f6e,47afba497e7ea7a2,cf9bb18d1ece5fd6
+FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+FrRawElement pRawResult0= {0x8638148449de925a,0x401bb97259805e65,0x4fde9f9ded052ba9,0x161b5687f14a8b6f};
+//Fr_rawAdd Test 1: 
+FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+FrRawElement pRawResult1= {0x3,0x0,0x0,0x0};
+//Fr_rawAdd Test 2: 
+rawAddLL_sq
+FrRawElement pRawA2= {0xffffffffffffffff,0x0,0x0,0x0};
+FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+FrRawElement pRawResult2= {0x43e1f593f0000003,0x2833e84879b9708f,0xb85045b68181585d,0x30644e72e131a029};
+//Fr_rawAdd Test 3: 
+rawAddLL_sq
+FrRawElement pRawA3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+FrRawElement pRawResult3= {0xbc1e0a6c0ffffffd,0xd7cc17b786468f6e,0x47afba497e7ea7a2,0xcf9bb18d1ece5fd6};
 
 // Passed
 C:
