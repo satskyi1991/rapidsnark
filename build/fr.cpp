@@ -356,7 +356,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     if (!mpz_fits_slong_p(mr) || !mpz_fits_ulong_p(mr))
     {
        //rawAddLL_sq
-        std::cout << "rawAddLL_sq" << "\n";
+        //std::cout << "rawAddLL_sq" << "\n";
         mpz_set(rax, mq);
         mpz_sub(mr, mr, rax);
     }
@@ -364,7 +364,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     if (mq->_mp_d[3] < rax->_mp_d[3])
     {
         //rawAddLL_sq
-         std::cout << "rawAddLL_sq 1" << "\n";
+         //std::cout << "rawAddLL_sq 1" << "\n";
          mpz_set(rax, mq);
          mpz_sub(mr, mr, rax);
     }
@@ -372,7 +372,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     if (mq->_mp_d[2] < rax->_mp_d[2])
     {
         //rawAddLL_sq
-         std::cout << "rawAddLL_sq 2" << "\n";
+         //std::cout << "rawAddLL_sq 2" << "\n";
          mpz_set(rax, mq);
          mpz_sub(mr, mr, rax);
     }
@@ -380,7 +380,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     if (mq->_mp_d[1] < rax->_mp_d[1])
     {
         //rawAddLL_sq
-         std::cout << "rawAddLL_sq 3" << "\n";
+         //std::cout << "rawAddLL_sq 3" << "\n";
          mpz_set(rax, mq);
          mpz_sub(mr, mr, rax);
     }
@@ -388,7 +388,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     if (mq->_mp_d[0] < rax->_mp_d[0])
     {
         //rawAddLL_sq
-         std::cout << "rawAddLL_sq 4" << "\n";
+         //std::cout << "rawAddLL_sq 4" << "\n";
          mpz_set(rax, mq);
          mpz_sub(mr, mr, rax);
     }
@@ -408,19 +408,31 @@ void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_t ma;
     mpz_t mb;
     mpz_t mr;
+    mpz_t mq;
     mpz_init(ma);
     mpz_init(mb);
     mpz_init(mr);
+    mpz_init(mq);
 
     mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
     mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
+    mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawq);
     mpz_sub(mr, ma, mb);
+
+    if (!mpz_fits_slong_p(mr) || !mpz_fits_ulong_p(mr)) // if overflow, add q
+    {
+       //rawSubLL_done
+        //std::cout << "rawSubLL_done" << "\n";
+        mpz_add(mr, mr, mq);
+    }
+
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
     mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
 
     mpz_clear(ma);
     mpz_clear(mb);
     mpz_clear(mr);
+    mpz_clear(mq);
 }
 
 void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
