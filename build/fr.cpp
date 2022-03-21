@@ -817,6 +817,8 @@ void Fr_toNormal(PFrElement r, PFrElement a)
 {
     if (a->type == Fr_LONGMONTGOMERY)
     {
+        r->type = Fr_LONG;
+        //r->shortVal = a->shortVal;
         Fr_rawFromMontgomery(r->longVal, a->longVal);
     }
     else

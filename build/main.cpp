@@ -41,6 +41,29 @@ FrRawElement pRawResult3 = {0,0,0,0};
 FrRawElement pRawA3      = {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
 FrRawElement pRawB3      = {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
 
+#define Fr_SHORT 0x00000000
+#define Fr_SHORTMONTGOMERY 0x40000000
+#define Fr_LONG 0x80000000
+#define Fr_LONGMONTGOMERY 0xC0000000
+
+FrElement RawResult = {0,0,{0,0,0,0}};
+FrElement RawA = {0xa1f0, Fr_SHORT,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+FrElement RawB = {0x1bb8, Fr_SHORT,{0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5}};
+
+FrElement RawResult1 = {0,0,{0,0,0,0}};
+FrElement RawA1 = {0xa1f0, Fr_SHORTMONTGOMERY,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+FrElement RawB1 = {0x1bb8, Fr_SHORTMONTGOMERY,{0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5}};
+
+FrElement RawResult2 = {0,0,{0,0,0,0}};
+FrElement RawA2 = {0xa1f0, Fr_LONG,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+FrElement RawB2 = {0x1bb8, Fr_LONG,{0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5}};
+
+FrElement RawResult3 = {0,0,{0,0,0,0}};
+FrElement RawA3 = {0xa1f0, Fr_LONGMONTGOMERY,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+FrElement RawB3 = {0x1bb8, Fr_LONGMONTGOMERY,{0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5}};
+
+
+
 //FrElement Fr_q = {0, 0x80000000, {0x43e1f593f0000001,
 //                                  0x2833e84879b97091,
 //                                  0xb85045b68181585d,
@@ -121,6 +144,22 @@ void compare_rawResult(FrRawElement pRawResult_asm, FrRawElement pRawResult_c, i
         pRawResult_asm[1] != pRawResult_c[1] ||
         pRawResult_asm[2] != pRawResult_c[2] ||
         pRawResult_asm[3] != pRawResult_c[3])
+    {
+        std::cout << TestName << idx << " failed!" << "\n";
+    }
+    else
+    {
+        std::cout << TestName << idx << " succeed!" << "\n";
+    }
+}
+
+void compare_Result(PFrElement pResult_asm, PFrElement pResult_c, int idx, std::string TestName)
+{
+    if (pResult_asm->shortVal != pResult_c->shortVal     ||
+        pResult_asm->longVal[0] != pResult_c->longVal[0] ||
+        pResult_asm->longVal[1] != pResult_c->longVal[1] ||
+        pResult_asm->longVal[2] != pResult_c->longVal[2] ||
+        pResult_asm->longVal[3] != pResult_c->longVal[3])
     {
         std::cout << TestName << idx << " failed!" << "\n";
     }
@@ -559,49 +598,6 @@ void Fr_rawIsZero_unit_test()
     compare_rawResult(pRawResult3, pRawResult3_c, 3, "Fr_rawIsZero_unit_test");
 }
 
-
-
-//void Fr_Rw_ToMontgomery_unit_test()
-//{
-//    //Fr_Rw_ToMontgomery_test 0:
-//    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
-//    FrRawElement pRawResult0= {0xcba5e0bbd0000003,0x789bb8d96d2c51b3,0x28f0d12384840917,0x112ceb58a394e07d};
-//    //Fr_Rw_ToMontgomery_test 1:
-//    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
-//    FrRawElement pRawResult1= {0xac96341c4ffffffb,0x36fc76959f60cd29,0x666ea36f7879462e,0xe0a77c19a07df2f};
-//    //Fr_Rw_ToMontgomery_test 2:
-//    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
-//    FrRawElement pRawResult2= {0x5b9a85c0dc5fb590,0x293a0258129f96b,0xd31fd70514055493,0x546132966296a07};
-//    //Fr_Rw_ToMontgomery_test 3:
-//    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
-//    FrRawElement pRawResult3= {0x8eaddd03c0bcc45a,0x1d0775cf53f57853,0xacb9a1fdb8079310,0x1b7838d45d9b3577};
-
-//    FrRawElement pRawResult0_c;
-//    FrRawElement pRawResult1_c;
-//    FrRawElement pRawResult2_c;
-//    FrRawElement pRawResult3_c;
-
-//    Fr_rawToMontgomery(pRawResult0_c, pRawA0);
-//    Fr_rawToMontgomery(pRawResult1_c, pRawA1);
-//    Fr_rawToMontgomery(pRawResult2_c, pRawA2);
-//    Fr_rawToMontgomery(pRawResult3_c, pRawA3);
-
-//    compare_rawResult(pRawResult0, pRawResult0_c, 0, "Fr_Rw_ToMontgomery_unit_test");
-//    compare_rawResult(pRawResult1, pRawResult1_c, 1, "Fr_Rw_ToMontgomery_unit_test");
-//    compare_rawResult(pRawResult2, pRawResult2_c, 2, "Fr_Rw_ToMontgomery_unit_test");
-//    compare_rawResult(pRawResult3, pRawResult3_c, 3, "Fr_Rw_ToMontgomery_unit_test");
-//}
-
-//void Fr_toNormal_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
-//{
-//    std::cout << "//Fr_Rw_ToMontgomery_test " << idx << ": " <<  '\n';
-//    Fr_toNormal_test(pRawResult, pRawA);
-//    std::cout << "FrRawElement pRawA" << idx << "= " << std::hex << "{0x" << pRawA[0] << ",0x" << pRawA[1] << ",0x" << pRawA[2] << ",0x" << pRawA[3] << "};"<< '\n';
-//    //std::cout << "FrRawElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
-//    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
-//}
-
-
 void Fr_Rw_FromMontgomery_unit_test()
 {
     //Fr_Rw_FromMontgomery_test 0:
@@ -640,6 +636,46 @@ void Fr_Rw_FromMontgomery_test(FrRawElement pRawResult, FrRawElement pRawA, FrRa
     std::cout << "FrRawElement pRawA" << idx << "= " << std::hex << "{0x" << pRawA[0] << ",0x" << pRawA[1] << ",0x" << pRawA[2] << ",0x" << pRawA[3] << "};"<< '\n';
     //std::cout << "FrRawElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
     std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
+}
+
+void Fr_toNormal_unit_test()
+{
+    //Fr_toNormal_test 0:
+    FrElement pA0= {0xa1f0,0x0,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    FrElement pResult0= {0xa1f0,0x0,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    //Fr_toNormal_test 1:
+    FrElement pA1= {0xa1f0,0x40000000,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    FrElement pResult1= {0xa1f0,0x40000000,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    //Fr_toNormal_test 2:
+    FrElement pA2= {0xa1f0,0x80000000,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    FrElement pResult2= {0xa1f0,0x80000000,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    //Fr_toNormal_test 3:
+    FrElement pA3= {0xa1f0,0xc0000000,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    FrElement pResult3= {0x0,0x80000000,{0x55b425913927735a,0xa3ac6d7389307a4d,0x543d3ec42a2529ae,0x256e51ca1fcef59b}};
+
+    FrElement Result0_c = {0,0,{0,0,0,0}};
+    FrElement Result1_c = {0,0,{0,0,0,0}};
+    FrElement Result2_c= {0,0,{0,0,0,0}};
+    FrElement Result3_c= {0,0,{0,0,0,0}};
+
+    Fr_toNormal(&Result0_c, &pA0);
+    Fr_toNormal(&Result1_c, &pA1);
+    Fr_toNormal(&Result2_c, &pA2);
+    Fr_toNormal(&Result3_c, &pA3);
+
+    compare_Result(&pResult0, &Result0_c, 0, "Fr_toNormal_unit_test");
+    compare_Result(&pResult1, &Result1_c, 1, "Fr_toNormal_unit_test");
+    compare_Result(&pResult2, &Result2_c, 2, "Fr_toNormal_unit_test");
+    compare_Result(&pResult3, &Result3_c, 3, "Fr_toNormal_unit_test");
+}
+
+void Fr_toNormal_test(PFrElement pResult, PFrElement pA, PFrElement pB, int idx)
+{
+    std::cout << "//Fr_toNormal_test " << idx << ": " <<  '\n';
+    Fr_toNormal(pResult, pA);
+    std::cout << "FrElement pA" << idx << "= " << std::hex << "{0x" << pA->shortVal << ",0x" << pA->type << ",{0x" << pA->longVal[0] << ",0x" << pA->longVal[1] << ",0x" << pA->longVal[2] << ",0x" << pA->longVal[3] << "}};"<< '\n';
+    //std::cout << "FrElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
+    std::cout << "FrElement pResult" << idx << "= " << std::hex << "{0x" << pResult->shortVal << ",0x" << pResult->type << ",{0x" << pResult->longVal[0] << ",0x" << pResult->longVal[1] << ",0x" << pResult->longVal[2] << ",0x" << pResult->longVal[3] << "}};"<< '\n';
 }
 
 
@@ -996,6 +1032,19 @@ int main()
     Fr_Rw_FromMontgomery_test(pRawResult1, pRawA1, pRawB1, 1);
     Fr_Rw_FromMontgomery_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_FromMontgomery_test(pRawResult3, pRawA3, pRawB3, 3);
+#endif
+
+#ifdef TEST_C_FUNCTIONS
+    Fr_toNormal_unit_test();
+    Fr_toNormal_test(&RawResult,  &RawA,  &RawB, 0);
+    Fr_toNormal_test(&RawResult1, &RawA1, &RawB1, 1);
+    Fr_toNormal_test(&RawResult2, &RawA2, &RawB2, 2);
+    Fr_toNormal_test(&RawResult3, &RawA3, &RawB3, 3);
+#else
+    Fr_toNormal_test(&RawResult,  &RawA,  &RawB, 0);
+    Fr_toNormal_test(&RawResult1, &RawA1, &RawB1, 1);
+    Fr_toNormal_test(&RawResult2, &RawA2, &RawB2, 2);
+    Fr_toNormal_test(&RawResult3, &RawA3, &RawB3, 3);
 #endif
 
 
