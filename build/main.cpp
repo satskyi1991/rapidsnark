@@ -30,11 +30,11 @@ FrRawElement pRawA = {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0
 FrRawElement pRawB = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
 
 FrRawElement pRawResult1 = {0,0,0,0};
-FrRawElement pRawA1      = {0x1,0,0,0};
-FrRawElement pRawB1      = {0x1,0,0,0};
+FrRawElement pRawA1      = {0x0,0,0,0};
+FrRawElement pRawB1      = {0x2,0,0,0};
 
 FrRawElement pRawResult2 = {0,0,0,0};
-FrRawElement pRawA2      = {0xffffffffffffffff,0,0,0};
+FrRawElement pRawA2      = {0xfffffffffffffffe,0,0,0};
 FrRawElement pRawB2      = {0xffffffffffffffff,0,0,0};
 
 FrRawElement pRawResult3 = {0,0,0,0};
@@ -518,6 +518,50 @@ void Fr_Rw_IsEq_unit_test()
 }
 
 
+void Fr_rawIsZero_test(uint64_t uRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
+{
+    std::cout << "//Fr_rawIsZero_test " << idx << ": " <<  '\n';
+    uRawResult = Fr_rawIsZero(pRawA);
+    std::cout << "FrRawElement pRawA" << idx << "= " << std::hex << "{0x" << pRawA[0] << ",0x" << pRawA[1] << ",0x" << pRawA[2] << ",0x" << pRawA[3] << "};"<< '\n';
+    //std::cout << "FrRawElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
+    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< uRawResult << "};"<< '\n';// << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
+}
+
+
+void Fr_rawIsZero_unit_test()
+{
+    //Fr_rawIsZero_test 0:
+    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+    FrRawElement pRawResult0= {0x0};
+    //Fr_rawIsZero_test 1:
+    FrRawElement pRawA1= {0x0,0x0,0x0,0x0};
+    FrRawElement pRawResult1= {0x1};
+    //Fr_rawIsZero_test 2:
+    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+    FrRawElement pRawResult2= {0x0};
+    //Fr_rawIsZero_test 3:
+    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+    FrRawElement pRawResult3= {0x0};
+
+    FrRawElement pRawResult0_c = {0};
+    FrRawElement pRawResult1_c = {0};
+    FrRawElement pRawResult2_c = {0};
+    FrRawElement pRawResult3_c = {0};
+
+    pRawResult0_c[0] = Fr_rawIsZero(pRawA0);
+    pRawResult1_c[0] = Fr_rawIsZero(pRawA1);
+    pRawResult2_c[0] = Fr_rawIsZero(pRawA2);
+    pRawResult3_c[0] = Fr_rawIsZero(pRawA3);
+
+    compare_rawResult(pRawResult0, pRawResult0_c, 0, "Fr_rawIsZero_unit_test");
+    compare_rawResult(pRawResult1, pRawResult1_c, 1, "Fr_rawIsZero_unit_test");
+    compare_rawResult(pRawResult2, pRawResult2_c, 2, "Fr_rawIsZero_unit_test");
+    compare_rawResult(pRawResult3, pRawResult3_c, 3, "Fr_rawIsZero_unit_test");
+}
+
+
+
+
 void Fr_rawFromMontgomery_test()
 {
     Fr_rawFromMontgomery(pRawResult, pRawA);
@@ -853,6 +897,19 @@ int main()
     Fr_rawIsEq_test(uRawResult1, pRawA1, pRawB1, 1);
     Fr_rawIsEq_test(uRawResult2, pRawA2, pRawB2, 2);
     Fr_rawIsEq_test(uRawResult3, pRawA3, pRawB3, 3);
+#endif
+
+#ifdef TEST_C_FUNCTIONS
+    Fr_rawIsZero_unit_test();
+//    Fr_rawIsZero_test(pRawResult,  pRawA,  pRawB, 0);
+//    Fr_rawIsZero_test(pRawResult1, pRawA1, pRawB1, 1);
+//    Fr_rawIsZero_test(pRawResult2, pRawA2, pRawB2, 2);
+//    Fr_rawIsZero_test(pRawResult3, pRawA3, pRawB3, 3);
+#else
+    Fr_rawIsZero_test(uRawResult,  pRawA,  pRawB, 0);
+    Fr_rawIsZero_test(uRawResult1, pRawA1, pRawB1, 1);
+    Fr_rawIsZero_test(uRawResult2, pRawA2, pRawB2, 2);
+    Fr_rawIsZero_test(uRawResult3, pRawA3, pRawB3, 3);
 #endif
 
 
