@@ -1683,10 +1683,10 @@ int main()
 {
 #ifdef TEST_C_FUNCTIONS
     Fr_Rw_add_unit_test();
-//    Fr_Rw_add_test(pRawResult,  pRawA,  pRawB, 0);
-//    Fr_Rw_add_test(pRawResult1, pRawA1, pRawB1, 1);
-//    Fr_Rw_add_test(pRawResult2, pRawA2, pRawB2, 2);
-//    Fr_Rw_add_test(pRawResult3, pRawA3, pRawB3, 3);
+    Fr_Rw_add_test(pRawResult,  pRawA,  pRawB, 0);
+    Fr_Rw_add_test(pRawResult1, pRawA1, pRawB1, 1);
+    Fr_Rw_add_test(pRawResult2, pRawA2, pRawB2, 2);
+    Fr_Rw_add_test(pRawResult3, pRawA3, pRawB3, 3);
 #else
     Fr_Rw_add_test(pRawResult,  pRawA,  pRawB, 0);
     Fr_Rw_add_test(pRawResult1, pRawA1, pRawB1, 1);

@@ -354,6 +354,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_add(rax, rax, mb);
     mpz_set(mr, rax);
     if (!mpz_fits_slong_p(mr) || !mpz_fits_ulong_p(mr))
+    //if (mpz_cmp(rax,mq))
     {
        //rawAddLL_sq
         //std::cout << "rawAddLL_sq" << "\n";
@@ -361,6 +362,63 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
         mpz_sub(mr, mr, rax);
     }
 
+    mpz_set(rax, mr);
+
+    if (rax->_mp_d[3] < mq->_mp_d[3])
+    {
+        //rawAddLL_done
+        return;
+    }
+    else
+    {
+        // rawAddLL_sq
+        mpz_set(rax, mq);
+        mpz_sub(mr, mr, rax);
+    }
+
+    mpz_set(rax, mr);
+
+    if (rax->_mp_d[2] < mq->_mp_d[2])
+    {
+        //rawAddLL_done
+        return;
+    }
+    else
+    {
+        // rawAddLL_sq
+        mpz_set(rax, mq);
+        mpz_sub(mr, mr, rax);
+    }
+
+    mpz_set(rax, mr);
+
+    if (rax->_mp_d[1] < mq->_mp_d[1])
+    {
+        //rawAddLL_done
+        return;
+    }
+    else
+    {
+        // rawAddLL_sq
+        mpz_set(rax, mq);
+        mpz_sub(mr, mr, rax);
+    }
+
+    mpz_set(rax, mr);
+
+    if (rax->_mp_d[0] < mq->_mp_d[0])
+    {
+        //rawAddLL_done
+        return;
+    }
+    else
+    {
+        // rawAddLL_sq
+        mpz_set(rax, mq);
+        mpz_sub(mr, mr, rax);
+    }
+
+/*
     if (mq->_mp_d[3] < rax->_mp_d[3])
     {
         //rawAddLL_sq
@@ -392,7 +450,7 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
          mpz_set(rax, mq);
          mpz_sub(mr, mr, rax);
     }
-
+*/
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
     mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
 
