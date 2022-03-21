@@ -21,16 +21,20 @@ using namespace std;
 //}
 #endif
 
+uint64_t uRawResult = 0;
+uint64_t uRawResult1 = 0;
+uint64_t uRawResult2 = 0;
+uint64_t uRawResult3 = 0;
 FrRawElement pRawResult = {0,0,0,0};
 FrRawElement pRawA = {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
 FrRawElement pRawB = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
 
 FrRawElement pRawResult1 = {0,0,0,0};
 FrRawElement pRawA1      = {0x1,0,0,0};
-FrRawElement pRawB1      = {0x2,0,0,0};
+FrRawElement pRawB1      = {0x1,0,0,0};
 
 FrRawElement pRawResult2 = {0,0,0,0};
-FrRawElement pRawA2      = {0xfffffffffffffffe,0,0,0};
+FrRawElement pRawA2      = {0xffffffffffffffff,0,0,0};
 FrRawElement pRawB2      = {0xffffffffffffffff,0,0,0};
 
 FrRawElement pRawResult3 = {0,0,0,0};
@@ -468,14 +472,51 @@ void Fr_Rw_ToMontgomery_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawE
     std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
 }
 
-
-void Fr_Rw_ToMontgomery_test()
+void Fr_rawIsEq_test(uint64_t uRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
 {
-    Fr_rawToMontgomery(pRawResult, pRawA);
-    std::cout << "Fr_rawToMontgomery Test: " <<  '\n';
-    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
-    std::cout << "pRawResult= " << std::hex << pRawResult[0] << ", " << pRawResult[1] << ", " << pRawResult[2] << ", " << pRawResult[3] << '\n';
+    std::cout << "//Fr_rawIsEq " << idx << ": " <<  '\n';
+    uRawResult = Fr_rawIsEq(pRawA, pRawB);
+    std::cout << "FrRawElement pRawA" << idx << "= " << std::hex << "{0x" << pRawA[0] << ",0x" << pRawA[1] << ",0x" << pRawA[2] << ",0x" << pRawA[3] << "};"<< '\n';
+    std::cout << "FrRawElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
+    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< uRawResult << "};"<< '\n';// << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
 }
+
+
+void Fr_Rw_IsEq_unit_test()
+{
+    //Fr_rawIsEq 0:
+    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+    FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+    FrRawElement pRawResult0= {0x0};
+    //Fr_rawIsEq 1:
+    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+    FrRawElement pRawB1= {0x1,0x0,0x0,0x0};
+    FrRawElement pRawResult1= {0x1};
+    //Fr_rawIsEq 2:
+    FrRawElement pRawA2= {0xffffffffffffffff,0x0,0x0,0x0};
+    FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+    FrRawElement pRawResult2= {0x1};
+    //Fr_rawIsEq 3:
+    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+    FrRawElement pRawResult3= {0x0};
+
+    FrRawElement pRawResult0_c = {0};
+    FrRawElement pRawResult1_c = {0};
+    FrRawElement pRawResult2_c = {0};
+    FrRawElement pRawResult3_c = {0};
+
+    pRawResult0_c[0] = Fr_rawIsEq(pRawA0, pRawB0);
+    pRawResult1_c[0] = Fr_rawIsEq(pRawA1, pRawB1);
+    pRawResult2_c[0] = Fr_rawIsEq(pRawA2, pRawB2);
+    pRawResult3_c[0] = Fr_rawIsEq(pRawA3, pRawB3);
+
+    compare_rawResult(pRawResult0, pRawResult0_c, 0, "Fr_Rw_IsEq_unit_test");
+    compare_rawResult(pRawResult1, pRawResult1_c, 1, "Fr_Rw_IsEq_unit_test");
+    compare_rawResult(pRawResult2, pRawResult2_c, 2, "Fr_Rw_IsEq_unit_test");
+    compare_rawResult(pRawResult3, pRawResult3_c, 3, "Fr_Rw_IsEq_unit_test");
+}
+
 
 void Fr_rawFromMontgomery_test()
 {
@@ -508,12 +549,7 @@ void Fr_Copy_test()
     std::cout << "ResultEl.longVal= " << std::hex << ResultEl.longVal[0] << ", " << ResultEl.longVal[1]<< ", " << ResultEl.longVal[2] << ", " << ResultEl.longVal[3] << '\n';
 }
 
-void Fr_rawIsEq_test()
-{
-    std::cout << "Fr_rawIsEq(pRawA, pRawB) Test: " <<  Fr_rawIsEq(pRawA, pRawB) << '\n';
-    std::cout << "pRawA= " << std::hex << pRawA[0] << ", " << pRawA[1] << ", " << pRawA[2] << ", " << pRawA[3] << '\n';
-    std::cout << "pRawResult= " << std::hex << pRawB[0] << ", " << pRawB[1] << ", " << pRawB[2] << ", " << pRawB[3] << '\n';
-}
+
 
 void Fr_copyn_test()
 {
@@ -805,6 +841,22 @@ int main()
     Fr_Rw_ToMontgomery_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_ToMontgomery_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
+
+#ifdef TEST_C_FUNCTIONS
+    Fr_Rw_IsEq_unit_test();
+//    Fr_rawIsEq_test(pRawResult,  pRawA,  pRawB, 0);
+//    Fr_rawIsEq_test(pRawResult1, pRawA1, pRawB1, 1);
+//    Fr_rawIsEq_test(pRawResult2, pRawA2, pRawB2, 2);
+//    Fr_rawIsEq_test(pRawResult3, pRawA3, pRawB3, 3);
+#else
+    Fr_rawIsEq_test(uRawResult,  pRawA,  pRawB, 0);
+    Fr_rawIsEq_test(uRawResult1, pRawA1, pRawB1, 1);
+    Fr_rawIsEq_test(uRawResult2, pRawA2, pRawB2, 2);
+    Fr_rawIsEq_test(uRawResult3, pRawA3, pRawB3, 3);
+#endif
+
+
+
 
 
 
