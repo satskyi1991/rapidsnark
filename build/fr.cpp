@@ -1018,11 +1018,13 @@ void mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
     if (!mpz_fits_sint_p(rax))
     {
         rawCopyS2L(r, temp);
+        //std::cout << "rawCopyS2L" << "\n";
     }
     else
     {
         r->type = Fr_SHORT;
-        r->shortVal = temp;
+        //r->longVal[0] = temp;
+        //std::cout << "not in rawCopyS2L" << "\n";
     }
     mpz_clear(rax);
 }
