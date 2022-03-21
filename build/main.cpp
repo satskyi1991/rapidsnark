@@ -251,9 +251,26 @@ FrElement Result3_l1ms2m = {0,0,{0,0,0,0}};
 FrElement A3_l1ms2m = {0xffff, Fr_LONGMONTGOMERY,{0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff}};
 FrElement B3_l1ms2m = {0xffff, Fr_SHORTMONTGOMERY,{0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff}};
 
+//mul_s1ml2m
+FrElement Result_s1ml2m = {0,0,{0,0,0,0}};
+FrElement A_s1ml2m = {0x1, Fr_SHORTMONTGOMERY,{0x01,0,0,0}};
+FrElement B_s1ml2m = {0x2, Fr_LONGMONTGOMERY,{0x02,0,0,0}};
+
+FrElement Result1_s1ml2m = {0,0,{0,0,0,0}};
+FrElement A1_s1ml2m = {0x0, Fr_SHORTMONTGOMERY,{0x0,0,0,0}};
+FrElement B1_s1ml2m = {0x2, Fr_LONGMONTGOMERY,{0x2,0,0,0}};
+
+FrElement Result2_s1ml2m = {0,0,{0,0,0,0}};
+FrElement A2_s1ml2m = {0xa1f0, Fr_SHORTMONTGOMERY,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+FrElement B2_s1ml2m = {0x1bb8, Fr_LONGMONTGOMERY,{0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5}};
+
+FrElement Result3_s1ml2m = {0,0,{0,0,0,0}};
+FrElement A3_s1ml2m = {0xffff, Fr_SHORTMONTGOMERY,{0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff}};
+FrElement B3_s1ml2m = {0xffff, Fr_LONGMONTGOMERY,{0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff}};
+
 
 //void mul_s1ml2n(PFrElement r,PFrElement a,PFrElement b);
-//void mul_s1ml2m(PFrElement r,PFrElement a,PFrElement b);
+
 
 
 //FrElement Fr_q = {0, 0x80000000, {0x43e1f593f0000001,
@@ -1356,6 +1373,50 @@ void Fr_mul_l1ms2m_test(PFrElement pResult, PFrElement pA, PFrElement pB, int id
 }
 
 
+void Fr_mul_s1ml2m_unit_test()
+{
+    //Fr_mul_s1ml2m_test 0:
+    FrElement pA_s1ml2m0= {0x1,0x40000000,{0x1,0x0,0x0,0x0}};
+    FrElement pB_s1ml2m0= {0x2,0xc0000000,{0x2,0x0,0x0,0x0}};
+    FrElement pResult_s1ml2m0= {0x0,0xc0000000,{0xb8b7400adb62329c,0x121deb53c223d90f,0x904c1bc95d70baba,0x2bd7f2a3058aaa39}};
+    //Fr_mul_s1ml2m_test 1:
+    FrElement pA_s1ml2m1= {0x0,0x40000000,{0x0,0x0,0x0,0x0}};
+    FrElement pB_s1ml2m1= {0x2,0xc0000000,{0x2,0x0,0x0,0x0}};
+    FrElement pResult_s1ml2m1= {0x0,0xc0000000,{0x0,0x0,0x0,0x0}};
+    //Fr_mul_s1ml2m_test 2:
+    FrElement pA_s1ml2m2= {0xa1f0,0x40000000,{0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014}};
+    FrElement pB_s1ml2m2= {0x1bb8,0xc0000000,{0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5}};
+    FrElement pResult_s1ml2m2= {0x0,0xc0000000,{0xcba5e0bbd0000003,0x789bb8d96d2c51b3,0x28f0d12384840917,0x112ceb58a394e07d}};
+    //Fr_mul_s1ml2m_test 3:
+    FrElement pA_s1ml2m3= {0xffff,0x40000000,{0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff}};
+    FrElement pB_s1ml2m3= {0xffff,0xc0000000,{0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff}};
+    FrElement pResult_s1ml2m3= {0x0,0xc0000000,{0xdea6a001d841e408,0xffd01934b5bef5d1,0xedc4ef0cf4a2b471,0x1d8f65bdb91d796f}};
+
+    FrElement Result0_c = {0,0,{0,0,0,0}};
+    FrElement Result1_c = {0,0,{0,0,0,0}};
+    FrElement Result2_c= {0,0,{0,0,0,0}};
+    FrElement Result3_c= {0,0,{0,0,0,0}};
+
+    Fr_mul(&Result0_c, &pA_s1ml2m0, &pB_s1ml2m0);
+    Fr_mul(&Result1_c, &pA_s1ml2m1, &pB_s1ml2m1);
+    Fr_mul(&Result2_c, &pA_s1ml2m2, &pB_s1ml2m2);
+    Fr_mul(&Result3_c, &pA_s1ml2m3, &pB_s1ml2m3);
+
+    compare_Result(&pResult_s1ml2m0, &Result0_c, 0, "Fr_mul_s1ml2m_unit_test");
+    compare_Result(&pResult_s1ml2m1, &Result1_c, 1, "Fr_mul_s1ml2m_unit_test");
+    compare_Result(&pResult_s1ml2m2, &Result2_c, 2, "Fr_mul_s1ml2m_unit_test");
+    compare_Result(&pResult_s1ml2m3, &Result3_c, 3, "Fr_mul_s1ml2m_unit_test");
+}
+
+void Fr_mul_s1ml2m_test(PFrElement pResult, PFrElement pA, PFrElement pB, int idx)
+{
+    std::cout << "//Fr_mul_s1ml2m_test " << idx << ": " <<  '\n';
+    Fr_mul(pResult, pA, pB);
+    std::cout << "FrElement pA_s1ml2m" << idx << "= " << std::hex << "{0x" << pA->shortVal << ",0x" << pA->type << ",{0x" << pA->longVal[0] << ",0x" << pA->longVal[1] << ",0x" << pA->longVal[2] << ",0x" << pA->longVal[3] << "}};"<< '\n';
+    std::cout << "FrElement pB_s1ml2m" << idx << "= " << std::hex << "{0x" << pB->shortVal << ",0x" << pB->type << ",{0x" << pB->longVal[0] << ",0x" << pB->longVal[1] << ",0x" << pB->longVal[2] << ",0x" << pB->longVal[3] << "}};"<< '\n';
+    std::cout << "FrElement pResult_s1ml2m" << idx << "= " << std::hex << "{0x" << pResult->shortVal << ",0x" << pResult->type << ",{0x" << pResult->longVal[0] << ",0x" << pResult->longVal[1] << ",0x" << pResult->longVal[2] << ",0x" << pResult->longVal[3] << "}};"<< '\n';
+}
+
 void Fr_Copy_test()
 {
     FrElement ResultEl = {0};
@@ -1862,7 +1923,18 @@ int main()
     Fr_mul_l1ms2m_test(&Result3_l1ms2m, &A3_l1ms2m, &B3_l1ms2m, 3);
 #endif
 
-
+#ifdef TEST_C_FUNCTIONS
+    Fr_mul_s1ml2m_unit_test();
+//    Fr_mul_s1ml2m_test(&Result_s1ml2m,   &A_s1ml2m,   &B_s1ml2m, 0);
+//    Fr_mul_s1ml2m_test(&Result1_s1ml2m,  &A1_s1ml2m,  &B1_s1ml2m, 1);
+//    Fr_mul_s1ml2m_test(&Result2_s1ml2m,  &A2_s1ml2m,  &B2_s1ml2m, 2);
+//    Fr_mul_s1ml2m_test(&Result3_s1ml2m,  &A3_s1ml2m,  &B3_s1ml2m, 3);
+#else
+    Fr_mul_s1ml2m_test(&Result_s1ml2m,   &A_s1ml2m,   &B_s1ml2m, 0);
+    Fr_mul_s1ml2m_test(&Result1_s1ml2m,  &A1_s1ml2m,  &B1_s1ml2m, 1);
+    Fr_mul_s1ml2m_test(&Result2_s1ml2m,  &A2_s1ml2m,  &B2_s1ml2m, 2);
+    Fr_mul_s1ml2m_test(&Result3_s1ml2m,  &A3_s1ml2m,  &B3_s1ml2m, 3);
+#endif
 
 
 //    Fr_Rw_sub_test(pRawResult,  pRawA,  pRawB, 0);
