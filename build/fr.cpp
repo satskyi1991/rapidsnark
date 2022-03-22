@@ -426,48 +426,104 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mp_limb_t mr4[5] = {0, 0, 0, 0, 0};
     mp_limb_t mnp    = np;
 
+//    // FirstLoop
+//    mpz_mul_ui(mr1, mb, pRawA[0]);
+//    // Second Loop
+//    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+//    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+//    mpz_add(mr4, mr3, mr1);
+//    mr4->_mp_d[0] = mr4->_mp_d[1];
+//    mr4->_mp_d[1] = mr4->_mp_d[2];
+//    mr4->_mp_d[2] = mr4->_mp_d[3];
+//    mr4->_mp_d[3] = mr4->_mp_d[4];
+//    mr4->_mp_d[4] = 0;
+
     // FirstLoop
     mpn_mul(&mr1[0], &mb[0], 4, &pRawA[0], 1);
     // Second Loop
     mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
     mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
+
+    std:: cout << "1 " << std::hex << mr4[0] << ", " << mr4[1] << ", " << mr4[2] << ", " << mr4[3] << ", " << mr4[4] << "\n";
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
     mr4[3] = mr4[4];
     mr4[4] = 0;
+
+//    // FirstLoop
+//    mpz_mul_ui(mr1, mb, pRawA[1]);
+//    // Second Loop
+//    mpz_add(mr1, mr4, mr1);
+//    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+//    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+//    mpz_add(mr4, mr3, mr1);
+//    mr4->_mp_d[0] = mr4->_mp_d[1];
+//    mr4->_mp_d[1] = mr4->_mp_d[2];
+//    mr4->_mp_d[2] = mr4->_mp_d[3];
+//    mr4->_mp_d[3] = mr4->_mp_d[4];
+//    mr4->_mp_d[4] = 0;
 
     // FirstLoop
     mpn_mul(&mr1[0], &mb[0], 4, &pRawA[1], 1);
     // Second Loop
+    mpn_add(&mr1[0], &mr4[0], 4, &mr1[0], 4);
     mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
     mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
     mr4[3] = mr4[4];
     mr4[4] = 0;
+
+//    // FirstLoop
+//    mpz_mul_ui(mr1, mb, pRawA[2]);
+//    // Second Loop
+//    mpz_add(mr1, mr4, mr1);
+//    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+//    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+//    mpz_add(mr4, mr3, mr1);
+//    mr4->_mp_d[0] = mr4->_mp_d[1];
+//    mr4->_mp_d[1] = mr4->_mp_d[2];
+//    mr4->_mp_d[2] = mr4->_mp_d[3];
+//    mr4->_mp_d[3] = mr4->_mp_d[4];
+//    mr4->_mp_d[4] = 0;
 
     // FirstLoop
     mpn_mul(&mr1[0], &mb[0], 4, &pRawA[2], 1);
     // Second Loop
+    mpn_add(&mr1[0], &mr4[0], 4, &mr1[0], 4);
     mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
     mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
     mr4[3] = mr4[4];
     mr4[4] = 0;
 
+//    // FirstLoop
+//    mpz_mul_ui(mr1, mb, pRawA[3]);
+//    // Second Loop
+//    mpz_add(mr1, mr4, mr1);
+//    mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
+//    mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
+//    mpz_add(mr4, mr3, mr1);
+//    mr4->_mp_d[0] = mr4->_mp_d[1];
+//    mr4->_mp_d[1] = mr4->_mp_d[2];
+//    mr4->_mp_d[2] = mr4->_mp_d[3];
+//    mr4->_mp_d[3] = mr4->_mp_d[4];
+//    mr4->_mp_d[4] = 0;
+
     // FirstLoop
     mpn_mul(&mr1[0], &mb[0], 4, &pRawA[3], 1);
     // Second Loop
+    mpn_add(&mr1[0], &mr4[0], 4, &mr1[0], 4);
     mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
     mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
