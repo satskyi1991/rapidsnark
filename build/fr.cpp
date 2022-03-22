@@ -466,50 +466,19 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
 void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 {
-    mpz_t ma;
-    mpz_t mb;
-    mpz_t mr;
-    mpz_t mq;
-    mpz_init(ma);
-    mpz_init(mb);
-    mpz_init(mr);
-    mpz_init(mq);
-
     mp_limb_t ma1[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
     mp_limb_t mb1[4] = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
     mp_limb_t mq1[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
     mp_limb_t mr1[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
     mp_limb_t carry;
 
-    mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
-    mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
-    mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawq);
-
-    mpz_xor(mr,mr,mr);
-    mpz_sub(mr, ma, mb);
     carry = mpn_sub_n(&mr1[0], &ma1[0], &mb1[0], 4);
     if(carry)
     {
         mpn_add_n(&mr1[0], &mr1[0], &mq1[0], 4);
     }
 
-    std::cout << "2 " << std::hex << mr->_mp_d[0] <<" , " << mr->_mp_d[1] <<" , " << mr->_mp_d[2] <<" , " << mr->_mp_d[3] <<" , " <<mr->_mp_d[4] <<"\n";
-
-    if ((!mpz_fits_ulong_p(mr) &&  mr->_mp_d[4]) ||
-        (!mpz_fits_slong_p(mr) &&  mr->_mp_d[4])) // if overflow, add q
-    {
-        //rawSubLL_aq
-        //std::cout << "rawSubLL_aq" << "\n";
-        mpz_add(mr, mr, mq);
-    }
-
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr1[i];
-    //mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr1);
-
-    mpz_clear(ma);
-    mpz_clear(mb);
-    mpz_clear(mr);
-    mpz_clear(mq);
 }
 
 void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
