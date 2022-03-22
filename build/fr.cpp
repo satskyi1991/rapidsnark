@@ -350,22 +350,47 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
     mpz_import(mb, Fr_N64, -1, 8, -1, 0, (const void *)pRawB);
     mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawq);
+    //mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)pRawResult);
+    mpz_xor(mr,mr,mr);
+    //std::cout << "111111 " << std::hex << mr->_mp_d[0] <<" , " << mr->_mp_d[1] <<" , " << mr->_mp_d[2] <<" , " << mr->_mp_d[3] <<" , " <<mr->_mp_d[4] <<"\n";
     mpz_set(rax, ma);
     mpz_add(rax, rax, mb);
     mpz_set(mr, rax);
-    if (!mpz_fits_slong_p(mr) || !mpz_fits_ulong_p(mr))
+
+    //std::cout << "1 " << std::hex << mr->_mp_d[0] <<" , " << mr->_mp_d[1] <<" , " << mr->_mp_d[2] <<" , " << mr->_mp_d[3] <<" , " <<mr->_mp_d[4] <<"\n";
+//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+//    mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+//    return;
+    //if (!mpz_fits_slong_p(mr) || !mpz_fits_ulong_p(mr))
     //if (mpz_cmp(rax,mq))
+    if (!mpz_fits_ulong_p(mr) && mr->_mp_d[4] == 1)
     {
        //rawAddLL_sq
         //std::cout << "rawAddLL_sq" << "\n";
         mpz_set(rax, mq);
         mpz_sub(mr, mr, rax);
+        //std::cout << "4 " << "\n";
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
+        //rawAddLL_done
+        return;
     }
 
     mpz_set(rax, mr);
 
+//    if (mpz_cmp(rax,mq))
+//    {
+//       //rawAddLL_sq
+//        //std::cout << "rawAddLL_sq" << "\n";
+//        mpz_set(rax, mq);
+//        mpz_sub(mr, mr, rax);
+//    }
+
     if (rax->_mp_d[3] < mq->_mp_d[3])
     {
+        //std::cout << "3 " << "\n";
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
         //rawAddLL_done
         return;
     }
@@ -380,6 +405,9 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
     if (rax->_mp_d[2] < mq->_mp_d[2])
     {
+        //std::cout << "2 " << "\n";
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
         //rawAddLL_done
         return;
     }
@@ -394,6 +422,9 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
     if (rax->_mp_d[1] < mq->_mp_d[1])
     {
+        //std::cout << "1 " << "\n";
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
         //rawAddLL_done
         return;
     }
@@ -408,6 +439,9 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
     if (rax->_mp_d[0] < mq->_mp_d[0])
     {
+        //std::cout << "1 " << "\n";
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
+        mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
         //rawAddLL_done
         return;
     }
@@ -418,39 +452,8 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
         mpz_sub(mr, mr, rax);
     }
 
-/*
-    if (mq->_mp_d[3] < rax->_mp_d[3])
-    {
-        //rawAddLL_sq
-         //std::cout << "rawAddLL_sq 1" << "\n";
-         mpz_set(rax, mq);
-         mpz_sub(mr, mr, rax);
-    }
+    //std::cout << "2 " << std::hex << mr->_mp_d[0] <<" , " << mr->_mp_d[1] <<" , " << mr->_mp_d[2] <<" , " << mr->_mp_d[3] <<" , " <<mr->_mp_d[4] <<"\n";
 
-    if (mq->_mp_d[2] < rax->_mp_d[2])
-    {
-        //rawAddLL_sq
-         //std::cout << "rawAddLL_sq 2" << "\n";
-         mpz_set(rax, mq);
-         mpz_sub(mr, mr, rax);
-    }
-
-    if (mq->_mp_d[1] < rax->_mp_d[1])
-    {
-        //rawAddLL_sq
-         //std::cout << "rawAddLL_sq 3" << "\n";
-         mpz_set(rax, mq);
-         mpz_sub(mr, mr, rax);
-    }
-
-    if (mq->_mp_d[0] < rax->_mp_d[0])
-    {
-        //rawAddLL_sq
-         //std::cout << "rawAddLL_sq 4" << "\n";
-         mpz_set(rax, mq);
-         mpz_sub(mr, mr, rax);
-    }
-*/
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
     mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
 
