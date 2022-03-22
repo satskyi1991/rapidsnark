@@ -370,53 +370,17 @@ void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
 void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
 {
-    mpz_t ma;
-    mpz_t mq;
-    mpz_t mr;
-    mpz_init(ma);
-    mpz_init(mq);
-    mpz_init(mr);
+    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
+    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
+    mp_limb_t mz[4] = {0, 0, 0, 0};
 
-    mpz_import(ma, Fr_N64, -1, sizeof(pRawA[0]), -1, 0, (const void *)pRawA);
-    mpz_import(mq, Fr_N64, -1, sizeof(pRawA[0]), -1, 0, (const void *)q);
-
-    if (ma->_mp_d[0] != 0)
+    if (mpn_cmp(&ma[0], &mz[0], 4) != 0)
     {
-        // doNegate
-        mpz_sub(mr, mq, ma);
+        mpn_sub_n(&mr[0], &mq[0], &ma[0], 4);
     }
 
-    if (ma->_mp_d[1] != 0)
-    {
-        // doNegate
-        mpz_sub(mr, mq, ma);
-    }
-
-    if (ma->_mp_d[2] != 0)
-    {
-        // doNegate
-        mpz_sub(mr, mq, ma);
-    }
-
-    if (ma->_mp_d[3] != 0)
-    {
-        // doNegate
-        mpz_sub(mr, mq, ma);
-    }
-
-    if (ma->_mp_d[0] == 0 &&
-        ma->_mp_d[1] == 0 &&
-        ma->_mp_d[2] == 0 &&
-        ma->_mp_d[3] == 0)
-    {
-        mpz_set(mr, ma);
-    }
-
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = 0;
-    mpz_export((void *)pRawResult, NULL, -1, sizeof(pRawResult[0]), -1, 0, mr);
-
-    mpz_clear(ma);
-    mpz_clear(mr);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
 }
 
 void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA)
