@@ -466,19 +466,19 @@ void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
 void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 {
-    mp_limb_t ma1[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
-    mp_limb_t mb1[4] = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
-    mp_limb_t mq1[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
-    mp_limb_t mr1[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
+    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
+    mp_limb_t mb[4] = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
+    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
     mp_limb_t carry;
 
-    carry = mpn_sub_n(&mr1[0], &ma1[0], &mb1[0], 4);
+    carry = mpn_sub_n(&mr[0], &ma[0], &mb[0], 4);
     if(carry)
     {
-        mpn_add_n(&mr1[0], &mr1[0], &mq1[0], 4);
+        mpn_add_n(&mr[0], &mr[0], &mq[0], 4);
     }
 
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr1[i];
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
 }
 
 void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
