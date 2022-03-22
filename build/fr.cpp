@@ -415,6 +415,73 @@ int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB)
 
 void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 {
+
+    mp_limb_t ma[4]  = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
+    mp_limb_t mb[4]  = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
+    mp_limb_t mq[4]  = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+    mp_limb_t mr[4]  = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
+    mp_limb_t mr1[4] = {0, 0, 0, 0};
+    mp_limb_t mr2[4] = {0, 0, 0, 0};
+    mp_limb_t mr3[4] = {0, 0, 0, 0};
+    mp_limb_t mr4[5] = {0, 0, 0, 0, 0};
+    mp_limb_t mnp    = np;
+
+    // FirstLoop
+    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[0], 1);
+    // Second Loop
+    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
+    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mr4[0] = mr4[1];
+    mr4[1] = mr4[2];
+    mr4[2] = mr4[3];
+    mr4[3] = mr4[4];
+    mr4[4] = 0;
+
+    // FirstLoop
+    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[1], 1);
+    // Second Loop
+    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
+    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mr4[0] = mr4[1];
+    mr4[1] = mr4[2];
+    mr4[2] = mr4[3];
+    mr4[3] = mr4[4];
+    mr4[4] = 0;
+
+    // FirstLoop
+    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[2], 1);
+    // Second Loop
+    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
+    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mr4[0] = mr4[1];
+    mr4[1] = mr4[2];
+    mr4[2] = mr4[3];
+    mr4[3] = mr4[4];
+    mr4[4] = 0;
+
+    // FirstLoop
+    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[3], 1);
+    // Second Loop
+    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
+    mpn_add_n(&mr4[0], &mr3[0], &mr1[0], 4);
+    mr4[0] = mr4[1];
+    mr4[1] = mr4[2];
+    mr4[2] = mr4[3];
+    mr4[3] = mr4[4];
+    mr4[4] = 0;
+
+    if (mpn_cmp(&mr4[0], &mq[0], 4) != 0)
+    {
+        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+    }
+
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+/*
+
     mpz_t ma;
     mpz_t mb;
     mpz_t mnp;
@@ -489,12 +556,28 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mr4->_mp_d[3] = mr4->_mp_d[4];
     mr4->_mp_d[4] = 0;
 
-    if (!mpz_cmp(mr4,mq))
+    mp_limb_t mmq[4]  = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+    mp_limb_t mmr[4]  = {mr4->_mp_d[0], mr4->_mp_d[1], mr4->_mp_d[2], mr4->_mp_d[3]};
+
+    if (mpn_cmp(&mmr[0], &mmq[0], 1) == 0)
     {
-        //Fr_rawMMul_sq:
-        mpz_sub(mr4,mr4,mq);
+        mpn_sub_n(&mmr[0], &mmr[0], &mmq[0], 4);
     }
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+
+//    if (mpn_cmp(&mmr[0], &mmq[0], 4) == 0)
+//    {
+//        mpn_sub_n(&mmr[0], &mmr[0], &mmq[0], 4);
+//    }
+
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mmr[i];
+
+//    if (!mpz_cmp(mr4,mq))
+//    {
+//        //Fr_rawMMul_sq:
+//        mpz_sub(mr4,mr4,mq);
+//        std::cout << "1 ";
+//    }
+//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
 
 //    if (mr4->_mp_d[3] == mq->_mp_d[3])
 //    {
@@ -519,6 +602,7 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_clear(mr4);
     mpz_clear(mnp);
     mpz_clear(mq);
+    */
 }
 
 void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA)
