@@ -413,6 +413,187 @@ int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB)
     return 1;
 }
 
+// 0
+// ASM
+////Fr_Rw_mul_test 0:
+//FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+//FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+//FrRawElement pRawResult0= {0x2b5f03ec9137536d,0x806e49a91514a16c,0x31762d353b74a158,0x13d4d397da065264};
+////Fr_Rw_mul_test 1:
+//FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+//FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+//FrRawElement pRawResult1= {0x169b0b13d72ddc99,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddf};
+////Fr_Rw_mul_test 2:
+//FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+//FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+//FrRawElement pRawResult2= {0x169b0b13d72ddc96,0x6c5b3334dcbfb50a,0xad619b286e68fcca,0x1949259d0e237ddf};
+////Fr_Rw_mul_test 3:
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0x169b0b13d72ddc98,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddd};
+
+//0 0, 169b0b13d72ddc98, 6c5b3334dcbfb509, ad619b286e68fcca, 1949259d0e237ddd, 0
+//1 0, 1b397538e18aa729, 4b6ea19f77d6f05a, 50b517979560dbf3, 1ad46d43563759ca, 0
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0x1b397538e18aa729,0x4b6ea19f77d6f05a,0x50b517979560dbf3,0x1ad46d43563759ca};
+
+//00 0, 2b5f03ec9137536d, 806e49a91514a16c, 31762d353b74a158, 13d4d397da065264, 0, 0, dc91, 0
+//0 2b5f03ec9137536d, 806e49a91514a16c, 31762d353b74a158, 13d4d397da065264, 0, 0
+//00 0, 169b0b13d72ddc99, 6c5b3334dcbfb509, ad619b286e68fcca, 1949259d0e237ddf, 0, 0, db31, 0
+//0 169b0b13d72ddc99, 6c5b3334dcbfb509, ad619b286e68fcca, 1949259d0e237ddf, 0, 0
+//00 0, 169b0b13d72ddc96, 6c5b3334dcbfb50a, ad619b286e68fcca, 1949259d0e237ddf, 0, 0, d9d1, 0
+//0 169b0b13d72ddc96, 6c5b3334dcbfb50a, ad619b286e68fcca, 1949259d0e237ddf, 0, 0
+//00 0, 169b0b13d72ddc98, 6c5b3334dcbfb509, ad619b286e68fcca, 1949259d0e237ddd, 1, 0, d861, 0
+//0 169b0b13d72ddc98, 6c5b3334dcbfb509, ad619b286e68fcca, 1949259d0e237ddd, 1, 1
+
+// C
+////Fr_Rw_mul_test 0:
+//FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+//FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+//FrRawElement pRawResult0= {0x2b5f03ec9137536d,0x806e49a91514a16c,0x31762d353b74a158,0x13d4d397da065264};
+////Fr_Rw_mul_test 1:
+//FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+//FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+//FrRawElement pRawResult1= {0x169b0b13d72ddc99,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddf};
+////Fr_Rw_mul_test 2:
+//FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+//FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+//FrRawElement pRawResult2= {0x169b0b13d72ddc96,0x6c5b3334dcbfb50a,0xad619b286e68fcca,0x1949259d0e237ddf};
+////Fr_Rw_mul_test 3:
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0x169b0b13d72ddc98,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddd};
+
+// 1
+// ASM
+////Fr_Rw_mul_test 0:
+//FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+//FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+//FrRawElement pRawResult0= {0xb3571702bd2958e5,0x9a382a6c97774a46,0xd9a87dd3463f79dc,0x27beaa5f8eb19105};
+////Fr_Rw_mul_test 1:
+//FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+//FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+//FrRawElement pRawResult1= {0x31dcea78edf3b8de,0xa95afc294653ce1e,0x562c6cde9eed09be,0x266201ae3fbe6af2};
+////Fr_Rw_mul_test 2:
+//FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+//FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+//FrRawElement pRawResult2= {0x31e554a5232eedfa,0x9aec237e3810f6d9,0xae4226fd3a103abd,0x18a6707c1b21fe37};
+////Fr_Rw_mul_test 3:
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0x1b397538e18aa72a,0x4b6ea19f77d6f05a,0x50b517979560dbf3,0x1ad46d43563759cb};
+
+//0 0, 169b0b13d72ddc98, 6c5b3334dcbfb509, ad619b286e68fcca, 1949259d0e237ddd, 0
+//1 0, 1b397538e18aa729, 4b6ea19f77d6f05a, 50b517979560dbf3, 1ad46d43563759ca, 0
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0x1b397538e18aa729,0x4b6ea19f77d6f05a,0x50b517979560dbf3,0x1ad46d43563759ca};
+
+//11 0, b3571702bd2958e5, 9a382a6c97774a46, d9a87dd3463f79dc, 27beaa5f8eb19105, 0, 0, 41, b018ee96f0f23265
+//1 b3571702bd2958e5, 9a382a6c97774a46, d9a87dd3463f79dc, 27beaa5f8eb19105, 0, 0
+//11 0, 31dcea78edf3b8de, a95afc294653ce1e, 562c6cde9eed09be, 266201ae3fbe6af2, 0, 0, 41, 169b0b13d72ddc99
+//1 31dcea78edf3b8de, a95afc294653ce1e, 562c6cde9eed09be, 266201ae3fbe6af2, 0, 0
+//11 0, 31e554a5232eedfa, 9aec237e3810f6d9, ae4226fd3a103abd, 18a6707c1b21fe37, 0, 0, 41, 169b0b13d72ddc96
+//1 31e554a5232eedfa, 9aec237e3810f6d9, ae4226fd3a103abd, 18a6707c1b21fe37, 0, 0
+//11 0, 1b397538e18aa729, 4b6ea19f77d6f05a, 50b517979560dbf3, 1ad46d43563759cc, 1, 0, 41, 169b0b13d72ddc9a
+//1 1b397538e18aa729, 4b6ea19f77d6f05a, 50b517979560dbf3, 1ad46d43563759cc, 1, 0
+
+
+// C:
+////Fr_Rw_mul_test 0:
+//FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+//FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+//FrRawElement pRawResult0= {0xb3571702bd2958e5,0x9a382a6c97774a46,0xd9a87dd3463f79dc,0x27beaa5f8eb19105};
+////Fr_Rw_mul_test 1:
+//FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+//FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+//FrRawElement pRawResult1= {0x31dcea78edf3b8de,0xa95afc294653ce1e,0x562c6cde9eed09be,0x266201ae3fbe6af2};
+////Fr_Rw_mul_test 2:
+//FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+//FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+//FrRawElement pRawResult2= {0x31e554a5232eedfa,0x9aec237e3810f6d9,0xae4226fd3a103abd,0x18a6707c1b21fe37};
+////Fr_Rw_mul_test 3:
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0x1b397538e18aa729,0x4b6ea19f77d6f05a,0x50b517979560dbf3,0x1ad46d43563759ca};
+
+// 2
+////Fr_Rw_mul_test 0:
+//FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+//FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+//FrRawElement pRawResult0= {0x781f41d8d29b0685,0x35d4f525e4933524,0x7123b1eae1aaed61,0x2c72835fecaffe88};
+////Fr_Rw_mul_test 1:
+//FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+//FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+//FrRawElement pRawResult1= {0xf3776a9834f97c9b,0xee0cbbabe96f11b7,0xa87997923fa2367a,0x25a806e1b2be78d1};
+////Fr_Rw_mul_test 2:
+//FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+//FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+//FrRawElement pRawResult2= {0xd5ea8b36b3a2d59b,0xba4bcf2cab2def57,0xda0fe4b3c933d270,0x10ebbe644acb676a};
+////Fr_Rw_mul_test 3:
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0xdf1ef554932135a2,0x86e184acef9f3d3c,0xc8a123737c005fc5,0x21bddee2ff8f8bfe};
+
+//22 0, 781f41d8d29b0685, 35d4f525e4933524, 7123b1eae1aaed61, 2c72835fecaffe88, 0, 0, 41, 165338df7a1740e7
+//2 781f41d8d29b0685, 35d4f525e4933524, 7123b1eae1aaed61, 2c72835fecaffe88, 0, 0
+//22 0, f3776a9834f97c9b, ee0cbbabe96f11b7, a87997923fa2367a, 25a806e1b2be78d1, 0, 0, 41, 31dcea78edf3b8de
+//2 f3776a9834f97c9b, ee0cbbabe96f11b7, a87997923fa2367a, 25a806e1b2be78d1, 0, 0
+//22 0, d5ea8b36b3a2d59b, ba4bcf2cab2def57, da0fe4b3c933d270, 10ebbe644acb676a, 0, 0, 41, 31e554a5232eedfa
+//2 d5ea8b36b3a2d59b, ba4bcf2cab2def57, da0fe4b3c933d270, 10ebbe644acb676a, 0, 0
+//22 0, f5c26a949f8a4755, e4cddf36be1c1b00, ce1878ba858c8d8f, 2d4b734de9169d24, 1, 0, 41, 1b397538e18aa72b
+//2 f5c26a949f8a4755, e4cddf36be1c1b00, ce1878ba858c8d8f, 2d4b734de9169d24, 1, 0
+
+
+
+
+
+// 3
+////Fr_Rw_mul_test 0:
+//FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+//FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+//FrRawElement pRawResult0= {0xcba5e0bbd0000003,0x789bb8d96d2c51b3,0x28f0d12384840917,0x112ceb58a394e07d};
+////Fr_Rw_mul_test 1:
+//FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+//FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+//FrRawElement pRawResult1= {0xb8b7400adb62329c,0x121deb53c223d90f,0x904c1bc95d70baba,0x2bd7f2a3058aaa39};
+////Fr_Rw_mul_test 2:
+//FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+//FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+//FrRawElement pRawResult2= {0x8663902cfae5d423,0x95d2440ac403ddd3,0x1ad411b88e349a0f,0x1ebf106109e4fa8d};
+////Fr_Rw_mul_test 3:
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0xd13604f1e300865c,0xba58b3d2a99f4ba5,0x1b4e415146d47f95,0x55c593ff9cfbf0a};
+
+//33 0, cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d, 0, 0, 41, 2fbbbc6c1774791
+//3 cba5e0bbd0000003, 789bb8d96d2c51b3, 28f0d12384840917, 112ceb58a394e07d, 0, 0
+//33 0, b8b7400adb62329c, 121deb53c223d90f, 904c1bc95d70baba, 2bd7f2a3058aaa39, 0, 0, 41, f3776a9834f97c9b
+//3 b8b7400adb62329c, 121deb53c223d90f, 904c1bc95d70baba, 2bd7f2a3058aaa39, 0, 0
+//33 0, 8663902cfae5d423, 95d2440ac403ddd3, 1ad411b88e349a0f, 1ebf106109e4fa8d, 0, 0, 41, d5ea8b36b3a2d59b
+//3 8663902cfae5d423, 95d2440ac403ddd3, 1ad411b88e349a0f, 1ebf106109e4fa8d, 0, 0
+//33 0, 12ccfa89686fbba1, ebcb78904eabb2ed, adffa5df826b80dd, 2e1d3b46a4a93ae0, 1, 0, 41, f5c26a949f8a4757
+//3 12ccfa89686fbba1, ebcb78904eabb2ed, adffa5df826b80dd, 2e1d3b46a4a93ae0, 1, 0
+
+// 4
+////Fr_Rw_mul_test 0:
+//FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
+//FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
+//FrRawElement pRawResult0= {0xcba5e0bbd0000003,0x789bb8d96d2c51b3,0x28f0d12384840917,0x112ceb58a394e07d};
+////Fr_Rw_mul_test 1:
+//FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+//FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
+//FrRawElement pRawResult1= {0xb8b7400adb62329c,0x121deb53c223d90f,0x904c1bc95d70baba,0x2bd7f2a3058aaa39};
+////Fr_Rw_mul_test 2:
+//FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
+//FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
+//FrRawElement pRawResult2= {0x8663902cfae5d423,0x95d2440ac403ddd3,0x1ad411b88e349a0f,0x1ebf106109e4fa8d};
+////Fr_Rw_mul_test 3:
+//FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//FrRawElement pRawResult3= {0xd13604f1e300865c,0xba58b3d2a99f4ba5,0x1b4e415146d47f95,0x55c593ff9cfbf0a};
+
 void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 {
 
@@ -420,11 +601,16 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mp_limb_t mb[4]  = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
     mp_limb_t mq[4]  = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
     mp_limb_t mr[4]  = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
-    mp_limb_t mr1[4] = {0, 0, 0, 0};
-    mp_limb_t mr2[4] = {0, 0, 0, 0};
-    mp_limb_t mr3[4] = {0, 0, 0, 0};
-    mp_limb_t mr4[5] = {0, 0, 0, 0, 0};
+    mp_limb_t mr1[5] = {0, 0, 0, 0, 0};
+    mp_limb_t mr2[5] = {0, 0, 0, 0, 0};
+    mp_limb_t mr3[6] = {0, 0, 0, 0, 0, 0};
+    mp_limb_t mr4[6] = {0, 0, 0, 0, 0, 0};
     mp_limb_t mnp    = np;
+    mp_limb_t carry = 0;
+    mp_limb_t carry0 = 0;
+    mp_limb_t carry1 = 0;
+    mp_limb_t carry2 = 0;
+    mp_limb_t carry3 = 0;
 
 //    // FirstLoop
 //    mpz_mul_ui(mr1, mb, pRawA[0]);
@@ -437,20 +623,104 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 //    mr4->_mp_d[2] = mr4->_mp_d[3];
 //    mr4->_mp_d[3] = mr4->_mp_d[4];
 //    mr4->_mp_d[4] = 0;
+// ; FirstLoop
+//{0x2,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xfffffffffffffffd,0xfffffffffffffffd};
+// {0x2,0x562f0e518380,0x7ffedbd50750,0x0,0x0,0xfffffffffffffffd};
 
+//FrRawElement pRawResult3= {0x2,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xfffffffffffffffd,0xfffffffffffffffd};
+
+    //    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+//    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+//    FrRawElement pRawResult3= {0x35f905313fdf50bb,0x5bab176e33b97efa,0xafd63944c55782d,0x1402c8cfdb71d335};
+    //FrRawElement pRawResult3= {0x2,0xfffffffffffffffd,0xffffffffffffffff,0xffffffffffffffff};
     // FirstLoop
-    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[0], 1);
-    // Second Loop
-    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
-    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
+    //mpn_mul(&mr1[0], &mb[0],  4, &pRawA[0], 1);
+    mp_limb_t r8,r9,r10,r11,r12,r13,r14,r15;
+    r9 = np;
+    mpn_xor_n(&r10,&r10,&r10,1);
 
-    std:: cout << "1 " << std::hex << mr4[0] << ", " << mr4[1] << ", " << mr4[2] << ", " << mr4[3] << ", " << mr4[4] << "\n";
+    mp_limb_t rcx[4] = {mb[0], mb[1], mb[2], mb[3]};
+    mp_limb_t rdx[4] = {mb[0], mb[1], mb[2], mb[3]};
+    mp_limb_t rsi[4] = {ma[0], ma[1], ma[2], ma[3]};
+    mp_limb_t raxr11[2] = {0,0};
+    mp_limb_t raxr13[2] = {0,0};
+    mp_limb_t rax = 0;
+    mp_limb_t r8r12[2] = {0,0};
+    mp_limb_t r8r14[2] = {0,0};
+    mp_limb_t rdi[6] = {0,0,0,0,0,0};
+    mp_limb_t zero = 0;
+
+    rdx[0] = ma[0];
+    mpn_mul(&raxr11[0], &rdx[0], 1, &rcx[0], 1);
+    r11 = raxr11[0];
+    rax = raxr11[1];
+    std:: cout << "raxr11 " << std::hex << raxr11[0] << ", "
+                                     << raxr11[1]<< "\n";
+    carry = mpn_mul(&r8r12[0], &rdx[0], 1, &rcx[1], 1);
+    r12  = r8r12[0];
+    r8 = r8r12[1];
+    std:: cout << "r8r12 " << std::hex << r8r12[0] << ", "
+                                     << r8r12[1]<< "\n";
+
+    std:: cout << "carry " << std::hex << carry << "\n";
+    carry = mpn_add(&r12, &r12, 1, &rax, 1);
+
+    std:: cout << "carry " << std::hex << carry << "\n";
+    std:: cout << "r12 " << std::hex << r12 << "\n";
+
+    mpn_mul(&raxr13[0], &rdx[0], 1, &rcx[2], 1);
+
+    std:: cout << "raxr13 " << std::hex << raxr13[0] << ", "
+                                     << raxr13[1]<< "\n";
+
+    rax = raxr13[1];
+    r13 = raxr13[0];
+    carry = mpn_add(&r13, &r13, 1, &rax, 1);
+    std:: cout << "carry " << std::hex << carry << "\n";
+
+    mpn_mul(&r8r14[0], &rdx[0], 1, &rcx[3], 1);
+    r8  = r8r14[1];
+    r14 = r8r14[0];
+
+
+    std:: cout << "r8r14 " << std::hex << r8r14[0] << ", "
+                                       << r8r14[1]<< "\n";
+
+    std:: cout << "r14 " << std::hex << r14 <<  "\n";
+
+    carry = mpn_add(&r14, &r14, 1, &rax, 1);
+    r15= r10;
+    mpn_add(&r15, &r15, 1, &r8, 1);
+    std:: cout << "carry " << std::hex << carry << "\n";
+    rdi[0] = r11;
+    rdi[1] = r12;
+    rdi[2] = r13;
+    rdi[3] = r14;
+    rdi[4] = r15;
+    rdi[5] = rax;
+
+    std:: cout << "rdi " << std::hex << rdi[0] << ", "
+                                     << rdi[1] << ", "
+                                     << rdi[2] << ", "
+                                     << rdi[3] << ", "
+                                     << rdi[4] << ", "
+                                     << rdi[5]<< "\n";
+
+    // Second Loop
+    mpn_mul(&mr2[0], &mnp,    1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0],  4, &mr2[0], 1);
+    carry0 = mpn_add(&mr4[0], &mr3[0], 5, &mr1[0], 5);
+    std:: cout << "0 " << std::hex << mr4[0] << ", " << mr4[1] << ", " << mr4[2] << ", " << mr4[3] << ", " << mr4[4] << ", " << mr4[5]<< "\n";
+    std:: cout << "carry 0 " << carry0 << "\n";
+
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
     mr4[3] = mr4[4];
     mr4[4] = 0;
+
+
+
 
 //    // FirstLoop
 //    mpz_mul_ui(mr1, mb, pRawA[1]);
@@ -466,17 +736,23 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 //    mr4->_mp_d[4] = 0;
 
     // FirstLoop
-    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[1], 1);
+    mpn_mul(&mr1[0], &mb[0],  4, &pRawA[1], 1);
     // Second Loop
     mpn_add(&mr1[0], &mr4[0], 4, &mr1[0], 4);
-    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
-    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
+    mpn_mul(&mr2[0], &mnp,    1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0],  4, &mr2[0], 1);
+    carry1 = mpn_add(&mr4[0], &mr3[0], 5, &mr1[0], 5);
+
+    std:: cout << "1 " << std::hex << mr4[0] << ", " << mr4[1] << ", " << mr4[2] << ", " << mr4[3] << ", " << mr4[4] << ", " << mr4[5]<< "\n";
+    std:: cout << "carry 1 " << carry1 << "\n";
+
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
     mr4[3] = mr4[4];
     mr4[4] = 0;
+
+
 
 //    // FirstLoop
 //    mpz_mul_ui(mr1, mb, pRawA[2]);
@@ -492,18 +768,18 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 //    mr4->_mp_d[4] = 0;
 
     // FirstLoop
-    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[2], 1);
+    mpn_mul(&mr1[0], &mb[0],  4, &pRawA[2], 1);
     // Second Loop
     mpn_add(&mr1[0], &mr4[0], 4, &mr1[0], 4);
-    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
-    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
+    mpn_mul(&mr2[0], &mnp,    1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0],  4, &mr2[0], 1);
+    carry2 = mpn_add(&mr4[0], &mr3[0], 5, &mr1[0], 5);
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
     mr4[3] = mr4[4];
     mr4[4] = 0;
-
+    std:: cout << "carry 2 " << carry2 << "\n";
 //    // FirstLoop
 //    mpz_mul_ui(mr1, mb, pRawA[3]);
 //    // Second Loop
@@ -518,24 +794,106 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 //    mr4->_mp_d[4] = 0;
 
     // FirstLoop
-    mpn_mul(&mr1[0], &mb[0], 4, &pRawA[3], 1);
+    mpn_mul(&mr1[0], &mb[0],  4, &pRawA[3], 1);
     // Second Loop
     mpn_add(&mr1[0], &mr4[0], 4, &mr1[0], 4);
-    mpn_mul(&mr2[0], &mnp, 1, &mr1[0], 1);
-    mpn_mul(&mr3[0], &mq[0], 4, &mr2[0], 1);
-    mpn_add(&mr4[0], &mr3[0], 4, &mr1[0], 5);
+    mpn_mul(&mr2[0], &mnp,    1, &mr1[0], 1);
+    mpn_mul(&mr3[0], &mq[0],  4, &mr2[0], 1);
+    carry3 = mpn_add(&mr4[0], &mr3[0], 5, &mr1[0], 5);
     mr4[0] = mr4[1];
     mr4[1] = mr4[2];
     mr4[2] = mr4[3];
     mr4[3] = mr4[4];
     mr4[4] = 0;
+    std:: cout << "carry 3 " << carry3 << "\n";
 
-    if (mpn_cmp(&mr4[0], &mq[0], 4) != 0)
+    if (mpn_cmp(&mr4[3], &mq[3], 1) != 0)
     {
         mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+        //return;
     }
 
+    if (mpn_cmp(&mr4[2], &mq[2], 1) != 0)
+    {
+        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+        //return;
+    }
+
+    if (mpn_cmp(&mr4[1], &mq[1], 1) != 0)
+    {
+        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+        //return;
+    }
+
+    if (mpn_cmp(&mr4[0], &mq[0], 1) != 0)
+    {
+        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+        //return;
+    }
+
+//    mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//    mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//    mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//    mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+
     for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+    return;
+
+//    std:: cout << "1 " << std::hex << mr4[0] << ", " << mr4[1] << ", " << mr4[2] << ", " << mr4[3] << ", " << mr4[4] << "\n";
+//    for (int i=0; i<Fr_N64; i++)
+//    {
+//        pRawResult[i] = mr4[i];
+//        return;
+//    }
+
+//    if (mpn_cmp(&mr4[3], &mq[3], 1) != 0)
+//    {
+//        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+//        return;
+//    }
+
+//    if (mpn_cmp(&mr4[2], &mq[2], 1) != 0)
+//    {
+//        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+//        return;
+//    }
+
+//    if (mpn_cmp(&mr4[1], &mq[1], 1) != 0)
+//    {
+//        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+//        return;
+//    }
+
+//    if (mpn_cmp(&mr4[0], &mq[0], 1) != 0)
+//    {
+//        mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+//        return;
+//    }
+
+    //uint8_t carry = mpn_cmp(&mr4[0], &mq[0], 4);
+    //for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+//    if (carry)
+//    {
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+//    }
+//    else if(mpn_cmp(&mr4[0], &mq[0], 4) != 0)
+//    {
+//        //mpn_sub_n(&mr4[0], &mr4[0], &mq[0], 4);
+//        for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4[i];
+//    }
+
+
+
+
+
 /*
 
     mpz_t ma;
@@ -567,11 +925,19 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
     mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
     mpz_add(mr4, mr3, mr1);
+
+    std:: cout << "00 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << ", " << mr4->_mp_d[6] << ", " << mr4->_mp_d[7] << ", " << mr4->_mp_d[8]  << "\n";
     mr4->_mp_d[0] = mr4->_mp_d[1];
     mr4->_mp_d[1] = mr4->_mp_d[2];
     mr4->_mp_d[2] = mr4->_mp_d[3];
     mr4->_mp_d[3] = mr4->_mp_d[4];
-    mr4->_mp_d[4] = 0;
+    mr4->_mp_d[4] = mr4->_mp_d[5];
+    mr4->_mp_d[5] = 0;
+
+//    std:: cout << "0 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << "\n";
+//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+//    return;
+
 
     // FirstLoop
     mpz_mul_ui(mr1, mb, pRawA[1]);
@@ -580,11 +946,19 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
     mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
     mpz_add(mr4, mr3, mr1);
+
+   std:: cout << "11 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << ", " << mr4->_mp_d[6] << ", " << mr4->_mp_d[7] << ", " << mr4->_mp_d[8]  << "\n";
     mr4->_mp_d[0] = mr4->_mp_d[1];
     mr4->_mp_d[1] = mr4->_mp_d[2];
     mr4->_mp_d[2] = mr4->_mp_d[3];
     mr4->_mp_d[3] = mr4->_mp_d[4];
-    mr4->_mp_d[4] = 0;
+    mr4->_mp_d[4] = mr4->_mp_d[5];
+    mr4->_mp_d[5] = 0;
+
+
+//    std:: cout << "1 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << "\n";
+//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+//    return;
 
     // FirstLoop
     mpz_mul_ui(mr1, mb, pRawA[2]);
@@ -593,11 +967,18 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
     mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
     mpz_add(mr4, mr3, mr1);
+
+    std:: cout << "22 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << ", " << mr4->_mp_d[6] << ", " << mr4->_mp_d[7] << ", " << mr4->_mp_d[8]  << "\n";
     mr4->_mp_d[0] = mr4->_mp_d[1];
     mr4->_mp_d[1] = mr4->_mp_d[2];
     mr4->_mp_d[2] = mr4->_mp_d[3];
     mr4->_mp_d[3] = mr4->_mp_d[4];
-    mr4->_mp_d[4] = 0;
+    mr4->_mp_d[4] = mr4->_mp_d[5];
+    mr4->_mp_d[5] = 0;
+
+    //std:: cout << "2 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << "\n";
+    //for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+    //return;
 
     // FirstLoop
     mpz_mul_ui(mr1, mb, pRawA[3]);
@@ -606,34 +987,45 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_mul_ui(mr2, mnp, mr1->_mp_d[0]);
     mpz_mul_ui(mr3, mq, mr2->_mp_d[0]);
     mpz_add(mr4, mr3, mr1);
+    std:: cout << "33 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << ", " << mr4->_mp_d[6] << ", " << mr4->_mp_d[7] << ", " << mr4->_mp_d[8]  << "\n";
     mr4->_mp_d[0] = mr4->_mp_d[1];
     mr4->_mp_d[1] = mr4->_mp_d[2];
     mr4->_mp_d[2] = mr4->_mp_d[3];
     mr4->_mp_d[3] = mr4->_mp_d[4];
-    mr4->_mp_d[4] = 0;
+    mr4->_mp_d[4] = mr4->_mp_d[5];
+    mr4->_mp_d[5] = 0;
 
-    mp_limb_t mmq[4]  = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
-    mp_limb_t mmr[4]  = {mr4->_mp_d[0], mr4->_mp_d[1], mr4->_mp_d[2], mr4->_mp_d[3]};
+    std:: cout << "3 " << std::hex << mr4->_mp_d[0] << ", " << mr4->_mp_d[1] << ", " << mr4->_mp_d[2] << ", " << mr4->_mp_d[3] << ", " << mr4->_mp_d[4] << ", " << mr4->_mp_d[5] << "\n";
+//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+//    return;
 
-    if (mpn_cmp(&mmr[0], &mmq[0], 1) == 0)
-    {
-        mpn_sub_n(&mmr[0], &mmr[0], &mmq[0], 4);
-    }
+
+//    mp_limb_t mmq[4]  = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+//    mp_limb_t mmr[4]  = {mr4->_mp_d[0], mr4->_mp_d[1], mr4->_mp_d[2], mr4->_mp_d[3]};
+
+//    if (mpn_cmp(&mmr[0], &mmq[0], 1) == 0)
+//    {
+//        mpn_sub_n(&mmr[0], &mmr[0], &mmq[0], 4);
+//    }
 
 //    if (mpn_cmp(&mmr[0], &mmq[0], 4) == 0)
 //    {
 //        mpn_sub_n(&mmr[0], &mmr[0], &mmq[0], 4);
 //    }
 
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mmr[i];
+//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mmr[i];
 
 //    if (!mpz_cmp(mr4,mq))
 //    {
 //        //Fr_rawMMul_sq:
 //        mpz_sub(mr4,mr4,mq);
-//        std::cout << "1 ";
+////        std::cout << "1 ";
 //    }
-//    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
+
+
+//    mpz_sub(mr4,mr4,mq);
+//    mpz_sub(mr4,mr4,mq);
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr4->_mp_d[i];
 
 //    if (mr4->_mp_d[3] == mq->_mp_d[3])
 //    {
@@ -658,7 +1050,9 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_clear(mr4);
     mpz_clear(mnp);
     mpz_clear(mq);
+
     */
+
 }
 
 void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA)

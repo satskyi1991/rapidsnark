@@ -589,9 +589,9 @@ void Fr_Rw_mul_unit_test()
     FrRawElement pRawResult2_c;
     FrRawElement pRawResult3_c;
 
-    Fr_rawMMul(pRawResult0_c, pRawA0, pRawB0);
-    Fr_rawMMul(pRawResult1_c, pRawA1, pRawB1);
-    Fr_rawMMul(pRawResult2_c, pRawA2, pRawB2);
+//    Fr_rawMMul(pRawResult0_c, pRawA0, pRawB0);
+//    Fr_rawMMul(pRawResult1_c, pRawA1, pRawB1);
+//    Fr_rawMMul(pRawResult2_c, pRawA2, pRawB2);
     Fr_rawMMul(pRawResult3_c, pRawA3, pRawB3);
 
     compare_rawResult(pRawResult0, pRawResult0_c, 0, "Fr_Rw_mul_unit_test");
@@ -606,7 +606,7 @@ void Fr_Rw_mul_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pR
     Fr_rawMMul(pRawResult, pRawA, pRawB);
     std::cout << "FrRawElement pRawA" << idx << "= " << std::hex << "{0x" << pRawA[0] << ",0x" << pRawA[1] << ",0x" << pRawA[2] << ",0x" << pRawA[3] << "};"<< '\n';
     std::cout << "FrRawElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
-    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};"<< '\n';
+    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << ",0x" << pRawResult[4] << ",0x" << pRawResult[5]<< "};"<< '\n';
 }
 
 
@@ -2008,6 +2008,18 @@ int main()
     Fr_mul_s1ml2n_test(&Result3_s1ml2n,  &A3_s1ml2n,  &B3_s1ml2n, 3);
 #endif
 
+#ifdef TEST_C_FUNCTIONS
+    Fr_Rw_mul_unit_test();
+//    Fr_Rw_mul_test(pRawResult,  pRawA,  pRawB, 0);
+//    Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
+//    Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
+    Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
+#else
+    Fr_Rw_mul_test(pRawResult,  pRawA,  pRawB, 0);
+    Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
+    Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
+    Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
+#endif
 
 
 
