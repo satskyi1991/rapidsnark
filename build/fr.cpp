@@ -671,6 +671,67 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     r15= r10;
     mpn_add(&r15, &r15, 1, &r8, 1);
 
+//    rdi[0] = r11;
+//    rdi[1] = r12;
+//    rdi[2] = r13;
+//    rdi[3] = r14;
+//    rdi[4] = r15;
+//    rdi[5] = rax;
+
+//    std:: cout << "rdi " << std::hex << rdi[0] << ", "
+//                                     << rdi[1] << ", "
+//                                     << rdi[2] << ", "
+//                                     << rdi[3] << ", "
+//                                     << rdi[4] << ", "
+//                                     << rdi[5]<< "\n";
+
+
+    // ; SecondLoop
+    //FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+    //FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
+    //pRawResult3= {0x169b0b13d72ddc98,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddd,0xfffffffffffffffd,0x1949259d0e237ddf};
+    mp_limb_t raxrdx[2] = {0,0};
+    mp_limb_t r8rax[2] = {0,0};
+
+    rdx[0] = r9;
+
+    mpn_mul(&raxrdx[0], &rdx[0], 1, &r11, 1);
+    rax = raxrdx[1];
+    rdx[0] = raxrdx[0];
+
+    mpn_mul(&r8rax[0], &rdx[0], 1, &mq[0], 1);
+    r8 = r8rax[1];
+    rax = r8rax[0];
+
+    mpn_add(&rax, &rax, 1, &r11, 1);
+
+    mpn_mul(&raxr11[0], &rdx[0], 1, &mq[1], 1);
+    rax = raxr11[1];
+    r11 = raxr11[0];
+
+    mpn_add(&r11, &r11, 1, &r8, 1);
+    mpn_add(&r11, &r11, 1, &r12, 1);
+
+    mpn_mul(&r8r12[0], &rdx[0], 1, &mq[2], 1);
+    r8  = r8r12[1];
+    r12 = r8r12[0];
+
+
+    mpn_add(&r12, &r12, 1, &rax, 1);
+    mpn_add(&r12, &r12, 1, &r13, 1);
+
+    mpn_mul(&raxr13[0], &rdx[0], 1, &mq[3], 1);
+    rax = raxr13[1];
+    r13  = raxr13[0];
+
+    mpn_add(&r13, &r13, 1, &r8, 1);
+    mpn_add(&r13, &r13, 1, &r14, 1);
+
+    r14 = r10;
+
+    mpn_add(&r14, &r14, 1, &rax, 1);
+    mpn_add(&r14, &r14, 1, &r15, 1);
+
     rdi[0] = r11;
     rdi[1] = r12;
     rdi[2] = r13;
