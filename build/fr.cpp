@@ -624,16 +624,11 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 //    mr4->_mp_d[3] = mr4->_mp_d[4];
 //    mr4->_mp_d[4] = 0;
 // ; FirstLoop
-//{0x2,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xfffffffffffffffd,0xfffffffffffffffd};
-// {0x2,0x562f0e518380,0x7ffedbd50750,0x0,0x0,0xfffffffffffffffd};
 
-//FrRawElement pRawResult3= {0x2,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xfffffffffffffffd,0xfffffffffffffffd};
 
-    //    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
-//    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
-//    FrRawElement pRawResult3= {0x35f905313fdf50bb,0x5bab176e33b97efa,0xafd63944c55782d,0x1402c8cfdb71d335};
-    //FrRawElement pRawResult3= {0x2,0xfffffffffffffffd,0xffffffffffffffff,0xffffffffffffffff};
     // FirstLoop
+    //{0x2,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xfffffffffffffffd,0xfffffffffffffffd};
+
     //mpn_mul(&mr1[0], &mb[0],  4, &pRawA[0], 1);
     mp_limb_t r8,r9,r10,r11,r12,r13,r14,r15;
     r9 = np;
@@ -654,44 +649,28 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpn_mul(&raxr11[0], &rdx[0], 1, &rcx[0], 1);
     r11 = raxr11[0];
     rax = raxr11[1];
-    std:: cout << "raxr11 " << std::hex << raxr11[0] << ", "
-                                     << raxr11[1]<< "\n";
-    carry = mpn_mul(&r8r12[0], &rdx[0], 1, &rcx[1], 1);
+
+    mpn_mul(&r8r12[0], &rdx[0], 1, &rcx[1], 1);
     r12  = r8r12[0];
     r8 = r8r12[1];
-    std:: cout << "r8r12 " << std::hex << r8r12[0] << ", "
-                                     << r8r12[1]<< "\n";
 
-    std:: cout << "carry " << std::hex << carry << "\n";
-    carry = mpn_add(&r12, &r12, 1, &rax, 1);
-
-    std:: cout << "carry " << std::hex << carry << "\n";
-    std:: cout << "r12 " << std::hex << r12 << "\n";
+    mpn_add(&r12, &r12, 1, &rax, 1);
 
     mpn_mul(&raxr13[0], &rdx[0], 1, &rcx[2], 1);
 
-    std:: cout << "raxr13 " << std::hex << raxr13[0] << ", "
-                                     << raxr13[1]<< "\n";
-
     rax = raxr13[1];
     r13 = raxr13[0];
-    carry = mpn_add(&r13, &r13, 1, &rax, 1);
-    std:: cout << "carry " << std::hex << carry << "\n";
+    mpn_add(&r13, &r13, 1, &rax, 1);
+
 
     mpn_mul(&r8r14[0], &rdx[0], 1, &rcx[3], 1);
     r8  = r8r14[1];
     r14 = r8r14[0];
 
-
-    std:: cout << "r8r14 " << std::hex << r8r14[0] << ", "
-                                       << r8r14[1]<< "\n";
-
-    std:: cout << "r14 " << std::hex << r14 <<  "\n";
-
-    carry = mpn_add(&r14, &r14, 1, &rax, 1);
+    mpn_add(&r14, &r14, 1, &rax, 1);
     r15= r10;
     mpn_add(&r15, &r15, 1, &r8, 1);
-    std:: cout << "carry " << std::hex << carry << "\n";
+
     rdi[0] = r11;
     rdi[1] = r12;
     rdi[2] = r13;
