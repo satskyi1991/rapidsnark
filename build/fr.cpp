@@ -606,6 +606,7 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mp_limb_t mr3[6] = {0, 0, 0, 0, 0, 0};
     mp_limb_t mr4[6] = {0, 0, 0, 0, 0, 0};
     mp_limb_t mnp    = np;
+    mp_limb_signed_t scarry = 0;
     mp_limb_t carry = 0;
     mp_limb_t carry0 = 0;
     mp_limb_t carry1 = 0;
@@ -654,27 +655,31 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     r12  = r8r12[0];
     r8 = r8r12[1];
 
+    carry = scarry;
     mpn_add(&r12, &r12, 1, &carry, 1);
-    carry = mpn_add(&r12, &r12, 1, &rax, 1);
+    scarry = mpn_add(&r12, &r12, 1, &rax, 1);
 
     mpn_mul(&raxr13[0], &rdx[0], 1, &rcx[2], 1);
 
     rax = raxr13[1];
     r13 = raxr13[0];
 
+    carry = scarry;
     mpn_add(&r13, &r13, 1, &carry, 1);
-    carry = mpn_add(&r13, &r13, 1, &rax, 1);
+    scarry = mpn_add(&r13, &r13, 1, &rax, 1);
 
     mpn_mul(&r8r14[0], &rdx[0], 1, &rcx[3], 1);
     r8  = r8r14[1];
     r14 = r8r14[0];
 
+    carry = scarry;
     mpn_add(&r14, &r14, 1, &carry, 1);
-    carry = mpn_add(&r14, &r14, 1, &rax, 1);
+    scarry = mpn_add(&r14, &r14, 1, &rax, 1);
 
     r15= r10;
+    carry = scarry;
     mpn_add(&r15, &r15, 1, &carry, 1);
-    carry = mpn_add(&r15, &r15, 1, &r8, 1);
+    scarry = mpn_add(&r15, &r15, 1, &r8, 1);
 
 
 //    rdi[0] = r11;
@@ -709,48 +714,56 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     r8 = r8rax[1];
     rax = r8rax[0];
 
+    carry = scarry;
     mpn_add(&rax, &rax, 1, &carry, 1);
-    carry = mpn_add(&rax, &rax, 1, &r11, 1);
+    scarry = mpn_add(&rax, &rax, 1, &r11, 1);
 
     mpn_mul(&raxr11[0], &rdx[0], 1, &mq[1], 1);
     rax = raxr11[1];
     r11 = raxr11[0];
 
+    carry = scarry;
     mpn_add(&r11, &r11, 1, &carry, 1);
-    carry = mpn_add(&r11, &r11, 1, &r8, 1);
+    scarry = mpn_add(&r11, &r11, 1, &r8, 1);
 
+    carry = scarry;
     //mpn_add(&r11, &r11, 1, &carry, 1); // @IS TODO must be uncomented here
-    carry = mpn_add(&r11, &r11, 1, &r12, 1);
+    scarry = mpn_add(&r11, &r11, 1, &r12, 1);
 
     mpn_mul(&r8r12[0], &rdx[0], 1, &mq[2], 1);
     r8  = r8r12[1];
     r12 = r8r12[0];
 
-
+    carry = scarry;
     mpn_add(&r12, &r12, 1, &carry, 1); // @IS TODO must be comented here
     mpn_add(&r12, &r12, 1, &carry, 1);
-    carry = mpn_add(&r12, &r12, 1, &rax, 1);
+    scarry = mpn_add(&r12, &r12, 1, &rax, 1);
 
+    carry = scarry;
     mpn_add(&r12, &r12, 1, &carry, 1);
-    carry = mpn_add(&r12, &r12, 1, &r13, 1);
+    scarry = mpn_add(&r12, &r12, 1, &r13, 1);
 
     mpn_mul(&raxr13[0], &rdx[0], 1, &mq[3], 1);
     rax = raxr13[1];
     r13  = raxr13[0];
 
+    carry = scarry;
     mpn_add(&r13, &r13, 1, &carry, 1);
-    carry = mpn_add(&r13, &r13, 1, &r8, 1);
+    scarry = mpn_add(&r13, &r13, 1, &r8, 1);
 
+    carry = scarry;
     mpn_add(&r13, &r13, 1, &carry, 1);
-    carry = mpn_add(&r13, &r13, 1, &r14, 1);
+    scarry = mpn_add(&r13, &r13, 1, &r14, 1);
 
     r14 = r10;
 
+    carry = scarry;
     mpn_add(&r14, &r14, 1, &carry, 1);
-    carry = mpn_add(&r14, &r14, 1, &rax, 1);
+    scarry = mpn_add(&r14, &r14, 1, &rax, 1);
 
+    carry = scarry;
     mpn_add(&r14, &r14, 1, &carry, 1);
-    carry = mpn_add(&r14, &r14, 1, &r15, 1);
+    scarry = mpn_add(&r14, &r14, 1, &r15, 1);
 
 //    rdi[0] = r11;
 //    rdi[1] = r12;
@@ -774,48 +787,144 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpn_mul(&r8rax[0], &rdx[0], 1, &rcx[0], 1);
     rax = r8rax[0];
     r8 = r8rax[1];
-
+    std::cout << "r110 = " << r11 <<"\n";
+    std::cout << "scarry = " << scarry <<"\n";
+    carry = 0;
+    //carry = scarry; // @IS TODO Should be uncommented here
     mpn_add(&r11, &r11, 1, &carry, 1);
-    carry = mpn_add(&r11, &r11, 1, &rax, 1);
+    scarry = mpn_add(&r11, &r11, 1, &rax, 1);
 
     std::cout << "r11 = " << r11 <<"\n";
+    std::cout << "rax = " << rax <<"\n";
     std::cout << "carry = " << carry <<"\n";
 
+    carry = scarry;
     mpn_add(&r12, &r12, 1, &carry, 1);
-    carry = mpn_add(&r12, &r12, 1, &r8, 1);
+    scarry = mpn_add(&r12, &r12, 1, &r8, 1);
 
     mpn_mul(&r8rax[0], &rdx[0], 1, &rcx[1], 1);
     rax = r8rax[0];
     r8  = r8rax[1];
 
+    carry = scarry;
     mpn_add(&r12, &r12, 1, &carry, 1);
-    carry = mpn_add(&r12, &r12, 1, &rax, 1);
+    scarry = mpn_add(&r12, &r12, 1, &rax, 1);
 
+    carry = scarry;
     mpn_add(&r13, &r13, 1, &carry, 1);
-    carry = mpn_add(&r13, &r13, 1, &r8, 1);
+    scarry = mpn_add(&r13, &r13, 1, &r8, 1);
 
     mpn_mul(&r8rax[0], &rdx[0], 1, &rcx[2], 1);
     rax  = r8rax[0];
     r8   = r8rax[1];
 
+    carry = scarry;
     mpn_add(&r13, &r13, 1, &carry, 1);
-    carry = mpn_add(&r13, &r13, 1, &rax, 1);
+    scarry = mpn_add(&r13, &r13, 1, &rax, 1);
 
+    carry = scarry;
     mpn_add(&r14, &r14, 1, &carry, 1);
-    carry = mpn_add(&r14, &r14, 1, &r8, 1);
+    scarry = mpn_add(&r14, &r14, 1, &r8, 1);
 
     mpn_mul(&r8rax[0], &rdx[0], 1, &rcx[3], 1);
     rax  = r8rax[0];
     r8   = r8rax[1];
 
+    carry = scarry;
     mpn_add(&r14, &r14, 1, &carry, 1);
-    carry = mpn_add(&r14, &r14, 1, &rax, 1);
+    scarry = mpn_add(&r14, &r14, 1, &rax, 1);
 
+    carry = scarry;
     mpn_add(&r15, &r15, 1, &carry, 1);
-    carry = mpn_add(&r15, &r15, 1, &r8, 1);
+    scarry = mpn_add(&r15, &r15, 1, &r8, 1);
 
+    carry = scarry;
+    carry = 1; // @IS TODO should be comented here
     mpn_add(&r15, &r15, 1, &carry, 1);
-    carry = mpn_add(&r15, &r15, 1, &r10, 1);
+    scarry = mpn_add(&r15, &r15, 1, &r10, 1);
+
+//    rdi[0] = r11;
+//    rdi[1] = r12;
+//    rdi[2] = r13;
+//    rdi[3] = r14;
+//    rdi[4] = r15;
+//    rdi[5] = rax;
+
+//    std:: cout << "rdi " << std::hex << rdi[0] << ", "
+//                                     << rdi[1] << ", "
+//                                     << rdi[2] << ", "
+//                                     << rdi[3] << ", "
+//                                     << rdi[4] << ", "
+//                                     << rdi[5]<< "\n";
+
+
+
+    //FrRawElement pRawResult3= {0x1b397538e18aa72a,0x4b6ea19f77d6f05a,0x50b517979560dbf3,0x1ad46d43563759cb,0xfffffffffffffffe,0x1ad46d43563759cc};
+    //; SecondLoop 1
+
+
+    rdx[0] = r9;
+
+    mpn_mul(&raxrdx[0], &rdx[0], 1, &r11, 1);
+    rax = raxrdx[1];
+    rdx[0] = raxrdx[0];
+
+    mpn_mul(&r8rax[0], &rdx[0], 1, &mq[0], 1);
+    r8 = r8rax[1];
+    rax = r8rax[0];
+
+    carry = scarry;
+    std::cout << "carry " << carry << "\n";
+    //mpn_add(&rax, &rax, 1, &carry, 1);
+    mpn_add(&rax, &rax, 1, &r11, 1);
+
+    mpn_mul(&raxr11[0], &rdx[0], 1, &mq[1], 1);
+    rax = raxr11[1];
+    r11 = raxr11[0];
+
+    carry = scarry;
+    mpn_add(&r11, &r11, 1, &carry, 1);
+    mpn_add(&r11, &r11, 1, &r8, 1);
+
+    carry = scarry;
+    mpn_add(&r11, &r11, 1, &carry, 1); // @IS TODO must be uncomented here
+    scarry = mpn_add(&r11, &r11, 1, &r12, 1);
+
+    mpn_mul(&r8r12[0], &rdx[0], 1, &mq[2], 1);
+    r8  = r8r12[1];
+    r12 = r8r12[0];
+
+    //carry = scarry;
+    //mpn_add(&r12, &r12, 1, &carry, 1); // @IS TODO must be comented here
+    mpn_add(&r12, &r12, 1, &carry, 1);
+    mpn_add(&r12, &r12, 1, &rax, 1);
+
+    carry = scarry;
+    mpn_add(&r12, &r12, 1, &carry, 1);
+    scarry = mpn_add(&r12, &r12, 1, &r13, 1);
+
+    mpn_mul(&raxr13[0], &rdx[0], 1, &mq[3], 1);
+    rax = raxr13[1];
+    r13  = raxr13[0];
+
+    //carry = scarry;
+    //mpn_add(&r13, &r13, 1, &carry, 1);
+    mpn_add(&r13, &r13, 1, &r8, 1);
+
+    carry = scarry;
+    mpn_add(&r13, &r13, 1, &carry, 1);
+    scarry = mpn_add(&r13, &r13, 1, &r14, 1);
+
+    r14 = r10;
+
+    //carry = scarry;
+    mpn_add(&r14, &r14, 1, &carry, 1);
+    mpn_add(&r14, &r14, 1, &rax, 1);
+
+    carry = scarry;
+    mpn_add(&r14, &r14, 1, &carry, 1);
+    scarry = mpn_add(&r14, &r14, 1, &r15, 1);
+
 
     rdi[0] = r11;
     rdi[1] = r12;
@@ -830,6 +939,7 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
                                      << rdi[3] << ", "
                                      << rdi[4] << ", "
                                      << rdi[5]<< "\n";
+
 
 
     // Second Loop
