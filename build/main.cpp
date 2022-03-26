@@ -1746,7 +1746,7 @@ int main()
     Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
-/*
+
 #ifdef TEST_C_FUNCTIONS
     Fr_Rw_Msquare_unit_test();
 //    Fr_Rw_Msquare_test(pRawResult,  pRawA,  pRawB, 0);
@@ -1759,7 +1759,7 @@ int main()
     Fr_Rw_Msquare_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_Msquare_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
-
+/*
 #ifdef TEST_C_FUNCTIONS
     Fr_Rw_mul1_unit_test();
 //    Fr_Rw_mul1_test(pRawResult,  pRawA,  pRawB, 0);
