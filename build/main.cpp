@@ -41,6 +41,11 @@ FrRawElement pRawResult3 = {0,0,0,0};
 FrRawElement pRawA3      = {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
 FrRawElement pRawB3      = {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
 
+FrRawElement pRawResult4 = {0,0,0,0};
+FrRawElement pRawA4      = {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+FrRawElement pRawB4      = {0xffffffffffffffff,0,0,0};
+
+
 //#define Fr_SHORT 0x00000000
 //#define Fr_SHORTMONTGOMERY 0x40000000
 //#define Fr_LONG 0x80000000
@@ -583,21 +588,28 @@ void Fr_Rw_mul_unit_test()
     FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
     FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
     FrRawElement pRawResult3= {0xd13604f1e300865c,0xba58b3d2a99f4ba5,0x1b4e415146d47f95,0x55c593ff9cfbf0a};
+    //Fr_Rw_mul_test 4:
+    FrRawElement pRawA4= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
+    FrRawElement pRawB4= {0xffffffffffffffff,0x0,0x0,0x0};
+    FrRawElement pRawResult4= {0x1d0a8ff4c8e5744c,0x6fd9959908f97ec,0xdfe72d24fcdef34e,0xd1c7f8bb929dbb};
 
     FrRawElement pRawResult0_c;
     FrRawElement pRawResult1_c;
     FrRawElement pRawResult2_c;
     FrRawElement pRawResult3_c;
+    FrRawElement pRawResult4_c;
 
     Fr_rawMMul(pRawResult0_c, pRawA0, pRawB0);
     Fr_rawMMul(pRawResult1_c, pRawA1, pRawB1);
     Fr_rawMMul(pRawResult2_c, pRawA2, pRawB2);
     Fr_rawMMul(pRawResult3_c, pRawA3, pRawB3);
+    Fr_rawMMul(pRawResult4_c, pRawA4, pRawB4);
 
     compare_rawResult(pRawResult0, pRawResult0_c, 0, "Fr_Rw_mul_unit_test");
     compare_rawResult(pRawResult1, pRawResult1_c, 1, "Fr_Rw_mul_unit_test");
     compare_rawResult(pRawResult2, pRawResult2_c, 2, "Fr_Rw_mul_unit_test");
     compare_rawResult(pRawResult3, pRawResult3_c, 3, "Fr_Rw_mul_unit_test");
+    compare_rawResult(pRawResult4, pRawResult4_c, 4, "Fr_Rw_mul_unit_test");
 }
 
 void Fr_Rw_mul_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
@@ -1745,6 +1757,7 @@ int main()
     Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
     Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
+    Fr_Rw_mul_test(pRawResult4, pRawA4, pRawB4, 4);
 #endif
 
 #ifdef TEST_C_FUNCTIONS
@@ -1759,20 +1772,20 @@ int main()
     Fr_Rw_Msquare_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_Msquare_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
-/*
+
 #ifdef TEST_C_FUNCTIONS
     Fr_Rw_mul1_unit_test();
-//    Fr_Rw_mul1_test(pRawResult,  pRawA,  pRawB, 0);
-//    Fr_Rw_mul1_test(pRawResult1, pRawA1, pRawB1, 1);
-//    Fr_Rw_mul1_test(pRawResult2, pRawA2, pRawB2, 2);
-//    Fr_Rw_mul1_test(pRawResult3, pRawA3, pRawB3, 3);
+    Fr_Rw_mul1_test(pRawResult,  pRawA,  pRawB, 0);
+    Fr_Rw_mul1_test(pRawResult1, pRawA1, pRawB1, 1);
+    Fr_Rw_mul1_test(pRawResult2, pRawA2, pRawB2, 2);
+    Fr_Rw_mul1_test(pRawResult3, pRawA3, pRawB3, 3);
 #else
     Fr_Rw_mul1_test(pRawResult,  pRawA,  pRawB, 0);
     Fr_Rw_mul1_test(pRawResult1, pRawA1, pRawB1, 1);
     Fr_Rw_mul1_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_mul1_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
-
+/*
 #ifdef TEST_C_FUNCTIONS
     Fr_Rw_ToMontgomery_unit_test();
 //    Fr_Rw_ToMontgomery_test(pRawResult,  pRawA,  pRawB, 0);
