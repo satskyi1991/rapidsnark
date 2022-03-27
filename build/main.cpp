@@ -1837,7 +1837,7 @@ int main()
     Fr_Rw_FromMontgomery_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_FromMontgomery_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
-/*
+
 #ifdef TEST_C_FUNCTIONS
     Fr_toNormal_unit_test();
 //    Fr_toNormal_test(&RawResult,  &RawA,  &RawB, 0);
@@ -1851,7 +1851,7 @@ int main()
     Fr_toNormal_test(&RawResult3, &RawA3, &RawB3, 3);
 #endif
 
-
+/*
 #ifdef TEST_C_FUNCTIONS
     Fr_mul_s1s2_unit_test();
 //    Fr_mul_s1s2_test(&Result_s1s2,  &A_s1s2,  &B_s1s2, 0);

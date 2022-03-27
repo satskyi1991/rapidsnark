@@ -635,8 +635,8 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
         mpz_sub(result, result, mq);
     }
 
-    //to_rawElement(pRawResult, result);
-    for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
+    to_rawElement(pRawResult, result);
+    //for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, mq, product, np0q, result, md, fcarry, NULL);
 }
@@ -701,8 +701,8 @@ void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
         mpz_sub(result, result, mq);
     }
 
-    //to_rawElement(pRawResult, result);
-    for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
+    to_rawElement(pRawResult, result);
+    //for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, mq, product, np0q, result, md, fcarry, NULL);
 }
