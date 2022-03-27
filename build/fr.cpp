@@ -1007,7 +1007,7 @@ void mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
 
     int64_t temp = (int64_t)a->shortVal * (int64_t)b->shortVal;
     r->longVal[0] = temp;
-    mpz_import(rax, Fr_N64, -1, 8, -1, 0, (const void *)r);
+    mpz_import(rax, 1, -1, 8, -1, 0, (const void *)r);
     // mul_manageOverflow
     if (!mpz_fits_sint_p(rax))
     {
@@ -1016,7 +1016,7 @@ void mul_s1s2(PFrElement r, PFrElement a, PFrElement b)
     }
     else
     {
-        r->type = Fr_SHORT;
+        r->type = Fr_LONG;
         //r->longVal[0] = temp;
         //std::cout << "not in rawCopyS2L" << "\n";
     }

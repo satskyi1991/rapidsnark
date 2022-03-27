@@ -1851,20 +1851,20 @@ int main()
     Fr_toNormal_test(&RawResult3, &RawA3, &RawB3, 3);
 #endif
 
-/*
+
 #ifdef TEST_C_FUNCTIONS
     Fr_mul_s1s2_unit_test();
-//    Fr_mul_s1s2_test(&Result_s1s2,  &A_s1s2,  &B_s1s2, 0);
-//    Fr_mul_s1s2_test(&Result1_s1s2, &A1_s1s2, &B1_s1s2, 1);
-//    Fr_mul_s1s2_test(&Result2_s1s2, &A2_s1s2, &B2_s1s2, 2);
-//    Fr_mul_s1s2_test(&Result3_s1s2, &A3_s1s2, &B3_s1s2, 3);
+    Fr_mul_s1s2_test(&Result_s1s2,  &A_s1s2,  &B_s1s2, 0);
+    Fr_mul_s1s2_test(&Result1_s1s2, &A1_s1s2, &B1_s1s2, 1);
+    Fr_mul_s1s2_test(&Result2_s1s2, &A2_s1s2, &B2_s1s2, 2);
+    Fr_mul_s1s2_test(&Result3_s1s2, &A3_s1s2, &B3_s1s2, 3);
 #else
     Fr_mul_s1s2_test(&Result_s1s2,  &A_s1s2,  &B_s1s2, 0);
     Fr_mul_s1s2_test(&Result1_s1s2, &A1_s1s2, &B1_s1s2, 1);
     Fr_mul_s1s2_test(&Result2_s1s2, &A2_s1s2, &B2_s1s2, 2);
     Fr_mul_s1s2_test(&Result3_s1s2, &A3_s1s2, &B3_s1s2, 3);
 #endif
-
+/*
 #ifdef TEST_C_FUNCTIONS
     Fr_mul_l1nl2n_unit_test();
 //    Fr_mul_l1nl2n_test(&Result_l1nl2n, &A_l1nl2n,  &B_l1nl2n, 0);
