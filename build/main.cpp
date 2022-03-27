@@ -839,8 +839,8 @@ void Fr_Rw_FromMontgomery_unit_test()
     FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
     FrRawElement pRawResult0= {0x55b425913927735a,0xa3ac6d7389307a4d,0x543d3ec42a2529ae,0x256e51ca1fcef59b};
     //Fr_Rw_FromMontgomery_test 1:
-    FrRawElement pRawA1= {0x0,0x0,0x0,0x0};
-    FrRawElement pRawResult1= {0x0,0x0,0x0,0x0};
+    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
+    FrRawElement pRawResult1= {0xdc5ba0056db1194e,0x90ef5a9e111ec87,0xc8260de4aeb85d5d,0x15ebf95182c5551c};
     //Fr_Rw_FromMontgomery_test 2:
     FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
     FrRawElement pRawResult2= {0x26d7659f271a8bb3,0x21364eeee929d8a6,0xd869189184a2650f,0x2f92867a259f026d};
@@ -1785,7 +1785,7 @@ int main()
     Fr_Rw_mul1_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_mul1_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
-/*
+
 #ifdef TEST_C_FUNCTIONS
     Fr_Rw_ToMontgomery_unit_test();
 //    Fr_Rw_ToMontgomery_test(pRawResult,  pRawA,  pRawB, 0);
@@ -1837,7 +1837,7 @@ int main()
     Fr_Rw_FromMontgomery_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_FromMontgomery_test(pRawResult3, pRawA3, pRawB3, 3);
 #endif
-
+/*
 #ifdef TEST_C_FUNCTIONS
     Fr_toNormal_unit_test();
 //    Fr_toNormal_test(&RawResult,  &RawA,  &RawB, 0);
@@ -1877,7 +1877,7 @@ int main()
     Fr_mul_l1nl2n_test(&Result2_l1nl2n, &A2_l1nl2n, &B2_l1nl2n, 2);
     Fr_mul_l1nl2n_test(&Result3_l1nl2n, &A3_l1nl2n, &B3_l1nl2n, 3);
 #endif
-    \
+
 #ifdef TEST_C_FUNCTIONS
     Fr_mul_l1ml2n_unit_test();
 //    Fr_mul_l1ml2n_test(&Result_l1ml2n, &A_l1ml2n,  &B_l1ml2n, 0);
@@ -2022,20 +2022,9 @@ int main()
     Fr_mul_s1ml2n_test(&Result3_s1ml2n,  &A3_s1ml2n,  &B3_s1ml2n, 3);
 #endif
 
-#ifdef TEST_C_FUNCTIONS
-    Fr_Rw_mul_unit_test();
-//    Fr_Rw_mul_test(pRawResult,  pRawA,  pRawB, 0);
-//    Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
-//    Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
-//    Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
-#else
-    Fr_Rw_mul_test(pRawResult,  pRawA,  pRawB, 0);
-    Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
-    Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
-    Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
-#endif
-
 */
+
+
 
 //    Fr_Rw_sub_test(pRawResult,  pRawA,  pRawB, 0);
 //    Fr_Rw_sub_test(pRawResult1, pRawA1, pRawB1, 1);
