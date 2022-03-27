@@ -582,10 +582,6 @@ void Fr_rawMSquare(FrRawElement pRawResult, FrRawElement pRawA)
 
 void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
 {
-//    FrRawElement pRawBtmp = {pRawB,0,0,0};
-//    //pRawBtmp[0] = pRawB;
-//    Fr_rawMMul(pRawResult, pRawA, pRawBtmp);
-
     uint64_t np0;
     mpz_t a, b, mq, product, np0q, result, md, fcarry;
 
@@ -596,151 +592,12 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
 
     to_mpz(a, pRawA);
     to_mpz(b, pRawB);
-
     to_mpz(mq, q);
 
     // FirstLoop 0
-//    ASM:
-//    //Fr_Rw_mul1_test 0:
-//    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
-//    FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
-//    FrRawElement pRawResult0= {0xb1949058c8000000,0x96434bfc83791c1a,0x7305d67baa794541,0xa2b3b87c18298620};
-//    //Fr_Rw_mul1_test 1:
-//    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
-//    FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
-//    FrRawElement pRawResult1= {0x2,0x0,0x0,0x0};
-//    //Fr_Rw_mul1_test 2:
-//    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
-//    FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
-//    FrRawElement pRawResult2= `{0x2,0xfffffffffffffffd,0x0,0x0};
-//    //Fr_Rw_mul1_test 3:
-//    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
-//    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
-//    FrRawElement pRawResult3= {0x2,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
-
-//      C passed:
-//    //Fr_Rw_mul1_test 0:
-//    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
-//    FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
-//    FrRawElement pRawResult0= {0xb1949058c8000000,0x96434bfc83791c1a,0x7305d67baa794541,0xa2b3b87c18298620};
-//    //Fr_Rw_mul1_test 1:
-//    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
-//    FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
-//    FrRawElement pRawResult1= {0x2,0x0,0x0,0xd981};
-//    //Fr_Rw_mul1_test 2:
-//    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
-//    FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
-//    FrRawElement pRawResult2= {0x2,0xfffffffffffffffd,0x0,0xd8a1};
-//    //Fr_Rw_mul1_test 3:
-//    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
-//    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
-//    FrRawElement pRawResult3= {0x2,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
     mpz_mul_ui(product, a, pRawB);
 
-//    ASM:
-//    //Fr_Rw_mul1_test 0:
-//    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
-//    FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
-//    FrRawElement pRawResult0= {0xa0bd364808f23265,0x59cabdad777f9501,0x4eac1c168ad95cd,0x152146db8a31ece6};
-//    //Fr_Rw_mul1_test 1:
-//    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
-//    FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
-//    FrRawElement pRawResult1= {0x169b0b13d72ddc99,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddf};
-//    //Fr_Rw_mul1_test 2:
-//    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
-//    FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
-//    FrRawElement pRawResult2= {0x169b0b13d72ddc96,0x6c5b3334dcbfb50a,0xad619b286e68fcca,0x1949259d0e237ddf};
-//    //Fr_Rw_mul1_test 3:
-//    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
-//    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
-//    FrRawElement pRawResult3= {0x169b0b13d72ddc98,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddd};
-
-//      C passed:
-//    //Fr_Rw_mul1_test 0:
-//    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
-//    FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
-//    FrRawElement pRawResult0= {0xa0bd364808f23265,0x59cabdad777f9501,0x4eac1c168ad95cd,0x152146db8a31ece6};
-//    //Fr_Rw_mul1_test 1:
-//    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
-//    FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
-//    FrRawElement pRawResult1= {0x169b0b13d72ddc99,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddf};
-//    //Fr_Rw_mul1_test 2:
-//    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
-//    FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
-//    FrRawElement pRawResult2= {0x169b0b13d72ddc96,0x6c5b3334dcbfb50a,0xad619b286e68fcca,0x1949259d0e237ddf};
-//    //Fr_Rw_mul1_test 3:
-//    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
-//    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
-//    FrRawElement pRawResult3= {0x169b0b13d72ddc98,0x6c5b3334dcbfb509,0xad619b286e68fcca,0x1949259d0e237ddd};
-
-//    // Second Loop 0
-//    np0 = np * mpz_getlimbn(product, 0);
-//    mpz_mul_ui(np0q, mq, np0);
-//    mpz_add(result, np0q, product);
-//    mpz_tdiv_q_2exp(result, result, 64);
-//    get_carry1(result, fcarry);
-//    mpz_mod(result, result, md);
-
     // Second Loop 0
-    np0 = np * mpz_getlimbn(product, 0);
-    mpz_mul_ui(np0q, mq, np0);
-    mpz_add(result, np0q, product);
-    mpz_tdiv_q_2exp(result, result, 64);
-    get_carry1(result, fcarry);
-    mpz_mod(result, result, md);
-
-//ASM:
-//    //Fr_Rw_mul1_test 0:
-//    FrRawElement pRawA0= {0xa1f0fac9f8000000,0x9419f4243cdcb848,0xdc2822db40c0ac2e,0x183227397098d014};
-//    FrRawElement pRawB0= {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x216d0b17f4e44a5};
-//    FrRawElement pRawResult0= {0x7cb2616604febd84,0x8961eab9d75dca40,0xb645bdbf641dc76f,0x2015156cef6f72e1};
-//    //Fr_Rw_mul1_test 1:
-//    FrRawElement pRawA1= {0x1,0x0,0x0,0x0};
-//    FrRawElement pRawB1= {0x2,0x0,0x0,0x0};
-//    FrRawElement pRawResult1= {0x31dcea78edf3b8de,0xa95afc294653ce1e,0x562c6cde9eed09be,0x266201ae3fbe6af2};
-//    //Fr_Rw_mul1_test 2:
-//    FrRawElement pRawA2= {0xfffffffffffffffe,0x0,0x0,0x0};
-//    FrRawElement pRawB2= {0xffffffffffffffff,0x0,0x0,0x0};
-//    FrRawElement pRawResult2= {0x31e554a5232eedfa,0x9aec237e3810f6d9,0xae4226fd3a103abd,0x18a6707c1b21fe37};
-//    //Fr_Rw_mul1_test 3:
-//    FrRawElement pRawA3= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
-//    FrRawElement pRawB3= {0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff};
-//    FrRawElement pRawResult3= {0x49e6a250a5cca92,0xdf136e6a9b173b51,0xa3537c6f26f7df28,0x18b47a64813dbed};
-
-
-//    //    // FirstLoop 1
-////    mpz_mul_ui(product, b, pRawA[1]);
-//    mpz_add(product, result, product);
-//    mpz_add(product, product, fcarry);
-
-////    mpz_add(result, product, fcarry);
-
-//    // Second Loop 1
-//    np0 = np * mpz_getlimbn(product, 0);
-//    mpz_mul_ui(np0q, mq, np0);
-//    mpz_add(result, np0q, product);
-//    mpz_tdiv_q_2exp(result, result, 64);
-//    get_carry1(result, fcarry);
-//    mpz_mod(result, result, md);
-
-    // Second Loop 1
-    np0 = np * mpz_getlimbn(product, 0);
-    mpz_mul_ui(np0q, mq, np0);
-    mpz_add(result, np0q, product);
-    mpz_add(product, product, fcarry);
-    mpz_tdiv_q_2exp(result, result, 64);
-    get_carry1(result, fcarry);
-    mpz_mod(result, result, md);
-
-    for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
-    return;
-
-//    // FirstLoop 2
-    mpz_mul_ui(product, b, pRawA[2]);
-    mpz_add(product, result, product);
-    mpz_add(product, product, fcarry);
-
-    // Second Loop 2
     np0 = np * mpz_getlimbn(product, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, product);
@@ -748,15 +605,29 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
     get_carry(result, fcarry);
     mpz_mod(result, result, md);
 
-    // FirstLoop 3
-    mpz_mul_ui(product, b, pRawA[3]);
-    mpz_add(product, result, product);
-    mpz_add(product, product, fcarry);
+    // Second Loop 1
+    np0 = np * mpz_getlimbn(result, 0);
+    mpz_mul_ui(np0q, mq, np0);
+    mpz_add(result, np0q, result);
+    mpz_add(result, result, fcarry);
+    mpz_tdiv_q_2exp(result, result, 64);
+    get_carry(result, fcarry);
+    mpz_mod(result, result, md);
+
+    // Second Loop 2
+    np0 = np * mpz_getlimbn(result, 0);
+    mpz_mul_ui(np0q, mq, np0);
+    mpz_add(result, np0q, result);
+    mpz_add(result, result, fcarry);
+    mpz_tdiv_q_2exp(result, result, 64);
+    get_carry(result, fcarry);
+    mpz_mod(result, result, md);
 
     // Second Loop 3
-    np0 = np * mpz_getlimbn(product, 0);
+    np0 = np * mpz_getlimbn(result, 0);
     mpz_mul_ui(np0q, mq, np0);
-    mpz_add(result, np0q, product);
+    mpz_add(result, np0q, result);
+    mpz_add(result, result, fcarry);
     mpz_tdiv_q_2exp(result, result, 64);
     mpz_mod(result, result, md);
 
@@ -765,8 +636,7 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
         mpz_sub(result, result, mq);
     }
 
-    //to_rawElement(pRawResult, result);
-//    for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
+    to_rawElement(pRawResult, result);
 
     mpz_clears(a, b, mq, product, np0q, result, md, fcarry, NULL);
 }
