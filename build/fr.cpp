@@ -336,84 +336,6 @@ void RawFr::fromMpz(Element &r, mpz_t a) {
 /*****************************************************************************************
  * ASM Functions to C/C++ using GNU MP Lib Begin
 ******************************************************************************************/
-void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
-{
-    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
-    mp_limb_t mb[4] = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
-    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
-    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
-    mp_limb_t carry;
-
-    carry = mpn_add_n(&mr[0], &ma[0], &mb[0], 4);
-    if(carry)
-    {
-        mpn_sub_n(&mr[0], &mr[0], &mq[0], 4);
-    }
-
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
-}
-
-void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
-{
-    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
-    mp_limb_t mb[4] = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
-    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
-    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
-    mp_limb_t carry;
-
-    carry = mpn_sub_n(&mr[0], &ma[0], &mb[0], 4);
-    if(carry)
-    {
-        mpn_add_n(&mr[0], &mr[0], &mq[0], 4);
-    }
-
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
-}
-
-void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
-{
-    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
-    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
-    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
-    mp_limb_t mz[4] = {0, 0, 0, 0};
-
-    if (mpn_cmp(&ma[0], &mz[0], 4) != 0)
-    {
-        mpn_sub_n(&mr[0], &mq[0], &ma[0], 4);
-    }
-
-    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
-}
-
-void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA)
-{
-    for (int i=0; i<Fr_N64; i++)
-        pRawResult[i] = pRawA[i];
-}
-
-void Fr_copy(PFrElement r, PFrElement a)
-{
-    r->shortVal = a->shortVal;
-    r->type = a->type;
-    for (int i=0; i<Fr_N64; i++)
-        r->longVal[i] = a->longVal[i];
-}
-
-void Fr_copyn(PFrElement r, PFrElement a, int n)
-{
-    for (int i=0; i<n; i++)
-        r->longVal[i] = a->longVal[i];
-}
-
-int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB)
-{
-    for (int i=0; i<Fr_N64; i++)
-    {
-        if (pRawA[i] != pRawB[i])
-            return 0;
-    }
-    return 1;
-}
 
 static inline void
 to_mpz(mpz_ptr dst, uint64_t src)
@@ -499,6 +421,85 @@ uint64_t get_carry1(mpz_ptr val, mpz_ptr carry)
         mpz_set_ui(carry, 1);
         //mpz_mul_2exp(carry, carry, 64);
     }
+}
+
+void Fr_rawAdd(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
+{
+    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
+    mp_limb_t mb[4] = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
+    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
+    mp_limb_t carry;
+
+    carry = mpn_add_n(&mr[0], &ma[0], &mb[0], 4);
+    if(carry)
+    {
+        mpn_sub_n(&mr[0], &mr[0], &mq[0], 4);
+    }
+
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
+}
+
+void Fr_rawSub(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
+{
+    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
+    mp_limb_t mb[4] = {pRawB[0], pRawB[1], pRawB[2], pRawB[3]};
+    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
+    mp_limb_t carry;
+
+    carry = mpn_sub_n(&mr[0], &ma[0], &mb[0], 4);
+    if(carry)
+    {
+        mpn_add_n(&mr[0], &mr[0], &mq[0], 4);
+    }
+
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
+}
+
+void Fr_rawNeg(FrRawElement pRawResult, FrRawElement pRawA)
+{
+    mp_limb_t ma[4] = {pRawA[0], pRawA[1], pRawA[2], pRawA[3]};
+    mp_limb_t mq[4] = {Fr_rawq[0], Fr_rawq[1], Fr_rawq[2], Fr_rawq[3]};
+    mp_limb_t mr[4] = {pRawResult[0], pRawResult[1], pRawResult[2], pRawResult[3]};
+    mp_limb_t mz[4] = {0, 0, 0, 0};
+
+    if (mpn_cmp(&ma[0], &mz[0], 4) != 0)
+    {
+        mpn_sub_n(&mr[0], &mq[0], &ma[0], 4);
+    }
+
+    for (int i=0; i<Fr_N64; i++) pRawResult[i] = mr[i];
+}
+
+void Fr_rawCopy(FrRawElement pRawResult, FrRawElement pRawA)
+{
+    for (int i=0; i<Fr_N64; i++)
+        pRawResult[i] = pRawA[i];
+}
+
+void Fr_copy(PFrElement r, PFrElement a)
+{
+    r->shortVal = a->shortVal;
+    r->type = a->type;
+    for (int i=0; i<Fr_N64; i++)
+        r->longVal[i] = a->longVal[i];
+}
+
+void Fr_copyn(PFrElement r, PFrElement a, int n)
+{
+    for (int i=0; i<n; i++)
+        r->longVal[i] = a->longVal[i];
+}
+
+int Fr_rawIsEq(FrRawElement pRawA, FrRawElement pRawB)
+{
+    for (int i=0; i<Fr_N64; i++)
+    {
+        if (pRawA[i] != pRawB[i])
+            return 0;
+    }
+    return 1;
 }
 
 void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
