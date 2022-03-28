@@ -24,12 +24,8 @@ extern "C"
     extern FrElement Fr_R3;
     extern FrRawElement Fr_rawq;
     extern FrRawElement Fr_rawR3;
-    extern FrRawElement q;
-    extern FrRawElement half;
     extern FrRawElement R2;
-    extern FrRawElement R3;
-    extern FrRawElement lboMask;
-    extern FrRawElement np;
+    extern uint64_t np;
 }
 extern "C" void Fr_copy(PFrElement r, PFrElement a);
 extern "C" void Fr_copyn(PFrElement r, PFrElement a, int n);

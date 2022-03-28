@@ -71,6 +71,9 @@ uint64_t np  = {0xc2e1f593efffffff};
 #endif
 */
 
+FrRawElement Fr_rawR2 = {0x1bb8e645ae216da7,0x53fe3ab1e35c59e3,0x8c49833d53bb8085,0x0216d0b17f4e44a5};
+uint64_t Fr_np  = {0xc2e1f593efffffff};
+
 static mpz_t mq;
 static mpz_t zero;
 static mpz_t one;
@@ -338,19 +341,19 @@ void RawFr::fromMpz(Element &r, mpz_t a) {
 ******************************************************************************************/
 
 static inline void
-to_mpz(mpz_ptr dst, uint64_t src)
+Fr_to_mpz(mpz_ptr dst, uint64_t src)
 {
      mpz_import(dst, 1, -1, sizeof(src), -1, 0, &src);
 }
 
 static inline void
-to_mpz(mpz_ptr dst, FrRawElement src)
+Fr_to_mpz(mpz_ptr dst, FrRawElement src)
 {
      mpz_import(dst, Fr_N64, -1, sizeof(*src), -1, 0, src);
 }
 
 static inline void
-to_rawElement(FrRawElement dst, mpz_ptr src)
+Fr_to_rawElement(FrRawElement dst, mpz_ptr src)
 {
     //assert(mpz_size(src) == Fr_N64);
 
@@ -512,15 +515,15 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_init_set_ui(md, 1);
     mpz_mul_2exp(md, md, 256);
 
-    to_mpz(a, pRawA);
-    to_mpz(b, pRawB);
-    to_mpz(mq, q);
+    Fr_to_mpz(a, pRawA);
+    Fr_to_mpz(b, pRawB);
+    Fr_to_mpz(mq, Fr_rawq);
 
     // FirstLoop 0
     mpz_mul_ui(product, b, pRawA[0]);
 
     // Second Loop 0
-    np0 = np * mpz_getlimbn(product, 0);
+    np0 = Fr_np * mpz_getlimbn(product, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, product);
     mpz_tdiv_q_2exp(result, result, 64);
@@ -533,7 +536,7 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_add(product, product, fcarry);
 
     // Second Loop 1
-    np0 = np * mpz_getlimbn(product, 0);
+    np0 = Fr_np * mpz_getlimbn(product, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, product);
     mpz_tdiv_q_2exp(result, result, 64);
@@ -546,7 +549,7 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_add(product, product, fcarry);
 
     // Second Loop 2
-    np0 = np * mpz_getlimbn(product, 0);
+    np0 = Fr_np * mpz_getlimbn(product, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, product);
     mpz_tdiv_q_2exp(result, result, 64);
@@ -559,7 +562,7 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
     mpz_add(product, product, fcarry);
 
     // Second Loop 3
-    np0 = np * mpz_getlimbn(product, 0);
+    np0 = Fr_np * mpz_getlimbn(product, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, product);
     mpz_tdiv_q_2exp(result, result, 64);
@@ -572,7 +575,7 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
 
     //mpz_mod(result, result, md);
 
-    to_rawElement(pRawResult, result);
+    Fr_to_rawElement(pRawResult, result);
     //for (int i=0; i<Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, b, mq, product, np0q, result, md, fcarry, NULL);
@@ -593,14 +596,14 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
     mpz_init_set_ui(md, 1);
     mpz_mul_2exp(md, md, 256);
 
-    to_mpz(a, pRawA);
-    to_mpz(mq, q);
+    Fr_to_mpz(a, pRawA);
+    Fr_to_mpz(mq, Fr_rawq);
 
     // FirstLoop 0
     mpz_mul_ui(product, a, pRawB);
 
     // Second Loop 0
-    np0 = np * mpz_getlimbn(product, 0);
+    np0 = Fr_np * mpz_getlimbn(product, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, product);
     mpz_tdiv_q_2exp(result, result, 64);
@@ -608,7 +611,7 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
     mpz_mod(result, result, md);
 
     // Second Loop 1
-    np0 = np * mpz_getlimbn(result, 0);
+    np0 = Fr_np * mpz_getlimbn(result, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, result);
     mpz_add(result, result, fcarry);
@@ -617,7 +620,7 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
     mpz_mod(result, result, md);
 
     // Second Loop 2
-    np0 = np * mpz_getlimbn(result, 0);
+    np0 = Fr_np * mpz_getlimbn(result, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, result);
     mpz_add(result, result, fcarry);
@@ -626,7 +629,7 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
     mpz_mod(result, result, md);
 
     // Second Loop 3
-    np0 = np * mpz_getlimbn(result, 0);
+    np0 = Fr_np * mpz_getlimbn(result, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, result);
     mpz_add(result, result, fcarry);
@@ -638,7 +641,7 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
         mpz_sub(result, result, mq);
     }
 
-    to_rawElement(pRawResult, result);
+    Fr_to_rawElement(pRawResult, result);
     //for (int i=0; i<Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, mq, product, np0q, result, md, fcarry, NULL);
@@ -646,7 +649,7 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
 
 void Fr_rawToMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
 {
-    Fr_rawMMul(pRawResult, pRawA, R2);
+    Fr_rawMMul(pRawResult, pRawA, Fr_rawR2);
 }
 
 void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
@@ -659,14 +662,14 @@ void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
     mpz_init_set_ui(md, 1);
     mpz_mul_2exp(md, md, 256);
 
-    to_mpz(a, pRawA);
-    to_mpz(mq, q);
+    Fr_to_mpz(a, pRawA);
+    Fr_to_mpz(mq, Fr_rawq);
 
     // FirstLoop 0
     mpz_set(product, a);
 
     // Second Loop 0
-    np0 = np * mpz_getlimbn(product, 0);
+    np0 = Fr_np * mpz_getlimbn(product, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, product);
     mpz_tdiv_q_2exp(result, result, 64);
@@ -674,7 +677,7 @@ void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
     mpz_mod(result, result, md);
 
     // Second Loop 1
-    np0 = np * mpz_getlimbn(result, 0);
+    np0 = Fr_np * mpz_getlimbn(result, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, result);
     mpz_add(result, result, fcarry);
@@ -683,7 +686,7 @@ void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
     mpz_mod(result, result, md);
 
     // Second Loop 2
-    np0 = np * mpz_getlimbn(result, 0);
+    np0 = Fr_np * mpz_getlimbn(result, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, result);
     mpz_add(result, result, fcarry);
@@ -692,7 +695,7 @@ void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
     mpz_mod(result, result, md);
 
     // Second Loop 3
-    np0 = np * mpz_getlimbn(result, 0);
+    np0 = Fr_np * mpz_getlimbn(result, 0);
     mpz_mul_ui(np0q, mq, np0);
     mpz_add(result, np0q, result);
     mpz_add(result, result, fcarry);
@@ -704,7 +707,7 @@ void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
         mpz_sub(result, result, mq);
     }
 
-    to_rawElement(pRawResult, result);
+    Fr_to_rawElement(pRawResult, result);
     //for (int i=0; i<Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, mq, product, np0q, result, md, fcarry, NULL);
@@ -748,7 +751,7 @@ void Fr_toLongNormal(PFrElement r, PFrElement a)
         //u64toLong_adjust_neg:
         if (mpz_cmp_ui(ma, 0) < 0)
         {
-            mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)q);
+            mpz_import(mq, Fr_N64, -1, 8, -1, 0, (const void *)Fr_rawq);
             mpz_add_ui(ma, ma, mq->_mp_d[0]); //add    rsi, [q]         ; Set the first digit
             mr->_mp_d[1] = ma->_mp_d[0]; //mov    [rdi + 8], rsi   ;
             ma->_mp_d[0] = -1; //mov    rsi, -1          ; all ones
@@ -848,7 +851,7 @@ void Fr_toMontgomery(PFrElement r, PFrElement a)
         mpz_add_ui(ma, ma, 8); //    add     rsi, 8
         mpz_export((void *)pRawResult, NULL, -1, 8, -1, 0, mr);
         mpz_export((void *)pRawA, NULL, -1, 8, -1, 0, ma);
-        Fr_rawMMul(pRawResult, pRawA, R2);
+        Fr_rawMMul(pRawResult, pRawA, Fr_rawR2);
         mpz_import(ma, Fr_N64, -1, 8, -1, 0, (const void *)pRawA);
         mpz_import(mr, Fr_N64, -1, 8, -1, 0, (const void *)pRawResult);
         mpz_sub_ui(mr, mr, 8);

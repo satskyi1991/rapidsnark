@@ -37,6 +37,7 @@
         global Fq_rawSub
         global Fq_rawNeg
         global Fq_rawMMul
+        global Fq_rawMMul1
         global Fq_rawMSquare
         global Fq_rawToMontgomery
         global Fq_rawFromMontgomery

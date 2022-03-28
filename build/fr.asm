@@ -16,7 +16,7 @@
 ;        global Fr_eq
 ;        global Fr_neq
 ;        global Fr_lt
-;        global Fr_gtFr_rawAdd
+;        global Fr_gt
 ;        global Fr_leq
 ;        global Fr_geq
 ;        global Fr_land

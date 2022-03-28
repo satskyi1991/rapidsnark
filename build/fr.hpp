@@ -21,16 +21,18 @@ typedef FrElement *PFrElement;
 extern "C"
 {
     extern FrElement Fr_q;
-    extern FrElement Fr_R3;
     extern FrRawElement Fr_rawq;
+    extern FrElement Fr_R3;
     extern FrRawElement Fr_rawR3;
-    extern FrRawElement q;
-    extern FrRawElement half;
     extern FrRawElement R2;
-    extern FrRawElement R3;
-    extern FrRawElement lboMask;
     extern uint64_t np;
 }
+
+//FrElement Fr_q = {0, 0x80000000, {0x43e1f593f0000001,0x2833e84879b97091,0xb85045b68181585d,0x30644e72e131a029}};
+//FrRawElement Fr_rawq  = {0x43e1f593f0000001,0x2833e84879b97091,0xb85045b68181585d,0x30644e72e131a029};
+//FrElement Fr_R3 = {0, 0x80000000, {0x5e94d8e1b4bf0040,0x2a489cbe1cfbb6b8,0x893cc664a19fcfed,0x0cf8594b7fcc657c}};
+//FrRawElement Fr_rawR3 = {0x5e94d8e1b4bf0040,0x2a489cbe1cfbb6b8,0x893cc664a19fcfed,0x0cf8594b7fcc657c};
+
 
 //FrElement Fr_q.shortVal = 0;
 
