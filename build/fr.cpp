@@ -430,7 +430,7 @@ to_mpz(mpz_ptr dst, FrRawElement src)
 static inline void
 to_rawElement(FrRawElement dst, mpz_ptr src)
 {
-    assert(mpz_size(src) == Fr_N64);
+    //assert(mpz_size(src) == Fr_N64);
 
     std::memset(dst, 0, sizeof(FrRawElement));
     mpz_export(dst, NULL, -1, 8, -1, 0, src);
@@ -569,8 +569,10 @@ void Fr_rawMMul(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB)
         mpz_sub(result, result, mq);
     }
 
-    //to_rawElement(pRawResult, result);
-    for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
+    //mpz_mod(result, result, md);
+
+    to_rawElement(pRawResult, result);
+    //for (int i=0; i<Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, b, mq, product, np0q, result, md, fcarry, NULL);
 }
@@ -636,7 +638,7 @@ void Fr_rawMMul1(FrRawElement pRawResult, FrRawElement pRawA, uint64_t pRawB)
     }
 
     to_rawElement(pRawResult, result);
-    //for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
+    //for (int i=0; i<Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, mq, product, np0q, result, md, fcarry, NULL);
 }
@@ -702,7 +704,7 @@ void Fr_rawFromMontgomery(FrRawElement pRawResult, FrRawElement pRawA)
     }
 
     to_rawElement(pRawResult, result);
-    //for (int i=0; i<=Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
+    //for (int i=0; i<Fr_N64; i++) pRawResult[i] = result->_mp_d[i];
 
     mpz_clears(a, mq, product, np0q, result, md, fcarry, NULL);
 }
@@ -945,13 +947,14 @@ void Fr_mul(PFrElement r, PFrElement a, PFrElement b)
         else if (a->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (ma, 62)) // 2298 ; check if montgomery first
         {
             // mul_l1ms2
-            if (b->type == Fr_LONGMONTGOMERY) //if (mpz_tstbit (mb, 62)) // 2358 ; check if montgomery second
+            if (b->type == Fr_SHORT) //if (mpz_tstbit (mb, 62)) // 2358 ; check if montgomery second
             {
-                mul_l1ms2m(r, a, b);
+
+                mul_l1ms2n(r, a, b);
             }
             else
             {
-                mul_l1ms2n(r, a, b);
+                mul_l1ms2m(r, a, b);
             }
 
         }
@@ -1052,6 +1055,8 @@ void mul_l1nl2n(PFrElement r,PFrElement a,PFrElement b)
 
     r->type = Fr_LONGMONTGOMERY;
     Fr_rawMMul(&r->longVal[0], &a->longVal[0], &b->longVal[0]);
+
+    //std::cout << "r " << std::hex << r->longVal[0] << ", " << r->longVal[1]<< ", " << r->longVal[2] << ", " << r->longVal[3] << "\n";
     tmp1.type = Fr_LONG;
     tmp2.type = Fr_LONG;
     tmp1.shortVal = 0;
@@ -1061,6 +1066,7 @@ void mul_l1nl2n(PFrElement r,PFrElement a,PFrElement b)
         tmp1.longVal[i] = r->longVal[i];
         tmp2.longVal[i] = Fr_R3.longVal[i];
     }
+    //std::cout << "tmp1 " << std::hex << tmp1.longVal[0] << ", " << tmp1.longVal[1] << ", " << tmp1.longVal[2] << ", " << tmp1.longVal[3] << "\n";
     Fr_rawMMul(&r->longVal[0], &tmp1.longVal[0], &tmp2.longVal[0]);
 }
 
@@ -1220,6 +1226,7 @@ void mul_l1ms2m(PFrElement r,PFrElement a,PFrElement b)
 {
     r->type = Fr_LONGMONTGOMERY;
     Fr_rawMMul(&r->longVal[0], &a->longVal[0], &b->longVal[0]);
+    //std::cout << "Hi mul_l1ms2m" << "\n";
 }
 
 void mul_s1ml2m(PFrElement r,PFrElement a,PFrElement b)

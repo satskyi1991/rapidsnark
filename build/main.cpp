@@ -45,6 +45,11 @@ FrRawElement pRawResult4 = {0,0,0,0};
 FrRawElement pRawA4      = {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
 FrRawElement pRawB4      = {0xffffffffffffffff,0,0,0};
 
+FrRawElement pRawResult5 = {0,0,0,0};
+FrRawElement pRawA5      = {0x0,0,0,0};
+FrRawElement pRawB5      = {0x2,0,0,0};
+
+
 
 //#define Fr_SHORT 0x00000000
 //#define Fr_SHORTMONTGOMERY 0x40000000
@@ -592,24 +597,31 @@ void Fr_Rw_mul_unit_test()
     FrRawElement pRawA4= {0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe,0xfffffffffffffffe};
     FrRawElement pRawB4= {0xffffffffffffffff,0x0,0x0,0x0};
     FrRawElement pRawResult4= {0x1d0a8ff4c8e5744c,0x6fd9959908f97ec,0xdfe72d24fcdef34e,0xd1c7f8bb929dbb};
+    //Fr_Rw_mul_test 5:
+    FrRawElement pRawA5= {0x0,0x0,0x0,0x0};
+    FrRawElement pRawB5= {0x2,0x0,0x0,0x0};
+    FrRawElement pRawResult5= {0x0,0x0,0x0,0x0};
 
     FrRawElement pRawResult0_c;
     FrRawElement pRawResult1_c;
     FrRawElement pRawResult2_c;
     FrRawElement pRawResult3_c;
     FrRawElement pRawResult4_c;
+    FrRawElement pRawResult5_c;
 
     Fr_rawMMul(pRawResult0_c, pRawA0, pRawB0);
     Fr_rawMMul(pRawResult1_c, pRawA1, pRawB1);
     Fr_rawMMul(pRawResult2_c, pRawA2, pRawB2);
     Fr_rawMMul(pRawResult3_c, pRawA3, pRawB3);
     Fr_rawMMul(pRawResult4_c, pRawA4, pRawB4);
+    Fr_rawMMul(pRawResult5_c, pRawA5, pRawB5);
 
     compare_rawResult(pRawResult0, pRawResult0_c, 0, "Fr_Rw_mul_unit_test");
     compare_rawResult(pRawResult1, pRawResult1_c, 1, "Fr_Rw_mul_unit_test");
     compare_rawResult(pRawResult2, pRawResult2_c, 2, "Fr_Rw_mul_unit_test");
     compare_rawResult(pRawResult3, pRawResult3_c, 3, "Fr_Rw_mul_unit_test");
     compare_rawResult(pRawResult4, pRawResult4_c, 4, "Fr_Rw_mul_unit_test");
+    compare_rawResult(pRawResult5, pRawResult5_c, 5, "Fr_Rw_mul_unit_test");
 }
 
 void Fr_Rw_mul_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pRawB, int idx)
@@ -618,7 +630,7 @@ void Fr_Rw_mul_test(FrRawElement pRawResult, FrRawElement pRawA, FrRawElement pR
     Fr_rawMMul(pRawResult, pRawA, pRawB);
     std::cout << "FrRawElement pRawA" << idx << "= " << std::hex << "{0x" << pRawA[0] << ",0x" << pRawA[1] << ",0x" << pRawA[2] << ",0x" << pRawA[3] << "};"<< '\n';
     std::cout << "FrRawElement pRawB" << idx << "= " << std::hex << "{0x" << pRawB[0] << ",0x" << pRawB[1] << ",0x" << pRawB[2] << ",0x" << pRawB[3] << "};"<< '\n';
-    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << '\n';
+    std::cout << "FrRawElement pRawResult" << idx << "= " << std::hex << "{0x"<< pRawResult[0] << ",0x" << pRawResult[1] << ",0x" << pRawResult[2] << ",0x" << pRawResult[3] << "};" << '\n';
 }
 
 
@@ -1752,12 +1764,15 @@ int main()
 //    Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
 //    Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
 //    Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
+//    Fr_Rw_mul_test(pRawResult4, pRawA4, pRawB4, 4);
+//    Fr_Rw_mul_test(pRawResult5, pRawA5, pRawB5, 5);
 #else
     Fr_Rw_mul_test(pRawResult,  pRawA,  pRawB, 0);
     Fr_Rw_mul_test(pRawResult1, pRawA1, pRawB1, 1);
     Fr_Rw_mul_test(pRawResult2, pRawA2, pRawB2, 2);
     Fr_Rw_mul_test(pRawResult3, pRawA3, pRawB3, 3);
     Fr_Rw_mul_test(pRawResult4, pRawA4, pRawB4, 4);
+    Fr_Rw_mul_test(pRawResult5, pRawA5, pRawB5, 5);
 #endif
 
 #ifdef TEST_C_FUNCTIONS
@@ -1854,17 +1869,17 @@ int main()
 
 #ifdef TEST_C_FUNCTIONS
     Fr_mul_s1s2_unit_test();
-    Fr_mul_s1s2_test(&Result_s1s2,  &A_s1s2,  &B_s1s2, 0);
-    Fr_mul_s1s2_test(&Result1_s1s2, &A1_s1s2, &B1_s1s2, 1);
-    Fr_mul_s1s2_test(&Result2_s1s2, &A2_s1s2, &B2_s1s2, 2);
-    Fr_mul_s1s2_test(&Result3_s1s2, &A3_s1s2, &B3_s1s2, 3);
+//    Fr_mul_s1s2_test(&Result_s1s2,  &A_s1s2,  &B_s1s2, 0);
+//    Fr_mul_s1s2_test(&Result1_s1s2, &A1_s1s2, &B1_s1s2, 1);
+//    Fr_mul_s1s2_test(&Result2_s1s2, &A2_s1s2, &B2_s1s2, 2);
+//    Fr_mul_s1s2_test(&Result3_s1s2, &A3_s1s2, &B3_s1s2, 3);
 #else
     Fr_mul_s1s2_test(&Result_s1s2,  &A_s1s2,  &B_s1s2, 0);
     Fr_mul_s1s2_test(&Result1_s1s2, &A1_s1s2, &B1_s1s2, 1);
     Fr_mul_s1s2_test(&Result2_s1s2, &A2_s1s2, &B2_s1s2, 2);
     Fr_mul_s1s2_test(&Result3_s1s2, &A3_s1s2, &B3_s1s2, 3);
 #endif
-/*
+
 #ifdef TEST_C_FUNCTIONS
     Fr_mul_l1nl2n_unit_test();
 //    Fr_mul_l1nl2n_test(&Result_l1nl2n, &A_l1nl2n,  &B_l1nl2n, 0);
@@ -1879,7 +1894,7 @@ int main()
 #endif
 
 #ifdef TEST_C_FUNCTIONS
-    Fr_mul_l1ml2n_unit_test();
+   Fr_mul_l1ml2n_unit_test();
 //    Fr_mul_l1ml2n_test(&Result_l1ml2n, &A_l1ml2n,  &B_l1ml2n, 0);
 //    Fr_mul_l1ml2n_test(&Result1_l1ml2n, &A1_l1ml2n, &B1_l1ml2n, 1);
 //    Fr_mul_l1ml2n_test(&Result2_l1ml2n, &A2_l1ml2n, &B2_l1ml2n, 2);
@@ -2022,7 +2037,7 @@ int main()
     Fr_mul_s1ml2n_test(&Result3_s1ml2n,  &A3_s1ml2n,  &B3_s1ml2n, 3);
 #endif
 
-*/
+
 
 
 
